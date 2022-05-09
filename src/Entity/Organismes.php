@@ -89,10 +89,22 @@ class Organismes
      */
     private $pointsFocaux;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=AgentDetache::class, mappedBy="organisme")
+     */
+    private $agentDetaches;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reversement::class, mappedBy="organisme")
+     */
+    private $reversements;
+
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
         $this->pointsFocaux = new ArrayCollection();
+        $this->agentDetaches = new ArrayCollection();
+        $this->reversements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -298,6 +310,63 @@ class Organismes
             // set the owning side to null (unless already changed)
             if ($pointsFocaux->getIdOrg() === $this) {
                 $pointsFocaux->setIdOrg(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AgentDetache>
+     */
+    public function getAgentDetaches(): Collection
+    {
+        return $this->agentDetaches;
+    }
+
+    public function addAgentDetach(AgentDetache $agentDetach): self
+    {
+        if (!$this->agentDetaches->contains($agentDetach)) {
+            $this->agentDetaches[] = $agentDetach;
+            $agentDetach->addOrganisme($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAgentDetach(AgentDetache $agentDetach): self
+    {
+        if ($this->agentDetaches->removeElement($agentDetach)) {
+            $agentDetach->removeOrganisme($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reversement>
+     */
+    public function getReversements(): Collection
+    {
+        return $this->reversements;
+    }
+
+    public function addReversement(Reversement $reversement): self
+    {
+        if (!$this->reversements->contains($reversement)) {
+            $this->reversements[] = $reversement;
+            $reversement->setOrganisme($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReversement(Reversement $reversement): self
+    {
+        if ($this->reversements->removeElement($reversement)) {
+            // set the owning side to null (unless already changed)
+            if ($reversement->getOrganisme() === $this) {
+                $reversement->setOrganisme(null);
             }
         }
 

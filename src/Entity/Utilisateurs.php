@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateursRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -50,6 +52,16 @@ class Utilisateurs implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\JoinColumn(nullable=false)
      */
     private $idOrg;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reversement::class, mappedBy="userRev")
+     */
+    private $reversements;
+
+    public function __construct()
+    {
+        $this->reversements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -167,6 +179,36 @@ class Utilisateurs implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIdOrg(?Organismes $idOrg): self
     {
         $this->idOrg = $idOrg;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reversement>
+     */
+    public function getReversements(): Collection
+    {
+        return $this->reversements;
+    }
+
+    public function addReversement(Reversement $reversement): self
+    {
+        if (!$this->reversements->contains($reversement)) {
+            $this->reversements[] = $reversement;
+            $reversement->setUserRev($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReversement(Reversement $reversement): self
+    {
+        if ($this->reversements->removeElement($reversement)) {
+            // set the owning side to null (unless already changed)
+            if ($reversement->getUserRev() === $this) {
+                $reversement->setUserRev(null);
+            }
+        }
 
         return $this;
     }

@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add organisme{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="h2 text-success">Création d'un organisme</div>
+        <hr>
+        {% if app.session.flashBag.has('success') %}
+            <div class="alert alert-success">
+                {% for msg in app.session.flashBag.get('success') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-9">
+                    {{ form_row(form.libelleOrg) }}
+                </div>
+                <div class="col-3">{{ form_row(form.sigle) }}</div>
+            </div>
+            <div class="row">
+                <div class="col">{{ form_row(form.siege) }}</div>
+                <div class="col">{{ form_row(form.region) }}</div>
+                <div class="col">{{ form_row(form.ville) }}</div>
+                <div class="col">{{ form_row(form.quartier) }}</div>
+            </div>
+            <div class="row">
+                <div class="col">{{ form_row(form.email) }}</div>
+                <div class="col">{{ form_row(form.bp) }}</div>
+                <div class="col">{{ form_row(form.fax) }}</div>
+                <div class="col">{{ form_row(form.siteWeb) }}</div>
+            </div><div class="row">
+                <div class="col">{{ form_row(form.telephone1) }}</div>
+                <div class="col">{{ form_row(form.telephone2) }}</div>
+            </div>
+            <div class="alert alert-success clearfix">
+                <h3 class="alert-heading">Sauvegarder l'organisme</h3>
+                <p>
+                    Vous êtes sur le point de créer un nouvel organisme, 
+                    cliquez sur le bouton "Enregister" !
+                </p>
+                <button type="submit" class="btn btn-primary float-right">
+                    <i class="fas fa-check"></i>
+                    Enregistrer
+                </button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+    
+{% endblock %}

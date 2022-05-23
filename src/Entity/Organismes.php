@@ -2,13 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\OrganismesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\OrganismesRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=OrganismesRepository::class)
+ * @UniqueEntity(
+ *      fields = {"sigle"},
+ *      message = "Un autre organisme possède déjà le même sigle, merci de le modifier."
+ * )
  */
 class Organismes
 {
@@ -36,16 +42,21 @@ class Organismes
 
     /**
      * @ORM\Column(type="string", length=16, nullable=true)
+     * @Assert\Length(
+     *      min=9, max=9, minMessage="Le téléphone doit avoir 9 caractères")
      */
     private $telephone1;
 
     /**
      * @ORM\Column(type="string", length=16, nullable=true)
+     * @Assert\Length(
+     *      min=9, max=9, minMessage="Le téléphone doit avoir 9 caractères")
      */
     private $telephone2;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Assert\Email(message = "L'email '{{ value }}' n'est pas valide.")
      */
     private $email;
 

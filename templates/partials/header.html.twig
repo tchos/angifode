@@ -1,0 +1,125 @@
+{#
+<table style="width:100%" border = "0">
+    <tr>
+        <th><img src="{{ asset('asset/images/logo_minfi.jpg') }}" class=" d-block" width="60" height="60"> </th>
+        <th>
+            <div align="center">
+                <img src="{{ asset('asset/images/angifode.png') }}"  class=" d-block" width="60" height="60">
+            </div>
+        </th>
+        <th><img src="{{ asset('asset/images/logo_dgb.png') }}" class=" d-block" width="60" height="60"></th>
+    </tr>
+    <tr>
+        <td> </td>
+        <td><h4 class="pt-1 text-center">APPLICATION NATIONALE DE GESTION INFORMATIQUE DES FONCTIONNAIRES EN DETACHEMENT</h4></td>
+        <td> </td>
+    </tr>
+</table>
+#}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('asset/images/angifode.png') }}"  class=" d-block" width="45">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown me-4">
+                    <a class="nav-link active dropdown-toggle fs-5" data-bs-toggle="dropdown"
+                       href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-male" aria-hidden="true"></i>
+                        Agents Public</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ path('agent_new') }}">Nouveau détachement</a>
+                        <a class="dropdown-item" href="#">Liste des détachés</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown me-4">
+                    <a class="nav-link active dropdown-toggle fs-5" data-bs-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                        Organismes</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ path('create_organisme') }}">Créer un nouvel organisme</a>
+                        <a class="dropdown-item" href="{{ path('organisme_list') }}">Liste des organismes</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown me-4">
+                    <a class="nav-link active dropdown-toggle fs-5" data-bs-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                        Reversements</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown me-4">
+                    <a class="nav-link active dropdown-toggle fs-5" data-bs-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                        ESD</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown me-4">
+                    <a class="nav-link active dropdown-toggle fs-5" data-bs-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                        Statistiques</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active fs-5" href="#">
+                        <i class="fa fa-laptop" aria-hidden="true"></i>
+                        Guide</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if app.user %}
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountDropDownLink">
+                            <i class="fas fa-user-check"></i> #
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropDownLink">
+                            <a href="#" class="dropdown-item">Saisir acte</a>
+                            <a href="#" class="dropdown-item">Mes saisies</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">Modifier mot de passe</a>
+                            <a href="#" class="dropdown-item">Modifier mon profil</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ path('account_logout') }}" class="dropdown-item"
+                               id="myLinkToConfirm" data-confirm-title="Attention !"
+                               data-confirm-message="Etes-vous sûr de vouloir vous déconnectez ?">
+                                Déconnexion
+                            </a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link taille fs-5" href="#">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Connexion <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

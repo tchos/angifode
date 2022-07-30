@@ -2,14 +2,20 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>ANGIFODE - {% block title %}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         <link rel="stylesheet" href="{{ asset('asset/css/bootstrap.min.css') }}"/>
         <link rel="stylesheet" href="{{ asset('asset/css/all.min.css') }}"/>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        {# Inclusion du header dans le template de base  avec twig #}
+        {% include "partials/header.html.twig" %}
+
         {% block body %}{% endblock %}
+
+        {# Inclusion du footer dans le template de base avec twig #}
+        {% include "partials/footer.html.twig" %}
         {% block javascripts %}{% endblock %}
         <script src="{{ asset('asset/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('asset/js/all.min.js') }}"></script>

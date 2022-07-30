@@ -42,15 +42,21 @@ class Organismes
 
     /**
      * @ORM\Column(type="string", length=16, nullable=true)
-     * @Assert\Length(
-     *      min=9, max=9, minMessage="Le téléphone doit avoir 9 caractères")
+     * @Assert\Regex(
+     *     pattern     = "/^[0-9]{9}/",
+     *     match = true,
+     *     message="Le numéro de téléphone ne prends que 9 chiffres"
+     * )
      */
     private $telephone1;
 
     /**
      * @ORM\Column(type="string", length=16, nullable=true)
-     * @Assert\Length(
-     *      min=9, max=9, minMessage="Le téléphone doit avoir 9 caractères")
+     * @Assert\Regex(
+     *     pattern     = "/^[0-9]{9}/",
+     *     match = true,
+     *     message="Le numéro de téléphone ne prends que 9 chiffres"
+     * )
      */
     private $telephone2;
 
@@ -67,6 +73,9 @@ class Organismes
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(
+     *     message = "Vous devez obligatoirement renseigner la localité de l'organisme"
+     * )
      */
     private $quartier;
 
@@ -382,5 +391,11 @@ class Organismes
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return "(".$this->sigle.") - ".$this->libelleOrg;
     }
 }

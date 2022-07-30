@@ -35,7 +35,7 @@ class AgentDetache
     private $dateNaissance;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $dateIntegration;
 
@@ -108,6 +108,26 @@ class AgentDetache
      * @ORM\OneToMany(targetEntity=Avancement::class, mappedBy="agent")
      */
     private $avancements;
+
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    private $telephone;
+
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    private $typeActe;
+
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    private $typeActeDet;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $dateActeDet;
 
     public function __construct()
     {
@@ -381,6 +401,54 @@ class AgentDetache
                 $avancement->setAgent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getTypeActe(): ?string
+    {
+        return $this->typeActe;
+    }
+
+    public function setTypeActe(string $typeActe): self
+    {
+        $this->typeActe = $typeActe;
+
+        return $this;
+    }
+
+    public function getTypeActeDet(): ?string
+    {
+        return $this->typeActeDet;
+    }
+
+    public function setTypeActeDet(string $typeActeDet): self
+    {
+        $this->typeActeDet = $typeActeDet;
+
+        return $this;
+    }
+
+    public function getDateActeDet(): ?\DateTimeInterface
+    {
+        return $this->dateActeDet;
+    }
+
+    public function setDateActeDet(\DateTimeInterface $dateActeDet): self
+    {
+        $this->dateActeDet = $dateActeDet;
 
         return $this;
     }

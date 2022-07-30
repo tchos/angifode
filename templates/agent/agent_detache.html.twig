@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau détachement{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="h2 text-success">Saisie d'un nouveau détachement</div>
+        <hr>
+        {% if app.session.flashBag.has('success') %}
+            <div class="alert alert-success">
+                {% for msg in app.session.flashBag.get('success') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-5 me-3">
+                <fieldset>
+                    <legend>Information sur l'agent</legend>
+                    <div class="row">
+                        <div class="col-7">{{ form_row(form.matricule) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7">{{ form_row(form.noms) }}</div>
+                        <div class="col-5">{{ form_row(form.telephone) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ form_row(form.dateNaissance) }}</div>
+                        <div class="col">{{ form_row(form.dateIntegration) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ form_row(form.refActeInt) }}</div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-5 ms-3">
+                <fieldset>
+                    <legend>Information sur le détachement</legend>
+                    <div class="row">
+                        <div class="col">{{ form_row(form.typeActeDet) }}</div>
+                        <div class="col ">{{ form_row(form.refActeDet) }}</div>
+                        <div class="col">{{ form_row(form.dateActeDet) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ form_row(form.ministere) }}</div>
+                        <div class="col">{{ form_row(form.gradeDet) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ form_row(form.classeDet) }}</div>
+                        <div class="col">{{ form_row(form.echelonDet) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ form_row(form.dateDet) }}</div>
+                        <div class="col">{{ form_row(form.datePriseService) }}</div>
+                        <div class="col">{{ form_row(form.dateSuspension) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ form_row(form.organisme) }}</div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        {#
+        <div class="row">
+            <div class="col-9">
+                {{ form_row(form.libelleOrg) }}
+            </div>
+            <div class="col-3">{{ form_row(form.sigle) }}</div>
+        </div>
+        <div class="row">
+            <div class="col">{{ form_row(form.siege) }}</div>
+            <div class="col">{{ form_row(form.ville) }}</div>
+            <div class="col">{{ form_row(form.quartier) }}</div>
+        </div>
+        <div class="row">
+            <div class="col">{{ form_row(form.email) }}</div>
+            <div class="col">{{ form_row(form.bp) }}</div>
+            <div class="col">{{ form_row(form.siteWeb) }}</div>
+        </div><div class="row">
+            <div class="col">{{ form_row(form.telephone1) }}</div>
+            <div class="col">{{ form_row(form.telephone2) }}</div>
+            <div class="col">{{ form_row(form.fax) }}</div>
+        </div>
+        #}
+        <button type="submit" class="btn btn-success">
+            <i class="fas fa-check"></i>
+            Enregistrer
+        </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

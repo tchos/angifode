@@ -22,30 +22,23 @@
             </div>
             <div class="row">
                 <div class="col">{{ form_row(form.siege) }}</div>
-                <div class="col">{{ form_row(form.region) }}</div>
+                {# <div class="col">{{ form_row(form.region) }}</div> #}
                 <div class="col">{{ form_row(form.ville) }}</div>
                 <div class="col">{{ form_row(form.quartier) }}</div>
             </div>
             <div class="row">
                 <div class="col">{{ form_row(form.email) }}</div>
                 <div class="col">{{ form_row(form.bp) }}</div>
-                <div class="col">{{ form_row(form.fax) }}</div>
                 <div class="col">{{ form_row(form.siteWeb) }}</div>
             </div><div class="row">
                 <div class="col">{{ form_row(form.telephone1) }}</div>
                 <div class="col">{{ form_row(form.telephone2) }}</div>
+                <div class="col">{{ form_row(form.fax) }}</div>
             </div>
-            <div class="alert alert-success clearfix">
-                <h3 class="alert-heading">Sauvegarder l'organisme</h3>
-                <p>
-                    Vous êtes sur le point de créer un nouvel organisme, 
-                    cliquez sur le bouton "Enregister" !
-                </p>
-                <button type="submit" class="btn btn-primary float-right">
-                    <i class="fas fa-check"></i>
-                    Enregistrer
-                </button>
-            </div>
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-check"></i>
+                Enregistrer
+            </button>
         {{ form_end(form) }}
     </div>
     

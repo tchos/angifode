@@ -6,9 +6,11 @@ use App\Repository\AgentDetacheRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AgentDetacheRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class AgentDetache
 {
@@ -21,26 +23,45 @@ class AgentDetache
 
     /**
      * @ORM\Column(type="string", length=7)
+     * @Assert\Regex(
+     *      pattern="/(^[A-Z][0-9]{6}$)|(^[0-9]{5,6}[A-Z]$)/",
+     *      message="Le matricule {{ value }} n'est pas un matricule valide.")
      */
     private $matricule;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 64,
+     *      minMessage = "Le nom doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le nom doit avoir au maximum {{ limit }} caractères"
+     * )
+     * @Assert\Regex (
+     *     pattern="/([A-Z][A-Z0-9\-]*)/",
+     *     message="Le nom doit être en majuscule")
      */
     private $noms;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThan(propertyPath="dateIntegration",
+     *  message="La date de naissance ne peut être postérieure à la date d'intégration !")
      */
     private $dateNaissance;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThanOrEqual(propertyPath="dateDet",
+     *  message="La date d'intégration ne peut être postérieure à la date de détachement !")
      */
     private $dateIntegration;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex (
+     *     pattern="/[0-9]+\/[A-Z0-9]+/",
+     *     message="Mauvais format de la référence")
      */
     private $refActeInt;
 
@@ -51,16 +72,25 @@ class AgentDetache
 
     /**
      * @ORM\Column(type="string", length=2)
+     * @Assert\Regex (
+     *     pattern="/0[0-9]{1}|1[0-2]/",
+     *     message="Les échelons vont de 00 à 12")
      */
     private $echelonDet;
 
     /**
      * @ORM\Column(type="string", length=2)
+     * @Assert\Regex (
+     *     pattern="/[0-2EH]/",
+     *     message="0 à 2 ou E ou H")
      */
     private $classeDet;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex (
+     *     pattern="/[0-9]+\/[A-Z0-9]+/",
+     *     message="Mauvais format de la référence")
      */
     private $refActeDet;
 
@@ -71,11 +101,15 @@ class AgentDetache
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan(propertyPath="dateDet",
+     *  message="La date de suspension ne peut être antérieure à la date de détachement !")
      */
     private $dateSuspension;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan(propertyPath="dateDet",
+     *  message="La date de prise de service ne peut être antérieure à la date de détachement !")
      */
     private $datePriseService;
 
@@ -117,17 +151,36 @@ class AgentDetache
     /**
      * @ORM\Column(type="string", length=32)
      */
-    private $typeActe;
-
-    /**
-     * @ORM\Column(type="string", length=32)
-     */
     private $typeActeDet;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThanOrEqual(propertyPath="dateDet",
+     *  message="La date de signature de l'acte de détachement ne peut être antérieure à la date de détachement !")
      */
     private $dateActeDet;
+
+    /**
+     * CallBack appelé à chaque fois que l'on veut enregistrer un agent détaché pour
+     * calculer sa date de saisie et sa date de fin détachement. *
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function PrePersist()
+    {
+        if (empty($this->dateCreation)) {
+            $this->dateCreation = new \DateTime();
+        }
+        /** Par défaut la date de fin de détachement à
+         * l'enregistrement sera sous la forme 0000-00-00
+         * */
+        if (empty($this->dateFinDet)) {
+            $this->dateFinDet = new \DateTime(date("01/01/0001"));
+        }
+    }
 
     public function __construct()
     {
@@ -413,18 +466,6 @@ class AgentDetache
     public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
-
-        return $this;
-    }
-
-    public function getTypeActe(): ?string
-    {
-        return $this->typeActe;
-    }
-
-    public function setTypeActe(string $typeActe): self
-    {
-        $this->typeActe = $typeActe;
 
         return $this;
     }

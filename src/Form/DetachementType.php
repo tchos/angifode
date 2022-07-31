@@ -27,7 +27,8 @@ class DetachementType extends AbstractType
             ->add('noms', TextType::class,[
                 'label' => 'Noms de l\'agent',
                 'attr' => [
-                    'placeholder' => 'Ex: TUKO BENEDICTO PACIFICO'
+                    'placeholder' => 'Ex: TUKO BENEDICTO PACIFICO',
+                    'style' => 'text-transform:uppercase'
                 ]
             ])
             ->add('telephone', TelType::class,[
@@ -36,12 +37,18 @@ class DetachementType extends AbstractType
                     'placeholder' => 'Ex: 677777777'
                 ]
             ])
-            ->add('dateNaissance', DateType::class, ['widget' => 'single_text'])
-            ->add('dateIntegration', DateType::class, ['widget' => 'single_text'])
+            ->add('dateNaissance', DateType::class, [
+                'label' => 'Date de naissance',
+                'widget' => 'single_text',
+                ])
+            ->add('dateIntegration', DateType::class, [
+                'label' => 'Date d\'intégration',
+                'widget' => 'single_text'])
             ->add('refActeInt', TextType::class,[
-                'label' => 'Référence de l\'acte de détachement',
+                'label' => 'Référence de l\'acte d\'intégration',
                 'attr' => [
-                    'placeholder' => 'Ex: 000/SPM/DETACHEMENT'
+                    'placeholder' => 'Ex: 000/SPM/INT',
+                    'style' => 'text-transform:uppercase'
                 ]
             ])
             ->add('typeActeDet', ChoiceType::class,[
@@ -53,7 +60,9 @@ class DetachementType extends AbstractType
                     'Décision' => 'DECISION'
                 ]
             ])
-            ->add('dateActeDet', DateType::class, ['widget' => 'single_text'])
+            ->add('dateActeDet', DateType::class, [
+                'label' => 'Date de signature',
+                'widget' => 'single_text'])
             ->add('ministere', TextType::class,[
                 'label' => 'Ministère',
                 'attr' => [
@@ -78,11 +87,24 @@ class DetachementType extends AbstractType
                     'placeholder' => 'Ex: 1'
                 ]
             ])
-            ->add('refActeDet')
-                ->add('dateDet')
-            ->add('dateSuspension')
-            ->add('datePriseService')
+            ->add('refActeDet', TextType::class,[
+                'label' => 'Références de l\'acte',
+                'attr' => [
+                    'placeholder' => 'Ex: 1234/SPM/DET',
+                    'style' => 'text-transform:uppercase'
+                ]
+            ])
+            ->add('dateDet', DateType::class, [
+                'label' => 'Date de détachement',
+                'widget' => 'single_text'])
+            ->add('dateSuspension',DateType::class, [
+                'label' => 'Date de suspension solde',
+                'widget' => 'single_text'])
+            ->add('datePriseService', DateType::class, [
+                'label' => 'Prise de service organisme',
+                'widget' => 'single_text'])
             ->add('organisme', EntityType::class,[
+                'label' => 'Organisme de détachement',
                 'class' => Organismes::class,
                 'mapped' => false
             ])

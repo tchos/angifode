@@ -28,7 +28,6 @@ class DetachementType extends AbstractType
                 'label' => 'Noms de l\'agent',
                 'attr' => [
                     'placeholder' => 'Ex: TUKO BENEDICTO PACIFICO',
-                    'style' => 'text-transform:uppercase'
                 ]
             ])
             ->add('telephone', TelType::class,[
@@ -52,7 +51,7 @@ class DetachementType extends AbstractType
                 ]
             ])
             ->add('typeActeDet', ChoiceType::class,[
-                'label' => 'Type acte de détachement',
+                'label' => 'Type acte',
                 'choices' => [
                     'Arrêté' => 'ARRETE',
                     'Décret' => 'DECRET',
@@ -105,8 +104,7 @@ class DetachementType extends AbstractType
                 'widget' => 'single_text'])
             ->add('organisme', EntityType::class,[
                 'label' => 'Organisme de détachement',
-                'class' => Organismes::class,
-                'mapped' => false
+                'class' => Organismes::class
             ])
         ;
     }

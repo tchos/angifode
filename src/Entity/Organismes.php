@@ -27,11 +27,17 @@ class Organismes
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex (
+     *     pattern="/^([A-Z\s0-9\-])*$/",
+     *     message="Le libellé de l'organisme doit être en majuscule")
      */
     private $libelleOrg;
 
     /**
      * @ORM\Column(type="string", length=32, nullable=true)
+     * @Assert\Regex (
+     *     pattern="/^([A-Z\s0-9\-])*$/",
+     *     message="Le nom de la région doit être en majuscule")
      */
     private $region;
 
@@ -68,6 +74,9 @@ class Organismes
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex (
+     *     pattern="/^([A-Z\s0-9\-])*$/",
+     *     message="Le nom de la ville doit être en majuscule")
      */
     private $ville;
 
@@ -76,26 +85,39 @@ class Organismes
      * @Assert\NotBlank(
      *     message = "Vous devez obligatoirement renseigner la localité de l'organisme"
      * )
+     * @Assert\Regex (
+     *     pattern="/^([A-Z\s0-9\-])*$/",
+     *     message="Le nom du quartier doit être en majuscule")
      */
     private $quartier;
 
     /**
      * @ORM\Column(type="string", length=32)
+     * @Assert\Regex (
+     *     pattern="/^([A-Z\s0-9\-])*$/",
+     *     message="Le sigle doit être en majuscule")
      */
     private $sigle;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Assert\Regex (
+     *     pattern="/^([A-Z\s0-9\-])*$/",
+     *     message="Le nom du siège doit être en majuscule")
      */
     private $siege;
 
     /**
      * @ORM\Column(type="string", length=32, nullable=true)
+     * @Assert\Regex (
+     *     pattern="/^([A-Z\s0-9\-])*$/",
+     *     message="En majuscule svp.")
      */
     private $bp;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(message = "L'url '{{ value }}' n'est pas valide")
      */
     private $siteWeb;
 
@@ -110,21 +132,21 @@ class Organismes
     private $pointsFocaux;
 
     /**
-     * @ORM\ManyToMany(targetEntity=AgentDetache::class, mappedBy="organisme")
-     */
-    private $agentDetaches;
-
-    /**
      * @ORM\OneToMany(targetEntity=Reversement::class, mappedBy="organisme")
      */
     private $reversements;
+
+    /**
+     * @ORM\OneToMany(targetEntity=AgentDetache::class, mappedBy="organisme")
+     */
+    private $agentDetaches;
 
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
         $this->pointsFocaux = new ArrayCollection();
-        $this->agentDetaches = new ArrayCollection();
         $this->reversements = new ArrayCollection();
+        $this->agentDetaches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -337,33 +359,6 @@ class Organismes
     }
 
     /**
-     * @return Collection<int, AgentDetache>
-     */
-    public function getAgentDetaches(): Collection
-    {
-        return $this->agentDetaches;
-    }
-
-    public function addAgentDetach(AgentDetache $agentDetach): self
-    {
-        if (!$this->agentDetaches->contains($agentDetach)) {
-            $this->agentDetaches[] = $agentDetach;
-            $agentDetach->addOrganisme($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAgentDetach(AgentDetache $agentDetach): self
-    {
-        if ($this->agentDetaches->removeElement($agentDetach)) {
-            $agentDetach->removeOrganisme($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Reversement>
      */
     public function getReversements(): Collection
@@ -397,5 +392,35 @@ class Organismes
     {
         // TODO: Implement __toString() method.
         return "(".$this->sigle.") - ".$this->libelleOrg;
+    }
+
+    /**
+     * @return Collection<int, AgentDetache>
+     */
+    public function getAgentDetaches(): Collection
+    {
+        return $this->agentDetaches;
+    }
+
+    public function addAgentDetach(AgentDetache $agentDetach): self
+    {
+        if (!$this->agentDetaches->contains($agentDetach)) {
+            $this->agentDetaches[] = $agentDetach;
+            $agentDetach->setOrganisme($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAgentDetach(AgentDetache $agentDetach): self
+    {
+        if ($this->agentDetaches->removeElement($agentDetach)) {
+            // set the owning side to null (unless already changed)
+            if ($agentDetach->getOrganisme() === $this) {
+                $agentDetach->setOrganisme(null);
+            }
+        }
+
+        return $this;
     }
 }

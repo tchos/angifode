@@ -7,9 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=AgentDetacheRepository::class)
+ * @UniqueEntity(fields = {"matricule","organisme"},
+ *      message = "Agent dejà détaché dans la même structure")
  * @ORM\HasLifecycleCallbacks
  */
 class AgentDetache
@@ -38,7 +41,7 @@ class AgentDetache
      *      maxMessage = "Le nom doit avoir au maximum {{ limit }} caractères"
      * )
      * @Assert\Regex (
-     *     pattern="/([A-Z][A-Z0-9\-]*)/",
+     *     pattern="/^([A-Z\s0-9\-])*$/",
      *     message="Le nom doit être en majuscule")
      */
     private $noms;
@@ -47,6 +50,7 @@ class AgentDetache
      * @ORM\Column(type="date")
      * @Assert\LessThan(propertyPath="dateIntegration",
      *  message="La date de naissance ne peut être postérieure à la date d'intégration !")
+     * @Assert\LessThanOrEqual ("-18 years", message="L'agent ne peut avoir moins de 18 ans")
      */
     private $dateNaissance;
 
@@ -59,9 +63,9 @@ class AgentDetache
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Regex (
-     *     pattern="/[0-9]+\/[A-Z0-9]+/",
-     *     message="Mauvais format de la référence")
+     * @Assert\Regex (pattern="/[0-9]+(\/[A-Z0-9])+/", message="Mauvais format de la référence")
+     * @Assert\Expression ("this.getRefActeDet() != this.getRefActeInt()",
+     *     message="La référence d'intégration doit être de la référence de détachement")
      */
     private $refActeInt;
 
@@ -89,8 +93,10 @@ class AgentDetache
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Regex (
-     *     pattern="/[0-9]+\/[A-Z0-9]+/",
+     *     pattern="/[0-9]+(\/[A-Z0-9])+/",
      *     message="Mauvais format de la référence")
+     * @Assert\Expression ("this.getRefActeDet() != this.getRefActeInt()",
+     *     message="La référence d'intégration doit être de la référence de détachement")
      */
     private $refActeDet;
 
@@ -129,11 +135,6 @@ class AgentDetache
     private $dateCreation;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Organismes::class, inversedBy="agentDetaches")
-     */
-    private $organisme;
-
-    /**
      * @ORM\OneToMany(targetEntity=Cotisation::class, mappedBy="agent")
      */
     private $cotisations;
@@ -161,6 +162,12 @@ class AgentDetache
     private $dateActeDet;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Organismes::class, inversedBy="agentDetaches")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organisme;
+
+    /**
      * CallBack appelé à chaque fois que l'on veut enregistrer un agent détaché pour
      * calculer sa date de saisie et sa date de fin détachement. *
      *
@@ -184,7 +191,6 @@ class AgentDetache
 
     public function __construct()
     {
-        $this->organisme = new ArrayCollection();
         $this->cotisations = new ArrayCollection();
         $this->avancements = new ArrayCollection();
     }
@@ -375,30 +381,6 @@ class AgentDetache
     }
 
     /**
-     * @return Collection<int, Organismes>
-     */
-    public function getOrganisme(): Collection
-    {
-        return $this->organisme;
-    }
-
-    public function addOrganisme(Organismes $organisme): self
-    {
-        if (!$this->organisme->contains($organisme)) {
-            $this->organisme[] = $organisme;
-        }
-
-        return $this;
-    }
-
-    public function removeOrganisme(Organismes $organisme): self
-    {
-        $this->organisme->removeElement($organisme);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Cotisation>
      */
     public function getCotisations(): Collection
@@ -490,6 +472,18 @@ class AgentDetache
     public function setDateActeDet(\DateTimeInterface $dateActeDet): self
     {
         $this->dateActeDet = $dateActeDet;
+
+        return $this;
+    }
+
+    public function getOrganisme(): ?Organismes
+    {
+        return $this->organisme;
+    }
+
+    public function setOrganisme(?Organismes $organisme): self
+    {
+        $this->organisme = $organisme;
 
         return $this;
     }

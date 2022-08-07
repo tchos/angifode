@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des agents détachés{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="text-center p-4">LISTE DES AGENTS DETACHES </h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="agentsdetaches" class="table table-striped table-hover mt-4">
+                        <thead>
+                            <tr class="table-dark">
+                                <th>ID</th>
+                                <th>MATRICULE</th>
+                                <th>NOMS</th>
+                                <th>ORGANISME</th>
+                                <th>DETACHEMENT</th>
+                                <th class="text-end">ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% set i = 1 %}
+                        {% for agentDetache in listeAgentDetaches %}
+                            <tr>
+                                <td>{{ i }}</td>
+                                <td>{{ agentDetache.matricule }}</td>
+                                <td>{{ agentDetache.noms }}</td>
+                                <td>{{ agentDetache.organisme.sigle }}</td>
+                                <td>{{ agentDetache.dateDet | format_datetime('full', 'none', locale='fr') }}</td>
+                                <td class="text-end">
+                                    <a title="Modifier le détachement" href="{{ path('agent_detache_edit', {'id': agentDetache.id}) }}">
+                                        <i class="fas fa-edit"></i><span class="ms-4"></span></a>
+                                    <a title="Supprimer le détachement" href="{{ path('agent_detache_edit', {'id': agentDetache.id}) }}">
+                                        <i class="fa fa-window-close text-danger"></i><span class="ms-4"></span></a>
+                                    <a title="Détails du détachement" href="{{ path('agent_detache_edit', {'id': agentDetache.id}) }}">
+                                        <i class="fas fa-info-circle text-success"></i><span class="ms-4"></span></a>
+                                    <a title="Mettre fin au détachement" href="{{ path('agent_detache_edit', {'id': agentDetache.id}) }}">
+                                        <i class="fas fa-delete-left text-warning"></i><span class="ms-4"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('asset/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('asset/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('asset/js/popper.min.js') }}"></script>
+    <script src="{{ asset('asset/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('asset/js/dataTables.bootstrap4.min.js') }}"></script>
+
+    <script src="{{ asset('asset/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('asset/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('asset/js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('asset/js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('asset/js/buttons.html5.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            var azemDataTable = $('#agentsdetaches').DataTable({
+                dom: 'Blfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        text:      '<i class="fas fa-copy" style="font-size:25px;color:blue;"></i>',
+                    },
+                    {
+                        extend: 'pdf',
+                        text:      '<i class="fas fa-file-pdf" style="font-size:25px;color:red;"></i>',
+                        exportOptions: {
+                            columns: [0,1,2] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        text:      '<i class="fas fa-file-alt" style="font-size:25px;color:black;"></i>',
+                    },
+                    {
+                        extend: 'excel',
+                        text:      '<i class="fas fa-file-excel" style="font-size:25px;color:darkgreen;"></i>',
+                    }
+                ]
+            });
+        });
+    </script>
+{% endblock %}

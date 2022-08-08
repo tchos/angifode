@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CONNEXION{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('asset/css/login.css') }}"/>
+{% endblock %}
+{% block body %}
+    <div class="container mx-5">
+        <div class="row">
+            <div class="col-md-3">
+                &nbsp;
+            </div>
+            <div class="col-md-6">
+                <section class="vh-75">
+                    <div class="align-items-center mh-25 mb-5">
+                        <img src="{{ asset('asset/images/angifode.png') }}" width="170px"
+                             class="rounded mx-auto d-block" alt="Sample image">
+                    </div>
+                    <form method="post">
+                        <div class="row container d-flex align-items-center justify-content-center" >
+                            <div style="width: 95%; height: 20px; border-bottom: 1px solid black; text-align: center">
+                              <span style="font-size: 23px; background-color: #000; padding: 0 10px; color: white">
+                                Connectez-vous !
+                              </span>
+                            </div>
+                            <div class="row mt-4">
+                                {% if error %}
+                                    <div class="alert alert-dismissible alert-danger">
+                                        <strong>Erreur de connexion ! </strong>
+                                        Nom d'utilisateur ou mot de passe incorrect.
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="row container d-flex align-items-center justify-content-center">
+                                <div class="row form-group mt-4">
+                                    <label for="inputUsername"><i class="fas fa-user-alt"></i>  Nom d'utilisateur</label>
+                                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
+                                           class="form-control" autocomplete="username" required autofocus
+                                        placeholder="Entrer votre nom d'utilisateur">
+                                </div>
+                                <div class="row form-group mt-4">
+                                    <label for="inputPassword"><i class="fas fa-unlock-alt"></i>  Mot de passe</label>
+                                    <input type="password" name="password" id="inputPassword" class="form-control"
+                                           autocomplete="current-password" required
+                                           placeholder="Entrer votre mot de passe">
+                                </div>
+                                <input type="hidden" name="_csrf_token"
+                                       value="{{ csrf_token('authenticate') }}"
+                                >
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="row mt-5">
+                                    <button class="btn btn-lg btn-success" type="submit">
+                                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                        Connexion
+                                    </button>
+                                    <p class="fw-lighter mt-4 pt-1 mb-0 text-center">
+                                        Vous n'avez pas de compte ? Veuillez contacter la MINFI ∕ DDPP.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}

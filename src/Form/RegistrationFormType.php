@@ -21,7 +21,12 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username')
+            ->add('username', TextType::class,[
+                'label' => 'Nom d\'utilisateur',
+                'attr' => [
+                    'placeholder' => 'Ex: benedicto'
+                ]
+            ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les deux mots de passe ne correspondent pas.',
@@ -35,7 +40,7 @@ class RegistrationFormType extends AbstractType
             ->add('fullName', TextType::class,[
                 'label' => 'Entrer le nom complet de l\'utilisateur',
                 'attr' => [
-                    'placeholder' => "JEAN BERNARD AKA"
+                    'placeholder' => "TUKO BENEDICTO PACIFICO"
                 ]
             ])
             ->add('activation', ChoiceType::class,[

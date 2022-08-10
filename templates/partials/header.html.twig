@@ -91,31 +91,28 @@
                         Guide</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto me-5">
                 {% if app.user %}
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountDropDownLink">
-                            <i class="fas fa-user-check"></i> #
+                        <a class="nav-link active dropdown-toggle fw-bolder" data-bs-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-check"></i> {{ app.user.fullName }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropDownLink">
-                            <a href="#" class="dropdown-item">Saisir acte</a>
-                            <a href="#" class="dropdown-item">Mes saisies</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">Modifier mot de passe</a>
+                        <div class="dropdown-menu" style="">
+                            <a href="{{ path("password_edit") }}" class="dropdown-item">Modifier mot de passe</a>
                             <a href="#" class="dropdown-item">Modifier mon profil</a>
                             <div class="dropdown-divider"></div>
                             <a href="{{ path('app_logout') }}" class="dropdown-item"
                                id="myLinkToConfirm" data-confirm-title="Attention !"
                                data-confirm-message="Etes-vous sûr de vouloir vous déconnectez ?">
-                                Déconnexion
+                                Se déconnecter
                             </a>
                         </div>
                     </li>
                 {% else %}
                     <li class="nav-item active">
-                        <a class="nav-link taille fs-5" href="#">
+                        <a class="nav-link active taille fs-5 fw-bolder" href="{{ path('app_login') }}">
                             <i class="fas fa-sign-in-alt"></i>
-                            Connexion <span class="sr-only">(current)</span>
+                            Se connecter <span class="sr-only">(current)</span>
                         </a>
                     </li>
                 {% endif %}

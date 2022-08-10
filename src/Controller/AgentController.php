@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\AgentDetache;
+use App\Entity\Historique;
 use App\Form\DetachementType;
 use App\Repository\AgentDetacheRepository;
 use App\Repository\OrganismesRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +19,14 @@ class AgentController extends AbstractController
 {
     # Enregistrer un nouveau détachement
     #[Route('/agent', name: 'agent_new')]
+    #[IsGranted("ROLE_USER")]
     public function detacher(EntityManagerInterface $manager, Request $request): Response
     {
+        // utilisateur connecté
+        $user = $this->getUser()->getUsername();
+        // pour l'historisation de l'action
+        $history = new Historique();
+
         //entité AgentDetache à associer au formulaire de creation d'un nouveau détachement
         $detache = new AgentDetache();
 
@@ -42,8 +50,15 @@ class AgentController extends AbstractController
                 // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
                 $form->get('dateIntegration')->addError(new FormError("Le détaché ne peut être intégré avant 17 ans !"));
             }else {
+                $history->setTypeAction("CREATE")
+                    ->setAuteur($user)
+                    ->setNature("AGENT_DETACHE")
+                    ->setClef($form->get('matricule')->getData())
+                    ->setDateAction(new \DateTime())
+                ;
                 // Persistence de l'entité AgentDetache
                 $manager->persist($detache);
+                $manager->persist($history);
                 $manager->flush();
 
                 // Alerte succès de l'enregistrement de l'acte de décès
@@ -59,9 +74,15 @@ class AgentController extends AbstractController
 
     # Apporter des modifications à un détachement
     #[Route('/agent/{id}/edit', name: 'agent_detache_edit')]
+    #[IsGranted("ROLE_USER")]
     public function update (EntityManagerInterface $manager, Request $request,
                              AgentDetache $detache): Response
     {
+        // utilisateur connecté
+        $user = $this->getUser()->getUsername();
+        // pour l'historisation de l'action
+        $history = new Historique();
+
         // constructeur de formulaire de creation d'un nouveau détachement
         $form = $this->createForm(DetachementType::class, $detache);
 
@@ -81,8 +102,15 @@ class AgentController extends AbstractController
                 // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
                 $form->get('dateIntegration')->addError(new FormError("Le détaché ne peut être intégré avant 17 ans !"));
             }else {
+                $history->setTypeAction("UPDATE")
+                    ->setAuteur($user)
+                    ->setNature("AGENT_DETACHE")
+                    ->setClef($form->get('matricule')->getData())
+                    ->setDateAction(new \DateTime())
+                ;
                 // Persistence de l'entité AgentDetache
                 $manager->persist($detache);
+                $manager->persist($history);
                 $manager->flush();
 
                 // Alerte succès de l'enregistrement de l'acte de décès

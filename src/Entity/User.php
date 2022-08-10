@@ -37,7 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\NotBlank (message="Veuillez entrer un mot de passe")
-     * @Assert\Length(min = 6, minMessage = 'Votre mot de passe doit avoir au minimum {{ limit }} caractères')
+     * @Assert\Length(min = 6, minMessage = "Votre mot de passe doit avoir au minimum '{{ limit }}' caractères")
      */
     private $password;
 
@@ -71,7 +71,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * prendre automatiquement sa date de création du compte .
      *
      * @ORM\PrePersist
-     * @ORM\PreUpdate
      *
      * @return void
      */
@@ -81,6 +80,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->registrationDate = new \DateTimeImmutable();
         }
 
+        $this->lastVisitDate = new \DateTime();
+    }
+
+    /**
+     * CallBack appelé à chaque fois que l'on veut mettre à jour un user pour
+     * prendre automatiquement sa date de dernière visite du compte .
+     *
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function  PreUpdate()
+    {
         $this->lastVisitDate = new \DateTime();
     }
 

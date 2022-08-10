@@ -3,16 +3,22 @@
 {% block title %}Création d'un compte{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="container">
+    <div class="h2 text-success">Créer un nouvel utilisateur</div>
+    <hr>
+    <div class="row-cols-2 justify-content-center d-flex align-items-center">
+        {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.username) }}
+            {{ form_row(registrationForm.password, {
+                label: 'Password'
+            }) }}
+            {{ form_row(registrationForm.fullName) }}
+        {{ form_row(registrationForm.activation) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.password, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.fullName) }}
-    {{ form_row(registrationForm.activation) }}
-
-        <button type="submit" class="btn">Créer le compte</button>
-    {{ form_end(registrationForm) }}
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                Créer le compte
+            </button>
+        {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

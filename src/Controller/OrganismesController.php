@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Historique;
 use App\Entity\Organismes;
 use App\Form\OrganismesType;
 use App\Repository\OrganismesRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrganismesController extends AbstractController
 {
     #[Route('/organisme', name: 'create_organisme')]
+    #[IsGranted("ROLE_USER")]
     public function index(EntityManagerInterface $manager, Request $request): Response
     {
+        // utilisateur connecté
+        $user = $this->getUser()->getUsername();
+        // pour l'historisation de l'action
+        $history = new Historique();
         //entité organisme à associer au formulaire de creation d'un organisme
         $organisme = new Organismes();
 
@@ -31,8 +38,15 @@ class OrganismesController extends AbstractController
          */
         if($form->isSubmitted() && $form->isValid())
         {
-            // Persistence de l'entité Organismes
+            $history->setTypeAction("CREATE")
+                    ->setAuteur($user)
+                    ->setNature("ORGANISME")
+                    ->setClef($form->get('sigle')->getData())
+                    ->setDateAction(new \DateTime())
+            ;
+            // Persistence de l'entité Organismes et Historique
             $manager->persist($organisme);
+            $manager->persist($history);
             $manager->flush();
 
             // Alerte succès de l'enregistrement de l'acte de décès
@@ -56,8 +70,14 @@ class OrganismesController extends AbstractController
      * @param Organismes $organisme
      * @return Response
      */
+    #[IsGranted("ROLE_USER")]
     public function edit(EntityManagerInterface $manager, Request $request, Organismes $organisme): Response
     {
+        // utilisateur connecté
+        $user = $this->getUser()->getUsername();
+        // pour l'historisation de l'action
+        $history = new Historique();
+
         // constructeur de formulaire de saisie des actes de décès
         $form = $this->createForm(OrganismesType::class, $organisme);
 
@@ -70,8 +90,15 @@ class OrganismesController extends AbstractController
          */
         if($form->isSubmitted() && $form->isValid())
         {
+            $history->setTypeAction("UPDATE")
+                ->setAuteur($user)
+                ->setNature("ORGANISME")
+                ->setClef($form->get('sigle')->getData())
+                ->setDateAction(new \DateTime())
+            ;
             // Persistence de l'entité Organismes
             $manager->persist($organisme);
+            $manager->persist($history);
             $manager->flush();
 
             // Alerte succès de l'enregistrement de l'acte de décès
@@ -96,6 +123,7 @@ class OrganismesController extends AbstractController
      * @param Organismes $organisme
      * @return Response
      */
+    #[IsGranted("ROLE_USER")]
     public function list(EntityManagerInterface $manager, Request $request, OrganismesRepository $repos): Response
     {
         $listeOrganismes = $repos->findAll();

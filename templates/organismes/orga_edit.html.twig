@@ -4,41 +4,37 @@
 
 {% block body %}
     <div class="container">
-        <div class="h2 text-success">Modifier l'organisme {{ organisme.sigle }}</div>
+        <div class="h4 text-success">Modifier l'organisme {{ organisme.sigle }}</div>
+        {% for message in app.session.flashBag.get('warning') %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
         <hr>
-        {% if app.session.flashBag.has('warning') %}
-            <div class="alert alert-warning">
-                {% for msg in app.session.flashBag.get('warning') %}
-                    {{ msg }}
-                {% endfor %}
-            </div>
-        {% endif %}
         {{ form_start(form) }}
-        <div class="row">
-            <div class="col-9">
-                {{ form_row(form.libelleOrg) }}
+            <div class="row">
+                <div class="col-9">
+                    {{ form_row(form.libelleOrg) }}
+                </div>
+                <div class="col-3">{{ form_row(form.sigle) }}</div>
             </div>
-            <div class="col-3">{{ form_row(form.sigle) }}</div>
-        </div>
-        <div class="row">
-            <div class="col">{{ form_row(form.siege) }}</div>
-            {# <div class="col">{{ form_row(form.region) }}</div> #}
-            <div class="col">{{ form_row(form.ville) }}</div>
-            <div class="col">{{ form_row(form.quartier) }}</div>
-        </div>
-        <div class="row">
-            <div class="col">{{ form_row(form.email) }}</div>
-            <div class="col">{{ form_row(form.bp) }}</div>
-            <div class="col">{{ form_row(form.siteWeb) }}</div>
-        </div><div class="row">
-            <div class="col">{{ form_row(form.telephone1) }}</div>
-            <div class="col">{{ form_row(form.telephone2) }}</div>
-            <div class="col">{{ form_row(form.fax) }}</div>
-        </div>
-        <button type="submit" class="btn btn-success">
-            <i class="fas fa-check"></i>
-            Enregistrer
-        </button>
+            <div class="row">
+                <div class="col">{{ form_row(form.siege) }}</div>
+                {# <div class="col">{{ form_row(form.region) }}</div> #}
+                <div class="col">{{ form_row(form.ville) }}</div>
+                <div class="col">{{ form_row(form.quartier) }}</div>
+            </div>
+            <div class="row">
+                <div class="col">{{ form_row(form.email) }}</div>
+                <div class="col">{{ form_row(form.bp) }}</div>
+                <div class="col">{{ form_row(form.siteWeb) }}</div>
+            </div><div class="row">
+                <div class="col">{{ form_row(form.telephone1) }}</div>
+                <div class="col">{{ form_row(form.telephone2) }}</div>
+                <div class="col">{{ form_row(form.fax) }}</div>
+            </div>
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-check"></i>
+                Enregistrer
+            </button>
         {{ form_end(form) }}
     </div>
 

@@ -4,38 +4,34 @@
 
 {% block body %}
     <div class="container">
-        <div class="h2 text-success">Création d'un organisme</div>
+        <div class="h4 text-success">Création d'un organisme</div>
+        {% for message in app.session.flashBag.get('success') %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
         <hr>
-        {% if app.session.flashBag.has('primary') %}
-            <div class="alert alert-success">
-                {% for msg in app.session.flashBag.get('primary') %}
-                    {{ msg }}
-                {% endfor %}
-            </div>
-        {% endif %}
         {{ form_start(form) }}
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col-9">
                     {{ form_row(form.libelleOrg) }}
                 </div>
                 <div class="col-3">{{ form_row(form.sigle) }}</div>
             </div>
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col">{{ form_row(form.siege) }}</div>
                 {# <div class="col">{{ form_row(form.region) }}</div> #}
                 <div class="col">{{ form_row(form.ville) }}</div>
                 <div class="col">{{ form_row(form.quartier) }}</div>
             </div>
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col">{{ form_row(form.email) }}</div>
                 <div class="col">{{ form_row(form.bp) }}</div>
                 <div class="col">{{ form_row(form.siteWeb) }}</div>
-            </div><div class="row">
+            </div><div class="row mt-4">
                 <div class="col">{{ form_row(form.telephone1) }}</div>
                 <div class="col">{{ form_row(form.telephone2) }}</div>
                 <div class="col">{{ form_row(form.fax) }}</div>
             </div>
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success mt-4">
                 <i class="fas fa-check"></i>
                 Enregistrer
             </button>

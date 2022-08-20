@@ -22,6 +22,9 @@ class AgentController extends AbstractController
     #[IsGranted("ROLE_USER")]
     public function detacher(EntityManagerInterface $manager, Request $request): Response
     {
+        $msg = null;
+        $good = null;
+
         // utilisateur connecté
         $user = $this->getUser()->getUsername();
         // pour l'historisation de l'action
@@ -61,8 +64,8 @@ class AgentController extends AbstractController
                 $manager->persist($history);
                 $manager->flush();
 
-                // Alerte succès de l'enregistrement de l'acte de décès
-                $this->addFlash("primary", "Nouveau détachement enregistré avec succès !!!");
+                // Alerte succès de l'enregistrement d'un nouveau détachement
+                $this->addFlash("success","Le nouveau détachement a été enregistré avec succès !!!");
 
                 return $this->redirectToRoute('agent_new');
             }
@@ -113,8 +116,8 @@ class AgentController extends AbstractController
                 $manager->persist($history);
                 $manager->flush();
 
-                // Alerte succès de l'enregistrement de l'acte de décès
-                $this->addFlash("primary", "Nouveau détachement enregistré avec succès !!!");
+                // Alerte succès de la mise à jour du détachement
+                $this->addFlash("warning","Les modifications apportées au détachement ont été enregistrés avec succès !!!");
 
                 return $this->redirectToRoute('agent_new');
             }

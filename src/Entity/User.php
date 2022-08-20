@@ -75,7 +75,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function PrePersist()
     {
-        if (empty($this->dateCreation)) {
+        if (empty($this->registrationDate)) {
             $this->registrationDate = new \DateTimeImmutable();
         }
 

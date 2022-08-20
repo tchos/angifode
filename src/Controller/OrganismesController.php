@@ -49,14 +49,14 @@ class OrganismesController extends AbstractController
             $manager->persist($history);
             $manager->flush();
 
-            // Alerte succès de l'enregistrement de l'acte de décès
-            $this->addFlash("primary", "Organisme créé avec succès !");
+            // Alerte succès de l'enregistrement d'un nouvel organisme
+            $this->addFlash("success", "Organisme créé avec succès !");
 
             return $this->redirectToRoute('create_organisme');
         }
 
         return $this->render('organismes/orga_add.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
@@ -101,7 +101,7 @@ class OrganismesController extends AbstractController
             $manager->persist($history);
             $manager->flush();
 
-            // Alerte succès de l'enregistrement de l'acte de décès
+            // Alerte succès de la mise à jour des informations sur un organisme
             $this->addFlash("warning", "Organisme modifié avec succès !");
 
             return $this->redirectToRoute('organisme_list');

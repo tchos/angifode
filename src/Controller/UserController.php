@@ -49,8 +49,6 @@ class UserController extends AbstractController
                           UserRepository $repos, Request $request): Response
     {
         $user = $this->getUser();
-        $msg = null;
-        $good = null;
 
         $form = $this->createForm(UpdatePasswordType::class, $user);
         $form->handleRequest($request);
@@ -69,22 +67,18 @@ class UserController extends AbstractController
                 $manager->flush();
 
                 // Notification du mot de passe modifié
-                $msg = "Mot de passe modifié avec succès !!!";
-                $good = "success";
+                $this->addFlash("success", "Mot de passe modifié avec succès !!!");
 
                 // Redirection vers la page de connexion
                 return $this->redirectToRoute('app_logout');
             }else{
                 // Notification du mot de passe modifié
-                $msg = "Votre ancien mot de passe n'est pas valide !!!";
-                $good = "danger";
+                $this->addFlash("danger", "Votre ancien mot de passe n'est pas valide !!!");
             }
         }
 
         return $this->render('security/password_edit.html.twig', [
-            'form' => $form->createView(),
-            'msg' => $msg,
-            'good' => $good
+            'form' => $form->createView()
         ]);
     }
 }

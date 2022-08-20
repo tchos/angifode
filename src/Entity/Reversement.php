@@ -5,10 +5,12 @@ namespace App\Entity;
 use App\Repository\ReversementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ReversementRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Reversement
 {
@@ -31,11 +33,14 @@ class Reversement
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan (propertyPath="dateFinRev",
+     *  message="Cette date doit être postérieure aux dates de l'intervalle de reversement !")
      */
     private $dateTitre;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\LessThan ( value = 1000000000, message = "Le montant de reversement ne doit pas dépasser 1 milliard" )
      */
     private $montantRev;
 
@@ -46,6 +51,8 @@ class Reversement
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan (propertyPath="dateDebRev",
+     *  message="Cette date doit être postérieure à la date de début de l'intervalle de reversement !")
      */
     private $dateFinRev;
 
@@ -65,9 +72,25 @@ class Reversement
     private $dateRev;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Utilisateurs::class, inversedBy="reversements")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reversements")
      */
     private $userRev;
+
+    /**
+     * CallBack appelé à chaque fois que l'on veut enregistrer un user pour
+     * prendre automatiquement sa date de création du compte .
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function PrePersist()
+    {
+        if (empty($this->dateRev)) {
+            $this->dateRev = new \DateTimeImmutable();
+        }
+    }
 
     /**
      * @ORM\OneToMany(targetEntity=Cotisation::class, mappedBy="reversement")
@@ -192,12 +215,12 @@ class Reversement
         return $this;
     }
 
-    public function getUserRev(): ?Utilisateurs
+    public function getUserRev(): ?User
     {
         return $this->userRev;
     }
 
-    public function setUserRev(?Utilisateurs $userRev): self
+    public function setUserRev(?User $userRev): self
     {
         $this->userRev = $userRev;
 

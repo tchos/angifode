@@ -6,7 +6,7 @@
     <div class="container">
         <div class="h4 text-success">Apporter des modification sur un détachement</div>
         {% for message in app.session.flashBag.get('warning') %}
-            <div class="alert alert-info">{{ message }}</div>
+            <div class="alert alert-warning">{{ message }}</div>
         {% endfor %}
         <hr>
         {{ form_start(form) }}

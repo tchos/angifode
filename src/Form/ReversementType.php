@@ -40,6 +40,7 @@ class ReversementType extends AbstractType
             ])
             ->add('montantRev', MoneyType::class,[
                 'label' => 'Montant du reversement',
+                'currency' => 'CFA',
                 'attr' => [
                     'placeholder' => 'Ex: 10000000'
                 ]

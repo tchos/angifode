@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier reversement{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="h4 text-success">
+            Modification du reversement du {{ reversement.typeRev }} N° {{ reversement.refTitre }} de {{ reversement.organisme.sigle }}
+        </div>
+        {% for message in app.session.flashBag.get('warning') %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+        <hr>
+        {{ form_start(form) }}
+        <div class="row mt-4">
+            <div class="col">{{ form_row(form.typeRev) }}</div>
+            <div class="col">{{ form_row(form.refTitre) }}</div>
+            <div class="col">{{ form_row(form.dateTitre) }}</div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">{{ form_row(form.montantRev) }}</div>
+            <div class="col">{{ form_row(form.dateDebRev) }}</div>
+            <div class="col">{{ form_row(form.dateFinRev) }}</div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">{{ form_row(form.preuveRev) }}</div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">{{ form_row(form.organisme) }}</div>
+        </div>
+        <button type="submit" class="btn btn-success mt-4">
+            <i class="fas fa-check"></i>
+            Enregistrer
+        </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -8,7 +8,11 @@
 
 {% block body %}
     <div class="container">
-        <h3 class="text-center p-4">LISTE DES AGENTS DETACHES </h3>
+        <h3 class="text-center">LISTE DES AGENTS DETACHES </h3>
+        {% for message in app.session.flashBag.get('warning') %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+        <hr>
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">

@@ -134,7 +134,7 @@ class AgentController extends AbstractController
     public function list(EntityManagerInterface $manager, Request $request, AgentDetacheRepository $repos): Response
     {
         $listeAgentDetaches = $repos->findAll();
-        #dd($listeAgentDetaches);
+
         return $this->render('agent/agent_detache_list.html.twig',[
             'listeAgentDetaches' => $listeAgentDetaches
         ]);

@@ -21,12 +21,12 @@ class ReversementController extends AbstractController
 {
     #[Route('/reversement', name: 'reversement_new')]
     #[IsGranted("ROLE_USER")]
-    public function index(EntityManagerInterface $manager, Request $request, SluggerInterface $slugger): Response
+    public function create_reversement(EntityManagerInterface $manager, Request $request, SluggerInterface $slugger): Response
     {
         // utilisateur connecté
         $user = $this->getUser();
         // pour l'historisation de l'action
-        $history = new Historique();
+        $historique = new Historique();
         // Variable que nous allons utiliser pour enregistrer un nouveau reversement
         $reversement = new Reversement();
 
@@ -53,9 +53,6 @@ class ReversementController extends AbstractController
             // this condition is needed because the 'preuveRev' field is not required
             // so the PDF file must be processed only when a file is uploaded
             if ($preuveRev) {
-                $originalFilename = pathinfo($preuveRev->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $sigle . '-' . $datereversement . '-' . uniqid() . '.' . $preuveRev->guessExtension();
 
                 // 'preuve_reversement_directory' = Chemin par défaut configuré dans le fichier service.yaml
@@ -79,21 +76,26 @@ class ReversementController extends AbstractController
                 $reversement->setPreuveRev($newFilename)
                             ->setUserRev($user);
 
-                $history->setTypeAction("CREATE")
+                $historique->setTypeAction("CREATE")
                         ->setAuteur($user->getUsername())
                         ->setNature("REVERSEMENT")
                         ->setClef($form->get('refTitre')->getData())
                         ->setDateAction(new \DateTimeImmutable());
 
+                //$agentsDetaches = $reversement->getOrganisme()->getAgentDetaches()->getValues();
+                //dd($agentsDetaches);
+
                 // Persistence de l'entité Organismes et Historique
                 $manager->persist($reversement);
-                $manager->persist($history);
+                $manager->persist($historique);
                 $manager->flush();
 
                 // Alerte succès de l'enregistrement d'un reversement
                 $this->addFlash("success","Le reversement a été enregistré avec succès !!!");
 
-                return $this->redirectToRoute('reversement_new');
+                return $this->redirectToRoute('cotisation_new', [
+                    'reversement' => $reversement->getId(),
+                ]);
             }
         }
 

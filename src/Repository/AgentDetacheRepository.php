@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\AgentDetache;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,9 +19,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AgentDetacheRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, AgentDetache::class);
+        $this->manager = $manager;
     }
 
     /**
@@ -45,6 +48,25 @@ class AgentDetacheRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    /**
+     * Retourne la liste des agents pour lesquels on a pas encore cotisé
+     */
+    public function findListeACotiser($reversement)
+    {
+        return $this->manager->createQuery(
+            "SELECT a.id, CONCAT(a.noms,' - (', a.matricule,')') as nom
+                FROM App\Entity\AgentDetache a
+                WHERE a.id NOT IN ( SELECT ad.id
+                                FROM App\Entity\Cotisation c
+                                JOIN c.agent ad
+                                JOIN c.reversement r
+                                WHERE r = :reversement )
+                ORDER BY nom"
+        )
+            ->setParameter('reversement', $reversement)
+            ->getResult();
     }
 
     // /**

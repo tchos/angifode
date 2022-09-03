@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle cotisation{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="h4 text-success">
+            Modification du montant de la cotisation de {{ agent }} liée au reversement N° {{ reversement.refTitre }}
+        </div>
+        {% for message in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        <hr>
+        <div class="row">
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    ORGANISME :
+                    <span class="badge bg-dark rounded-pill">{{ reversement.organisme.sigle }}</span>
+                </li>
+            </div>
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    PERIODE :
+                    <span class="badge bg-dark rounded-pill">Du
+                        {{ reversement.dateDebRev | format_datetime('short', 'none', locale='fr') }} au
+                        {{ reversement.dateFinRev | format_datetime('short', 'none', locale='fr') }}
+                    </span>
+                </li>
+            </div>
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    MONTANT :
+                    <span class="badge bg-dark rounded-pill">
+                        {{ reversement.montantRev | number_format(0,'.',' ')}} FCFA
+                    </span>
+                </li>
+            </div>
+            <div class="col">
+                {% set montantReversement = reversement.montantRev %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    GAP :
+                    <span class="badge bg-danger rounded-pill">
+                        {{ (montantReversement - totalCotisation) | number_format(0,'.',' ')}} FCFA
+                    </span>
+                </li>
+            </div>
+        </div>
+        <hr>
+        {{ form_start(form) }}
+        <div class="row mt-5">
+            <div class="col">{{ form_row(form.cotSalariale) }}</div>
+            <div class="col">{{ form_row(form.cotPatronale) }}</div>
+            <div class="col">{{ form_row(form.cotTotale) }}</div>
+        </div>
+        <button type="submit" class="btn btn-success mt-4">
+            <i class="fas fa-check"></i>
+            Enregistrer
+        </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

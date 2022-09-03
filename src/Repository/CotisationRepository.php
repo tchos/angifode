@@ -4,9 +4,11 @@ namespace App\Repository;
 
 use App\Entity\Cotisation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @extends ServiceEntityRepository<Cotisation>
@@ -18,9 +20,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CotisationRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, Cotisation::class);
+        $this->manager = $manager;
     }
 
     /**
@@ -45,6 +49,40 @@ class CotisationRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    /**
+     * Retourne la liste des agents détachés pour qui on a saisi une cotisation
+     * @param $reversement
+     * @return float|int|mixed|string
+     */
+    public function findListCotisation($reversement)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.reversement = :reversement')
+            ->andWhere('c.cotTotale > 0')
+            ->setParameter('reversement', $reversement)
+            ->orderBy('c.agent', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * Retourne le total des cotisations pour un reversement
+     * @param $reversement
+     * @return Integer
+     */
+    public function sommeCotisation($reversement)
+    {
+        return $this->manager->createQuery(
+            'SELECT SUM(c.cotTotale) as totalCotisation
+            FROM App\Entity\Cotisation c
+            JOIN c.reversement r
+            WHERE r = :reversement'
+        )
+            ->setParameter('reversement', $reversement)
+            ->getSingleScalarResult();
     }
 
     // /**

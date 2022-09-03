@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ReversementType extends AbstractType
 {
@@ -66,6 +67,9 @@ class ReversementType extends AbstractType
                             'application/x-pdf',
                         ],
                         'mimeTypesMessage' => 'Merci de téléverser le fichier au format pdf',
+                    ]),
+                    new Assert\NotBlank([
+                        'message' => 'Vous devez impérativement insérer une preuve de réversement'
                     ])
                 ],
             ])

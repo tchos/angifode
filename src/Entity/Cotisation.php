@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CotisationRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Cotisation
 {
@@ -58,6 +59,22 @@ class Cotisation
      * @ORM\JoinColumn(nullable=false)
      */
     private $reversement;
+
+    /**
+     * CallBack appelé à chaque fois que l'on veut enregistrer une cotisation
+     * prendre automatiquement la date à laquelle on a saisi la cotisation .
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function PrePersist()
+    {
+        if (empty($this->dateCotisation)) {
+            $this->dateCotisation = new \DateTimeImmutable();
+        }
+    }
 
     /**
      * @ORM\Column(type="datetime")

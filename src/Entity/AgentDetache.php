@@ -487,4 +487,14 @@ class AgentDetache
 
         return $this;
     }
+
+    /**
+     * Fonction toString(): renvoie le matricule et le nom de l'agent détaché
+     */
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        $resultat = $this->noms . "(" . $this->matricule . ") ";
+        return $resultat;
+    }
 }

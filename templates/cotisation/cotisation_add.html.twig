@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle cotisation{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="h4 text-success">
+            Enregistrement d'une cotisation liée au reversement N° {{ reversement.refTitre }}
+        </div>
+        {% for message in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        <hr>
+        <div class="row">
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    ORGANISME :
+                    <span class="badge bg-dark rounded-pill">{{ reversement.organisme.sigle }}</span>
+                </li>
+            </div>
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    PERIODE :
+                    <span class="badge bg-dark rounded-pill">Du
+                        {{ reversement.dateDebRev | format_datetime('short', 'none', locale='fr') }} au
+                        {{ reversement.dateFinRev | format_datetime('short', 'none', locale='fr') }}
+                    </span>
+                </li>
+            </div>
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    MONTANT :
+                    <span class="badge bg-dark rounded-pill">
+                        {{ reversement.montantRev | number_format(0,'.',' ')}} FCFA
+                    </span>
+                </li>
+            </div>
+            <div class="col">
+                {% set montantReversement = reversement.montantRev %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    GAP :
+                    <span class="badge bg-danger rounded-pill">
+                        {{ (montantReversement - totalCotisation) | number_format(0,'.',' ')}} FCFA
+                    </span>
+                </li>
+            </div>
+        </div>
+        <hr>
+        {{ form_start(form) }}
+        <div class="row mt-5">
+            <div class="col-4">{{ form_row(form.agentdetache) }}</div>
+            <div class="col">{{ form_row(form.cotSalariale) }}</div>
+            <div class="col">{{ form_row(form.cotPatronale) }}</div>
+            <div class="col">{{ form_row(form.cotTotale) }}</div>
+        </div>
+        <div class="row mt-4">
+
+        </div>
+        <button type="submit" class="btn btn-success mt-4">
+            <i class="fas fa-check"></i>
+            Enregistrer
+        </button>
+        {{ form_end(form) }}
+        <hr>
+        <div class="align-self-center align-items-center mt-5">
+            <span class="text-center badge bg-dark"><h6>ETAT NOMMINATIF DES COTISATION</h6></span>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="agentsdetaches" class="table table-striped table-hover mt-4">
+                        <thead>
+                        <tr class="table-dark">
+                            <th>ID</th>
+                            <th>MATRICULE</th>
+                            <th>NOMS</th>
+                            <th>TOTAL COTISE</th>
+                            <th class="text-end">ACTION</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% set i = 1 %}
+                        {% set sommeCotisation = 0 %}
+                        {% for cotisation in listeCotisation %}
+                            <tr>
+                                <td>{{ i }}</td>
+                                <td>{{ cotisation.agent.matricule }}</td>
+                                <td>{{ cotisation.agent.noms }}</td>
+                                <td>{{ cotisation.cotTotale | number_format(0,'.',' ') }}</td>
+                                <td class="text-end">
+                                    <a title="Apporter des modifications à la cotisation"
+                                       href="{{ path('cotisation_edit', {'id': cotisation.id}) }}">
+                                        <i class="fas fa-edit"></i><span class="ms-4"></span></a>
+                                    <a title="Supprimer la cotisation"
+                                       href="{{ path('cotisation_delete', {'id': cotisation.id}) }}">
+                                        <i class="fa fa-window-close text-danger"></i><span class="ms-4"></span></a>
+                                </td>
+                            </tr>
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('asset/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('asset/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('asset/js/popper.min.js') }}"></script>
+    <script src="{{ asset('asset/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('asset/js/dataTables.bootstrap4.min.js') }}"></script>
+
+    <script src="{{ asset('asset/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('asset/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('asset/js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('asset/js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('asset/js/buttons.html5.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            var azemDataTable = $('#agentsdetaches').DataTable({
+                dom: 'Blfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        text:      '<i class="fas fa-copy" style="font-size:25px;color:blue;"></i>',
+                    },
+                    {
+                        extend: 'pdf',
+                        text:      '<i class="fas fa-file-pdf" style="font-size:25px;color:red;"></i>',
+                        exportOptions: {
+                            columns: [0,1,2] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        text:      '<i class="fas fa-file-alt" style="font-size:25px;color:black;"></i>',
+                    },
+                    {
+                        extend: 'excel',
+                        text:      '<i class="fas fa-file-excel" style="font-size:25px;color:darkgreen;"></i>',
+                    }
+                ]
+            });
+        });
+
+        // cotTotal = cotSalariale + cotPatronale
+        $(function() {
+            $("#cotisation_cotSalariale, #cotisation_cotPatronale").on("keydown keyup", total);
+            function total() {
+                $("#cotisation_cotTotale").val(Number($("#cotisation_cotSalariale").val()) + Number($("#cotisation_cotPatronale").val()));
+            }
+        });
+    </script>
+{% endblock %}

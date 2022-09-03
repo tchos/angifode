@@ -256,4 +256,14 @@ class Reversement
 
         return $this;
     }
+
+    /**
+     * Fonction toString(): renvoie moi la référence et la date de reversement
+     */
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return "REF N° " . $this->refTitre . " du " . $this->dateDebRev->format('d-m-Y') .
+            " au " . $this->dateFinRev->format('d-m-Y');
+    }
 }

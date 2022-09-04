@@ -14,6 +14,47 @@ class Statistiques
         $this->manager = $manager;
     }
 
+    public function getStats()
+    {
+        $nbUsers = $this->getUsersCount();
+        $nbOrganismes = $this->getOrganismesCount();
+        $nbAgentsDetaches = $this->getAgentsDetachesCount();
+
+        return compact('nbUsers', 'nbOrganismes', 'nbAgentsDetaches');
+    }
+
+    /**
+     * Retourne le nombre de users inscrits
+     *
+     * @return Integer
+     */
+    public function getUsersCount()
+    {
+        return $this->manager->createQuery('SELECT COUNT(u) FROM App\Entity\User u')->getSingleScalarResult();
+    }
+
+    /**
+     * Retourne le nombre d'organismes parapublics
+     *
+     * @return Integer
+     */
+    public function getOrganismesCount()
+    {
+        return $this->manager->createQuery('SELECT COUNT(o) FROM App\Entity\Organismes o')
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Retourne le nombre d'agents détachés
+     *
+     * @return Integer
+     */
+    public function getAgentsDetachesCount()
+    {
+        return $this->manager->createQuery('SELECT COUNT(a) FROM App\Entity\AgentDetache a')
+            ->getSingleScalarResult();
+    }
+
     /**
      * Retourne la liste des agents pour lesquels on a pas encore cotisé
      */
@@ -34,7 +75,7 @@ class Statistiques
             ->getResult();
 
         $anc = [];
-        foreach ($agentsNonCotiser as $i=>$val) {
+        foreach ($agentsNonCotiser as $i => $val) {
             $anc[$agentsNonCotiser[$i]['nom']] = $agentsNonCotiser[$i]['id'];
         }
         return $anc;

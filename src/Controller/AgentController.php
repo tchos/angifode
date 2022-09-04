@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormError;
 class AgentController extends AbstractController
 {
     # Enregistrer un nouveau détachement
-    #[Route('/agent', name: 'agent_new')]
+    #[Route('/agent', name: 'agent_detache_new')]
     #[IsGranted("ROLE_USER")]
     public function detacher(EntityManagerInterface $manager, Request $request): Response
     {

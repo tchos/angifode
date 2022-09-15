@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Services\Statistiques;
+use App\Services\Services;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(Statistiques $statistiques): Response
+    public function index(Services $statistiques): Response
     {
         // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
         $stats = $statistiques->getStats();

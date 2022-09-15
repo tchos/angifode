@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EsdController!{% endblock %}
+{% block title %}Nouveau reversement{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/tchos/Documents/projets/symfony/angifode/src/Controller/EsdController.php'|file_link(0) }}">src/Controller/EsdController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/tchos/Documents/projets/symfony/angifode/templates/esd/index.html.twig'|file_link(0) }}">templates/esd/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="container">
+        <div class="h4 text-success">Dette sociale de {{ organisme.sigle }}: renseignez les date de début et de fin de la période</div>
+        <hr>
+        {{ form_start(form) }}
+        <div class="row mt-4">
+            <div class="col">{{ form_row(form.dateDebRev) }}</div>
+            <div class="col">{{ form_row(form.dateFinRev) }}</div>
+        </div>
+        <button type="submit" class="btn btn-success btn-sm mt-4">
+            <i class="fas fa-check"></i>
+            <span class="fw-bolder">Evaluer la dette</span>
+        </button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

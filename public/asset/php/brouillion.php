@@ -39,3 +39,111 @@ $this->addFlash(
             "success",
             "La cotisation de l'agent <strong>" . $agent->getNoms() . "(" . $agent->getMatricule() . ") 
                 </strong> du reversement " . $reversement . ", a bien été supprimé");
+                
+                
+------ SERVICES.
+$nbBareme = 0;
+        $nbAvct = 0;
+        // prochain avancement
+        $prochaineAvct = "date prochain avancement";
+        $derniereDate = $dateDebut;
+        $sommeAReverser = 0;
+
+        //On parcours d'abord les barèmes
+        if($dateDebut >= "01-07-2014") { // Il n'y a qu'un seul barème en jeu
+
+            while ($dateFin > $prochaineAvct) {
+                $nbAvct++;
+                $pd = $prochaineAvct - $derniereDate - 1;
+                if($typeAgent == 1 )
+                    $sommeAReverser = $sommeAReverser + ( ($salaire * 12 * 22 * $pd) / (360 * 100) );
+                else
+                    $sommeAReverser = $sommeAReverser + ( ($salaire * 12 * 18 * $pd) / (360 * 100) );
+
+                $derniereDate = $prochaineAvct;
+                $prochaineAvct = $prochaineAvct + "2 ans";
+            }
+
+            // dernière période
+            $pd = $dateFin - $derniereDate - 1;
+            if($typeAgent == 1 )
+                $sommeAReverser = $sommeAReverser + ( ($salaire * 12 * 22 * $pd) / (360 * 100) );
+            else
+                $sommeAReverser = $sommeAReverser + ( ($salaire * 12 * 18 * $pd) / (360 * 100) );
+
+            return $sommeAReverser;
+
+        }else { // Il y aura plusieurs barèmes en jeu
+            $i = 0;
+
+            // on capte le premier barème
+            while ($dateDebut > $bareme[$i]) {
+                $i++;
+                if($bareme[$i] >= $dateDebut)
+                    $prochainBareme = $bareme;
+            }
+
+            //if($prochaineAvct < $prochainBareme)
+        }
+        
+/**
+     * Retourne les sommes à reverser pour un agent détaché
+     * @Return array
+     */
+    public function getPeriodes($dateDebut, $dateFin){
+
+        // Dates barème
+        $bareme = $this->dateSalaire($dateDebut, $dateFin);
+
+        // Va contenir toutes les périodes de détachement
+        $tableauPeriode = [];
+
+        // Date de début
+        //$tableauPeriode[] = date_format($dateDebut, 'Y-m-d');
+        //$tableauPeriode[] = date_format($dateFin, 'Y-m-d');
+        $tableauPeriode[] = $dateDebut;
+        $tableauPeriode[] = $dateFin;
+        foreach ($bareme as $keys => $value) {
+            foreach ($value as $key => $date) {
+                if ($dateDebut <= $date && $date <= $dateFin)
+                    $tableauPeriode[] = date('Y-m-d', strtotime($date));
+            }
+        }
+
+        // prochain avancement
+        $dateIntegration = date_create("1995-11-01");
+        date_add($dateIntegration,date_interval_create_from_date_string("2 years"));
+
+        while ($dateIntegration <= $dateFin) {
+            if ($dateDebut <= $dateIntegration && $dateIntegration <= $dateFin) {
+                $tableauPeriode[] = date_format($dateIntegration, 'Y-m-d');
+            }
+
+            date_add($dateIntegration,date_interval_create_from_date_string("2 years"));
+        }
+
+
+        // Tri du tableau
+        sort($tableauPeriode);
+
+        return $tableauPeriode;
+    }
+    
+    "2002-02-11"
+  1 => "2003-11-01"
+  2 => "2005-11-01"
+  3 => "2007-11-01"
+  4 => "2008-04-01"
+  5 => "2009-11-01"
+  6 => "2011-11-01"
+  7 => "2013-11-01"
+  8 => "2014-07-01"
+  9 => "2015-11-01"
+  10 => "2017-11-01"
+  11 => "2019-11-01"
+  12 => "2021-11-01"
+  13 => "2022-09-10"
+  
+  
+  
+

@@ -9,7 +9,7 @@ use App\Form\CotisationEditType;
 use App\Form\CotisationType;
 use App\Repository\AgentDetacheRepository;
 use App\Repository\CotisationRepository;
-use App\Services\Statistiques;
+use App\Services\Services;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -21,7 +21,7 @@ class CotisationController extends AbstractController
 {
     #[Route('/cotisation/reversement/{reversement}', name: 'cotisation_new')]
     public function index(EntityManagerInterface $manager, Request $request, Reversement $reversement,
-            CotisationRepository $repos, Statistiques $statistiques, AgentDetacheRepository $agRepos): Response
+                          CotisationRepository   $repos, Services $services, AgentDetacheRepository $agRepos): Response
     {
         // Pour historiser l'ajout d'une nouvelle cotisation en bd
         $historique = new Historique();
@@ -31,7 +31,7 @@ class CotisationController extends AbstractController
         $user = $this->getUser();
 
         //Liste des agants pour lesquels on n'a pas encore cotisé
-        $anc = $statistiques->getListeACotiser($reversement);
+        $anc = $services->getListeACotiser($reversement);
 
         //dd($anc);
         // Formulaire de cotisation
@@ -102,7 +102,7 @@ class CotisationController extends AbstractController
 
     #[Route('/cotisation/{id}/edit', name: 'cotisation_edit')]
     public function edit_cotisation(EntityManagerInterface $manager, Request $request, Cotisation $cotisation,
-                          CotisationRepository $repos, Statistiques $statistiques, AgentDetacheRepository $agRepos): Response
+                                    CotisationRepository   $repos, Services $statistiques, AgentDetacheRepository $agRepos): Response
     {
         // Pour historiser l'ajout d'une nouvelle cotisation en bd
         $historique = new Historique();
@@ -166,6 +166,7 @@ class CotisationController extends AbstractController
 
         return $this->render('cotisation/cotisation_edit.html.twig', [
             'form' => $form->createView(),
+            'cotisation' => $cotisation,
             'reversement' => $reversement,
             'totalCotisation' => $totalCotisation,
             'agent' => $agent->getNoms() . "(" . $agent->getMatricule() . ")",

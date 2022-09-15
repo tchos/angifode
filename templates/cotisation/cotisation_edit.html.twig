@@ -56,10 +56,42 @@
             <div class="col">{{ form_row(form.cotPatronale) }}</div>
             <div class="col">{{ form_row(form.cotTotale) }}</div>
         </div>
-        <button type="submit" class="btn btn-success mt-4">
-            <i class="fas fa-check"></i>
-            Enregistrer
-        </button>
+        <div class="row mt-4">
+            <div class="col-4">
+                <button type="submit" class="btn btn-success btn-sm mt-4">
+                    <i class="fas fa-check"></i>
+                    <span class="fw-bolder"> Enregistrer les modifications</span>
+                </button>
+                <a class="btn btn-dark btn-sm mt-4" href="{{ path('reversement_list') }}">
+                    <i class="fa fa-window-restore" aria-hidden="true"></i>
+                    <span class="fw-bolder"> Annuler les modifications</span>
+                </a>
+            </div>
+            <div class="col-2 ms-auto">
+                <a title="Supprimer la cotisation" data-bs-toggle="modal" data-bs-target="#modal1" class="btn btn-danger btn-sm mt-4">
+                    <i class="fa fa-times text-danger"></i> Supprimer la cotisation
+                </a>
+                <div class="modal fade text-start" id="modal1" data-bs-backdrop="static">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Suppression d'une cotisation !</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Voulez-vous réellement supprimer cette cotisation de {{ cotisation.agent.noms }}({{ cotisation.agent.matricule }}) ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-danger" href="{{ path('cotisation_delete', {'id': cotisation.id}) }}">Oui, Supprimer</a>
+                                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Non, Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}

@@ -10,12 +10,12 @@
 </head>
 <body>
 <div class="row align-items-center">
-    <div class="col p-4 ms-5"><img src="{{ asset('asset/images/logo_minfi.jpg') }}" class=" d-block" width="60" height="60"></div>
-    <div class="col-9" align="center">
-        <img src="{{ asset('asset/images/angifode.png') }}"  class=" d-block" width="60" height="60">
+    <div class="col ms-auto"><img src="{{ asset('asset/images/logo_minfi.jpg') }}" class="float-start d-block" width="60" height="60"></div>
+    <div class="col-9">
+        <img src="{{ asset('asset/images/angifode.png') }}" class="rounded mx-auto d-block" width="60" height="60">
         <h4 class="pt-1 text-center">APPLICATION NATIONALE DE GESTION INFORMATIQUE DES FONCTIONNAIRES EN DETACHEMENT</h4>
     </div>
-    <div class="col-1 mx-auto"><img src="{{ asset('asset/images/logo_dgb.png') }}" class=" d-block" width="60" height="60"></div>
+    <div class="col-1 me-auto"><img src="{{ asset('asset/images/logo_dgb.png') }}" class="float-end d-block" width="60" height="60"></div>
 </div>
 {# Inclusion du header dans le template de base  avec twig #}
 {% include "partials/header.html.twig" %}

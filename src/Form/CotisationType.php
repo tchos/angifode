@@ -6,7 +6,7 @@ use App\Entity\AgentDetache;
 use App\Entity\Cotisation;
 use App\Entity\Reversement;
 use App\Repository\AgentDetacheRepository;
-use App\Services\Statistiques;
+use App\Services\Services;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CotisationType extends AbstractType
 {
     private $statistiques;
-    public function __construct(Statistiques $statistiques)
+    public function __construct(Services $statistiques)
     {
         $this->statistiques = $statistiques;
     }

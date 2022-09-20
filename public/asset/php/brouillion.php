@@ -144,6 +144,22 @@ $nbBareme = 0;
   12 => "2021-11-01"
   13 => "2022-09-10"
   
+  <div class="row-cols-2 justify-content-center d-flex align-items-center">
+
+
+                
+
+                {{ form_row(registrationForm.organisme) }}
+                {{ form_row(registrationForm.roles) }}
+                {{ form_row(registrationForm.activation) }}
+
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    Créer le compte
+                </button>
+
+            </div>
+  
   
   
 

@@ -61,6 +61,28 @@ class Services
     }
 
     /**
+     * Retourne la liste des organismes
+     *
+    public function getListeOrganismes($organisme)
+    {
+        //Liste des organismes
+        $organismes = $this->manager->createQuery(
+            "SELECT o.id, CONCAT(o.sigle,' - (', o.libelleOrg,')') as libelle
+                FROM App\Entity\Organismes o
+                WHERE o.sigle LIKE '%:organisme%'
+                ORDER BY libelle"
+        )
+            ->setParameter('organisme', $organisme)
+            ->getResult();
+
+        $organismes = [];
+        foreach ($org as $i => $val) {
+            $organismes[$org[$i]['libelle']] = $org[$i]['id'];
+        }
+        return $organismes;
+    }
+*/
+    /**
      * Retourne la liste des agents pour lesquels on a pas encore cotisé
      */
     public function getListeACotiser($reversement)

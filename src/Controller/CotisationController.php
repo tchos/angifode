@@ -11,12 +11,17 @@ use App\Repository\AgentDetacheRepository;
 use App\Repository\CotisationRepository;
 use App\Services\Services;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Require ROLE_USER for all the actions of this controller
+ */
+#[IsGranted('ROLE_USER')]
 class CotisationController extends AbstractController
 {
     #[Route('/cotisation/reversement/{reversement}', name: 'cotisation_new')]
@@ -181,7 +186,6 @@ class CotisationController extends AbstractController
      * @return void
      */
     #[Route("cotisation/{id}/delete", name:"cotisation_delete")]
-    #[IsGranted("ROLE_USER")]
     public function delete_cotisation(EntityManagerInterface $manager, Cotisation $cotisation)
     {
         // Reversement concernant la cotisation à supprimer

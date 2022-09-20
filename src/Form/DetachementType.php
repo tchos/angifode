@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\AgentDetache;
 use App\Entity\Organismes;
+use App\Repository\AgentDetacheRepository;
+use App\Repository\OrganismesRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -17,6 +19,7 @@ class DetachementType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $organismes = $options['organisme'];
         $builder
             ->add('matricule', TextType::class,[
                 'label' => 'Matricule de l\'agent',
@@ -104,7 +107,8 @@ class DetachementType extends AbstractType
                 'widget' => 'single_text'])
             ->add('organisme', EntityType::class,[
                 'label' => 'Organisme de détachement',
-                'class' => Organismes::class
+                'class' => Organismes::class,
+                'choices' => $organismes
             ])
         ;
     }
@@ -114,5 +118,8 @@ class DetachementType extends AbstractType
         $resolver->setDefaults([
             'data_class' => AgentDetache::class,
         ]);
+
+        $resolver->setDefined('organisme');
+        $resolver->setRequired(['organisme']);
     }
 }

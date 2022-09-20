@@ -13,10 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Require ROLE_USER for all the actions of this controller
+ */
+#[IsGranted('ROLE_USER')]
 class OrganismesController extends AbstractController
 {
     #[Route('/organisme', name: 'create_organisme')]
-    #[IsGranted("ROLE_USER")]
     public function index(EntityManagerInterface $manager, Request $request): Response
     {
         // utilisateur connecté
@@ -52,7 +55,7 @@ class OrganismesController extends AbstractController
             // Alerte succès de l'enregistrement d'un nouvel organisme
             $this->addFlash("success", "Organisme créé avec succès !");
 
-            return $this->redirectToRoute('create_organisme');
+            return $this->redirectToRoute('organisme_list');
         }
 
         return $this->render('organismes/orga_add.html.twig', [
@@ -70,7 +73,6 @@ class OrganismesController extends AbstractController
      * @param Organismes $organisme
      * @return Response
      */
-    #[IsGranted("ROLE_USER")]
     public function edit(EntityManagerInterface $manager, Request $request, Organismes $organisme): Response
     {
         // utilisateur connecté
@@ -123,7 +125,6 @@ class OrganismesController extends AbstractController
      * @param Organismes $organisme
      * @return Response
      */
-    #[IsGranted("ROLE_USER")]
     public function list(EntityManagerInterface $manager, Request $request, OrganismesRepository $repos): Response
     {
         $listeOrganismes = $repos->findAll();

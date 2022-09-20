@@ -2,23 +2,39 @@
 
 {% block title %}Création d'un compte{% endblock %}
 
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('asset/css/angifode.css') }}"/>{% endblock %}
+
 {% block body %}
 <div class="container">
-    <div class="h3 text-success">Créer un nouvel utilisateur</div>
+    <div class="h4 text-success">Créer un nouvel utilisateur</div>
     <hr>
-    <div class="row-cols-2 justify-content-center d-flex align-items-center">
-        {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.username) }}
-            {{ form_row(registrationForm.password, {
-                label: 'Password'
-            }) }}
-            {{ form_row(registrationForm.fullName) }}
-        {{ form_row(registrationForm.activation) }}
-
-            <button type="submit" class="btn btn-success">
-                <i class="fa fa-check-circle" aria-hidden="true"></i>
-                Créer le compte
-            </button>
-        {{ form_end(registrationForm) }}
-    </div>
+    {{ form_start(registrationForm) }}
+        <div class="row">
+            <div class="col-md">
+                {{ form_row(registrationForm.username) }}
+            </div>
+            <div class="col-md">
+                {{ form_row(registrationForm.fullName) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                {{ form_row(registrationForm.password, { label: 'Password'}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">{{ form_row(registrationForm.organisme) }}</div>
+            <div class="col-md">{{ form_row(registrationForm.roles) }}</div>
+            <div class="col-md">{{ form_row(registrationForm.activation) }}</div>
+        </div>
+        <button type="submit" class="btn btn-success btn-sm">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            <span class="fw-bolder">Créer le compte</span>
+        </button>
+        <button type="reset" class="btn btn-dark btn-sm">
+            <i class="fa fa-times-circle" aria-hidden="true"></i>
+            <span class="fw-bolder">Annuler la création</span>
+        </button>
+    {{ form_end(registrationForm) }}
+</div>
 {% endblock %}

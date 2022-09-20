@@ -7,6 +7,7 @@ use App\Entity\Historique;
 use App\Form\DetachementType;
 use App\Repository\AgentDetacheRepository;
 use App\Repository\OrganismesRepository;
+use App\Services\Services;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,26 +16,34 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormError;
 
+/**
+ * Require ROLE_USER for all the actions of this controller
+ */
+#[IsGranted('ROLE_USER')]
 class AgentController extends AbstractController
 {
     # Enregistrer un nouveau détachement
     #[Route('/agent', name: 'agent_detache_new')]
-    #[IsGranted("ROLE_USER")]
-    public function detacher(EntityManagerInterface $manager, Request $request): Response
+    public function detacher(EntityManagerInterface $manager, Request $request, Services $services, OrganismesRepository $organismesRepository): Response
     {
-        $msg = null;
-        $good = null;
-
         // utilisateur connecté
         $user = $this->getUser()->getUsername();
         // pour l'historisation de l'action
         $history = new Historique();
+        // organisme de l'utilisateur connecté
+        $organisme = $this->getUser()->getOrganisme()->getSigle();
 
         //entité AgentDetache à associer au formulaire de creation d'un nouveau détachement
         $detache = new AgentDetache();
 
+        //Les users du MINFI ou alors les admin voyent tous les organismes
+        if ($this->isGranted('ROLE_ADMIN') | $organisme === "MINFI")
+            $organisme = "";
+
+        $listeOrganisme = $organismesRepository->findBySigle($organisme);
+
         // constructeur de formulaire de creation d'un nouveau détachement
-        $form = $this->createForm(DetachementType::class, $detache);
+        $form = $this->createForm(DetachementType::class, $detache, ['organisme' => $listeOrganisme]);
 
         // handlerequest() permet de parcourir la requête et d'extraire les informations du formulaire
         $form->handleRequest($request);
@@ -67,7 +76,7 @@ class AgentController extends AbstractController
                 // Alerte succès de l'enregistrement d'un nouveau détachement
                 $this->addFlash("success","Le nouveau détachement a été enregistré avec succès !!!");
 
-                return $this->redirectToRoute('agent_new');
+                return $this->redirectToRoute('agent_detache_list');
             }
         }
         return $this->render('agent/agent_detache.html.twig', [
@@ -77,7 +86,6 @@ class AgentController extends AbstractController
 
     # Apporter des modifications à un détachement
     #[Route('/agent/{id}/edit', name: 'agent_detache_edit')]
-    #[IsGranted("ROLE_USER")]
     public function update (EntityManagerInterface $manager, Request $request,
                              AgentDetache $detache): Response
     {
@@ -133,7 +141,10 @@ class AgentController extends AbstractController
     #[Route('/agent/list', name: 'agent_detache_list')]
     public function list(EntityManagerInterface $manager, Request $request, AgentDetacheRepository $repos): Response
     {
-        $listeAgentDetaches = $repos->findAll();
+        if($this->getUser()->getOrganisme()->getSigle() === "MINFI" | $this->isGranted('ROLE_ADMIN'))
+            $listeAgentDetaches = $repos->findAll();
+        else
+            $listeAgentDetaches = $repos->findBy(['organisme' => $this->getUser()->getOrganisme()]);
 
         return $this->render('agent/agent_detache_list.html.twig',[
             'listeAgentDetaches' => $listeAgentDetaches

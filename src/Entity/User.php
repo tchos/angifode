@@ -60,6 +60,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $registrationDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Organismes::class, inversedBy="users")
+     */
+    private $organisme;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -218,6 +223,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRegistrationDate(\DateTimeInterface $registrationDate): self
     {
         $this->registrationDate = $registrationDate;
+
+        return $this;
+    }
+
+    public function getOrganisme(): ?Organismes
+    {
+        return $this->organisme;
+    }
+
+    public function setOrganisme(?Organismes $organisme): self
+    {
+        $this->organisme = $organisme;
 
         return $this;
     }

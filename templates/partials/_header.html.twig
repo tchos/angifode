@@ -1,21 +1,3 @@
-{#
-<table style="width:100%" border = "0">
-    <tr>
-        <th><img src="{{ asset('asset/images/logo_minfi.jpg') }}" class=" d-block" width="60" height="60"> </th>
-        <th>
-            <div align="center">
-                <img src="{{ asset('asset/images/angifode.png') }}"  class=" d-block" width="60" height="60">
-            </div>
-        </th>
-        <th><img src="{{ asset('asset/images/logo_dgb.png') }}" class=" d-block" width="60" height="60"></th>
-    </tr>
-    <tr>
-        <td> </td>
-        <td><h4 class="pt-1 text-center">APPLICATION NATIONALE DE GESTION INFORMATIQUE DES FONCTIONNAIRES EN DETACHEMENT</h4></td>
-        <td> </td>
-    </tr>
-</table>
-#}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ path('app_home') }}">
@@ -36,16 +18,18 @@
                         <a class="dropdown-item" href="{{ path('agent_detache_list') }}">Liste des détachés</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown me-4">
-                    <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown" href="#" role="button"
-                       aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-building" aria-hidden="true"></i>
-                        Organismes</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ path('create_organisme') }}">Créer un nouvel organisme</a>
-                        <a class="dropdown-item" href="{{ path('organisme_list') }}">Liste des organismes</a>
-                    </div>
-                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-building" aria-hidden="true"></i>
+                            Organismes</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ path('create_organisme') }}">Créer un nouvel organisme</a>
+                            <a class="dropdown-item" href="{{ path('organisme_list') }}">Liste des organismes</a>
+                        </div>
+                    </li>
+                {% endif %}
                 <li class="nav-item dropdown me-4">
                     <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown" href="#" role="button"
                        aria-haspopup="true" aria-expanded="false">
@@ -72,6 +56,19 @@
                         <a class="dropdown-item" href="#">Separated link</a>
                     </div>
                 </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-building" aria-hidden="true"></i>
+                            <span class="fw-bolder">Utilisateurs</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ path('app_register') }}">Créer un nouvel utilisateur</a>
+                            <a class="dropdown-item" href="{{ path('organisme_list') }}">Liste des utilisateur</a>
+                        </div>
+                    </li>
+                {% endif %}
                 <li class="nav-item dropdown me-4">
                     <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown" href="#" role="button"
                        aria-haspopup="true" aria-expanded="false">
@@ -98,8 +95,14 @@
                            aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-check"></i> {{ app.user.fullName }}
                         </a>
                         <div class="dropdown-menu" style="">
-                            <a href="{{ path("password_edit") }}" class="dropdown-item">Modifier mot de passe</a>
-                            <a href="#" class="dropdown-item">Modifier mon profil</a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path("app_register") }}" class="dropdown-item">Créer un compte</a>
+                            {% endif %}
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ path('password_edit') }}" class="dropdown-item">
+                                Modifier mot de passe
+                            </a>
+                            <a href="#" class="dropdown-item">Modifier mon profile</a>
                             <div class="dropdown-divider"></div>
                             <a href="{{ path('app_logout') }}" class="dropdown-item"
                                id="myLinkToConfirm" data-confirm-title="Attention !"

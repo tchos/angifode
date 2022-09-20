@@ -9,15 +9,19 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {# Inclusion du header dans le template de base  avec twig #}
-        {% include "partials/header.html.twig" %}
+        <div id="main">
+            {% if is_granted('ROLE_USER') %}
+                {# Inclusion du header dans le template de base  avec twig #}
+                {% include "partials/_header.html.twig" %}
+            {% endif %}
 
-        {% block body %}{% endblock %}
+            {% block body %}{% endblock %}
 
-        {# Inclusion du footer dans le template de base avec twig #}
-        {% include "partials/footer.html.twig" %}
-        {% block javascripts %}{% endblock %}
-        <script src="{{ asset('asset/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('asset/js/all.min.js') }}"></script>
+            {# Inclusion du footer dans le template de base avec twig #}
+            {% include "partials/_footer.html.twig" %}
+            {% block javascripts %}{% endblock %}
+            <script src="{{ asset('asset/js/bootstrap.bundle.min.js') }}"></script>
+            <script src="{{ asset('asset/js/all.min.js') }}"></script>
+        </div>
     </body>
 </html>

@@ -1,17 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}CONNEXION{% endblock %}
-{% block stylesheet %}
+
+{% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('asset/css/login.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('asset/css/angifode.css') }}"/>
 {% endblock %}
+
 {% block body %}
     <div class="container mx-5">
-        <div class="row">
+        <div class="row pt-5" style="height: 900px">
             <div class="col-md-5">
                 &nbsp;
             </div>
-            <div class="col-md-6">
-                <section class="vh-75">
+            <div class="col-md-6 mx-auto mt-5" style="width:500px">
+                <section class="vh-75 pt-5">
                     <div class="align-items-center mh-25 mb-5">
                         <img src="{{ asset('asset/images/angifode.png') }}" width="170px"
                              class="rounded mx-auto d-block" alt="Sample image">
@@ -50,7 +53,7 @@
                             </div>
                             <div class="row d-flex justify-content-center align-content-center">
                                 <div class="row mt-5">
-                                    <button class="btn btn-lg btn-success btn-sm" type="submit">
+                                    <button class="btn btn-lg btn-success" type="submit">
                                         <i class="fa fa-sign-in" aria-hidden="true"></i>
                                         Connexion
                                     </button>

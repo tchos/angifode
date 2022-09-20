@@ -47,6 +47,29 @@ class OrganismesRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param $value
+     * @return float|int|mixed|string
+     */
+    public function findBySigle($value)
+    {
+        if($value === "") {
+            return $this->createQueryBuilder('o')
+                ->orderBy('o.sigle', 'ASC')
+                ->getQuery()
+                ->getResult()
+                ;
+        } else {
+            return $this->createQueryBuilder('o')
+                ->andWhere('o.sigle LIKE :val')
+                ->setParameter('val', $value)
+                ->orderBy('o.sigle', 'ASC')
+                ->getQuery()
+                ->getResult()
+                ;
+        }
+    }
+
     // /**
     //  * @return Organismes[] Returns an array of Organismes objects
     //  */

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\UpdatePasswordType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use \Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,8 +27,8 @@ class UserController extends AbstractController
             $manager->persist($utilisateur);
             $manager->flush();
 
-            // redirection vers la page "agent_new"
-            return $this->redirectToRoute('agent_new');
+            // redirection vers la page "app_home"
+            return $this->redirectToRoute('app_home');
         }
 
         // get the login error if there is one
@@ -45,6 +46,7 @@ class UserController extends AbstractController
     }
 
     #[Route(path: '/updatepassword', name: 'password_edit')]
+    #[IsGranted('ROLE_USER')]
     public function updatePassword (UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager,
                           UserRepository $repos, Request $request): Response
     {

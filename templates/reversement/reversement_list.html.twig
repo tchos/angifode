@@ -24,8 +24,8 @@
                             <th>TYPE</th>
                             <th>DATE</th>
                             <th>MONTANT</th>
-                            <th>PREUVES</th>
-                            <th class="text-end">ACTION</th>
+                            <th class="text-center">PREUVES</th>
+                            <th class="text-center">ACTION</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -41,21 +41,18 @@
                                 <td>{{ reversement.typeRev }}</td>
                                 <td>{{ reversement.dateTitre | format_datetime('full', 'none', locale='fr') }}</td>
                                 <td>{{ reversement.montantRev }}</td>
-                                <td>
+                                <td class="text-center">
                                     <a title="Preuve de reversement"
                                        href="{{ asset("asset/preuves/" ~ organisme ~ "/" ~ year ~ "/" ~ "/" ~ reversement.preuveRev ) }}">
-                                        {{ reversement.preuveRev }}
+                                        <img src="{{ asset("asset/images/pdf_file_icon.png") }}" alt="{{ reversement.preuveRev }}" width="17px">
                                     </a>
                                 </td>
-                                <td class="text-end">
-                                    <a title="Modifier le détachement" href="{{ path('reversement_edit', {'id': reversement.id}) }}">
-                                        <i class="fas fa-edit"></i><span class="ms-4"></span></a>
-                                    <a title="Supprimer le détachement" href="#">
-                                        <i class="fa fa-window-close text-danger"></i><span class="ms-4"></span></a>
-                                    <a title="Détails du détachement" href="#">
-                                        <i class="fas fa-info-circle text-success"></i><span class="ms-4"></span></a>
-                                    <a title="Mettre fin au détachement" href="#">
-                                        <i class="fas fa-delete-left text-warning"></i><span class="ms-4"></span>
+                                <td class="text-center">
+                                    <a title="Modifier le réversement {{ reversement.refTitre }}" href="{{ path('reversement_edit', {'id': reversement.id}) }}">
+                                        <i class="fas fa-edit"></i><span class="ms-4"></span>
+                                    </a>
+                                    <a title="Enregistrer les cotisations sur le réversement {{ reversement.refTitre }}" href="{{ path('reversement_edit', {'id': reversement.id}) }}">
+                                        <i class="fas fa-user-plus"></i><span class="ms-4"></span>
                                     </a>
                                 </td>
                             </tr>
@@ -112,4 +109,5 @@
 {% endblock %}
 {#
 {{ asset("asset/preuves/") }}{{ organisme }}/{{ year }}/{{ reversement.preuveRev }}
+    href="{{ asset("asset/preuves/" ~ organisme ~ "/" ~ year ~ "/" ~ "/" ~ reversement.preuveRev ) }}"
 #}

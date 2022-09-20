@@ -11,11 +11,16 @@ use App\Repository\BaremeRepository;
 use App\Repository\OrganismesRepository;
 use App\Repository\TypeBaremeRepository;
 use App\Services\Services;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Require ROLE_USER for all the actions of this controller
+ */
+#[IsGranted('ROLE_USER')]
 class EsdController extends AbstractController
 {
     #[Route('/esd/{id}', name: 'esd_evaluate')]

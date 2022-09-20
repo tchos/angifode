@@ -17,10 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Require ROLE_USER for all the actions of this controller
+ */
+#[IsGranted('ROLE_USER')]
 class ReversementController extends AbstractController
 {
     #[Route('/reversement', name: 'reversement_new')]
-    #[IsGranted("ROLE_USER")]
     public function create_reversement(EntityManagerInterface $manager, Request $request, SluggerInterface $slugger): Response
     {
         // utilisateur connecté
@@ -105,11 +108,14 @@ class ReversementController extends AbstractController
     }
 
     #[Route('/reversement/list', name: 'reversement_list')]
-    #[IsGrante("ROLE_USER")]
     public function lister_reversement(EntityManagerInterface $manager, Request $request,
                                        ReversementRepository $repos):Response
     {
-        $listeReversements = $repos->findAll();
+        if($this->getUser()->getOrganisme()->getSigle() === "MINFI" | $this->isGranted('ROLE_ADMIN'))
+            $listeReversements = $repos->findAll();
+        else
+            $listeReversements = $repos->findBy(['organisme' => $this->getUser()->getOrganisme()]);
+
         $chemin = $this->getParameter('preuve_reversement_directory');
         return $this->render('reversement/reversement_list.html.twig',[
             'listeReversements' => $listeReversements,
@@ -118,7 +124,6 @@ class ReversementController extends AbstractController
     }
 
     #[Route('/reversement/{id}/edit', name: 'reversement_edit')]
-    #[IsGranted("ROLE_USER")]
     public function update_reversement(EntityManagerInterface $manager, Request $request,
                                        Reversement $reversement, SluggerInterface $slugger): Response
     {

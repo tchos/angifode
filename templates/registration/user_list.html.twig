@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="text-center">LISTE DES UTILISATEURS </h3>
+        {% for message in app.session.flashBag.get('warning') %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+        <hr p-4>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="utilisateurs" class="table table-striped table-hover mt-4">
+                        <thead>
+                        <tr class="table-dark">
+                            <th>ID</th>
+                            <th>USERNAME</th>
+                            <th>ORGANISME</th>
+                            <th>CREER PAR</th>
+                            <th>DERNIERE VISITE</th>
+                            <th class="text-center">ACTION</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% set i = 1 %}
+                        {% for user in listeUsers %}
+                            {% set organisme = user.organisme.sigle %}
+                            <tr>
+                                <td>{{ i }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ organisme }}</td>
+                                <td>{{ user.createdBy }}</td>
+                                <td>{{ user.lastVisitDate | format_datetime('full', 'none', locale='fr') }}</td>
+                                <td class="text-center">
+                                    <a title="Modifier le profil de {{ user.username }}"
+                                       href="{{ path('user_edit', {'id': user.id}) }}">
+                                        <i class="fas fa-edit"></i></i><span class="ms-4"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('asset/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('asset/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('asset/js/popper.min.js') }}"></script>
+    <script src="{{ asset('asset/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('asset/js/dataTables.bootstrap4.min.js') }}"></script>
+
+    <script src="{{ asset('asset/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('asset/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('asset/js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('asset/js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('asset/js/buttons.html5.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            var azemDataTable = $('#utilisateurs').DataTable({
+                dom: 'Blfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        text:      '<i class="fas fa-copy" style="font-size:25px;color:blue;"></i>',
+                    },
+                    {
+                        extend: 'pdf',
+                        text:      '<i class="fas fa-file-pdf" style="font-size:25px;color:red;"></i>',
+                        exportOptions: {
+                            columns: [0,1,2] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        text:      '<i class="fas fa-file-alt" style="font-size:25px;color:black;"></i>',
+                    },
+                    {
+                        extend: 'excel',
+                        text:      '<i class="fas fa-file-excel" style="font-size:25px;color:darkgreen;"></i>',
+                    }
+                ]
+            });
+        });
+    </script>
+{% endblock %}
+{#
+{{ asset("asset/preuves/") }}{{ organisme }}/{{ year }}/{{ reversement.preuveRev }}
+    href="{{ asset("asset/preuves/" ~ organisme ~ "/" ~ year ~ "/" ~ "/" ~ reversement.preuveRev ) }}"
+#}

@@ -178,7 +178,7 @@ class Services
         // AND num_bar IN (select num_bar from type_bareme where date_debut <= "2003-09-01" and date_fin >= "2002-02-11");
         //Liste des agants pour lesquels on n'a pas encore cotisé
         return $this->manager->createQuery(
-            "SELECT b.salaireBase
+            "SELECT MAX(b.salaireBase)
                 FROM App\Entity\Bareme b
                 WHERE b.grade = :grade AND b.classe = :classe AND b.echelon = :echelon AND b.numBar IN ( 
                     SELECT t.numBar
@@ -202,13 +202,13 @@ class Services
         $sar = 0;
         $tableauPeriode = $this->getPeriodes($dateDebut, $dateFin);
 
-        $dateDebut = date_create($tableauPeriode[0]);
-        $dateFin = date_create($tableauPeriode[1]);
-        date_sub($dateFin,date_interval_create_from_date_string("1 day"));
+        $dateD = date_create($tableauPeriode[0]);
+        $dateF = date_create($tableauPeriode[1]);
+        date_sub($dateF,date_interval_create_from_date_string("1 day"));
 
-        $sb = $this->getSalaire($dateDebut, $dateFin, "42210", "2", "01");
+        $sb = $this->getSalaire($dateD, $dateF, "42210", "2", "01");
 
-        $pd = $dateDebut->diff($dateFin)->format('%d');
+        $pd = $dateD->diff($dateF)->format('%d');
 
         if ($typeAgent == 1) {
             $sar = $sar + (($sb * 12 * 22 * $pd) / (360 * 100));
@@ -216,15 +216,15 @@ class Services
             $sar = $sar + (($sb * 12 * 18 * $pd) / (360 * 100));
         }
 
-        for ($i = 4; $i < count($tableauPeriode); $i++) {
+        for ($i = 1; $i < count($tableauPeriode)-1; $i++) {
 
-            $dateDebut = date_create($tableauPeriode[$i]);
-            $dateFin = date_create($tableauPeriode[$i+1]);
-            date_sub($dateFin,date_interval_create_from_date_string("1 day"));
-            dd($dateDebut, $dateFin);
-            $sb = $this->getSalaire($dateDebut, $dateFin, "42210", "2", "01");
-            dd($sb);
-            $pd = $dateDebut->diff($dateFin)->days;
+            $dateD = date_create($tableauPeriode[$i]);
+            $dateF = date_create($tableauPeriode[$i+1]);
+            date_sub($dateF,date_interval_create_from_date_string("1 day"));
+
+            $sb = $this->getSalaire($dateD, $dateF, "42210", "2", "01");
+            //dd($sb);
+            $pd = $dateD->diff($dateF)->days;
 
             if ($typeAgent == 1) {
                 $sar = $sar + (($sb * 12 * 22 * $pd) / (360 * 100));

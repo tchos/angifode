@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du compte de {{ user.username }}{% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('asset/css/angifode.css') }}"/>{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="h4 text-success">Modifier le compte de l'utilisateur {{ user.username }}</div>
+        <hr>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md">
+                {{ form_row(form.username) }}
+            </div>
+            <div class="col-md">
+                {{ form_row(form.fullName) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                {{ form_row(form.password, { label: 'Password'}) }}
+            </div>
+        </div>
+        <div class="row" hidden>
+            <div class="col-md-6">{{ form_row(form.organisme) }}</div>
+            <div class="col-md">{{ form_row(form.roles) }}</div>
+            <div class="col-md">{{ form_row(form.activation) }}</div>
+        </div>
+        <button type="submit" class="btn btn-success btn-sm">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            <span class="fw-bolder">Enregistrer les modifications</span>
+        </button>
+        <a class="btn btn-dark btn-sm" href="{{ path('user_list') }}">
+            <i class="fa fa-window-restore" aria-hidden="true"></i>
+            <span class="fw-bolder">Annuler les modifications</span>
+        </a>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

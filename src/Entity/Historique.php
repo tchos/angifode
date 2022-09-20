@@ -28,7 +28,7 @@ class Historique
     private $nature;
 
     /**
-     * @ORM\Column(type="string", length=8)
+     * @ORM\Column(type="string", length=32)
      */
     private $clef;
 

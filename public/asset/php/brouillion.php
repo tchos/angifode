@@ -129,6 +129,8 @@ $nbBareme = 0;
         return $tableauPeriode;
     }
     
+    SELECT MIN(INDICE) AS ind_sol FROM `bareme` WHERE grade="42210" AND  `INDICE` > 335;
+    
     "2002-02-11"
   1 => "2003-11-01"
   2 => "2005-11-01"

@@ -65,6 +65,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $organisme;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $CreatedBy;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -235,6 +240,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setOrganisme(?Organismes $organisme): self
     {
         $this->organisme = $organisme;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?string
+    {
+        return $this->CreatedBy;
+    }
+
+    public function setCreatedBy(?string $CreatedBy): self
+    {
+        $this->CreatedBy = $CreatedBy;
 
         return $this;
     }

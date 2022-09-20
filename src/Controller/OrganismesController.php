@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Historique;
 use App\Entity\Organismes;
+use App\Entity\User;
 use App\Form\OrganismesType;
 use App\Repository\OrganismesRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,6 +27,7 @@ class OrganismesController extends AbstractController
         $user = $this->getUser()->getUsername();
         // pour l'historisation de l'action
         $history = new Historique();
+
         //entité organisme à associer au formulaire de creation d'un organisme
         $organisme = new Organismes();
 
@@ -41,12 +43,14 @@ class OrganismesController extends AbstractController
          */
         if($form->isSubmitted() && $form->isValid())
         {
+            // Historique pour la créaton de l'organisme
             $history->setTypeAction("CREATE")
                     ->setAuteur($user)
                     ->setNature("ORGANISME")
                     ->setClef($form->get('sigle')->getData())
                     ->setDateAction(new \DateTime())
             ;
+
             // Persistence de l'entité Organismes et Historique
             $manager->persist($organisme);
             $manager->persist($history);

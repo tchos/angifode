@@ -6,8 +6,8 @@
 ?>
 <?php
 
-
-//--------------------------------  FIN DETACHEMENT, renvoie la date de fin de détachement-------------------
+//#################################### PROCEDURES ET FONCTIONS
+//--------------------------------  FIN DETACHEMENT, renvoie la date de fin de détachement
 function date_fin_detachement($matricule,$sgl_org,$categorie,$naiss,$indice)
     {
 //-- Date de fin de détachement,retraite ou activité
@@ -30,7 +30,7 @@ if ($row2 = mysqli_fetch_array($execution2,MYSQLI_NUM)){ // recupéreration  du 
 return $date_fin;
 }
 
-//--------------------------------  AGE AVANCEMENT FOR AUTOMATIQUE RECLASSIFICATION ------------------------//
+//--------------------------------  AGE AVANCEMENT
 function age_avancement()
     {
 global $naiss; global $date_avancement;
@@ -49,9 +49,7 @@ $annees--;
 }
 return $annees;
     }
-
 //--------------------------------  AGES
-
 function age($naiss)
     {
     // Découper la date dans un tableau associatif
@@ -623,8 +621,6 @@ return $total;
 } // fIN DE LA FONCTION etat_sommes_dues
 
 //--------------------------------  AGE AVANCEMENT
-
-//********************************************new angifode get cotisation starts here *************************/
 function total_cotisation($matricule){
 global $ligne_cotisation;global $total_cotisations;
  require 'connect2.php'; 
@@ -668,5 +664,28 @@ $lang="fr";
   return $difference_montant;
 }	
 	
+//-----------------------------------------------------------------------
+/*function entete_esd($matricule){
+
+$ligne_entete_esd;
+$lang="fr";
+
+ $requete="SELECT psalm23_angifode_angifode_agent.matricule matricule, `nom` , `prenoms`,sgl_org, dat_pri_ser, dat_eff_det,date_naissance,gra_int,ech_int,ind_int, cat_int, cor_int,dat_int FROM `psalm23_angifode_angifode_agent`";
+$requete.=" WHERE (psalm23_angifode_angifode_agent.matricule=psalm23_antilope_agent.matricule) AND (psalm23_angifode_angifode_agent.matricule='".$matricule."')";
+$result = $dbc->query($requete);   
+if ( $row = $result->fetch_object()) {
+   $nom=$row->nom; $prenom=$row->prenoms;$indice=$row->ind_int;$indice1=$row->ind_int; $prise_service=$row->dat_pri_ser;$organisme=$row->sgl_org;$categorie=strtoupper($row->cat_int);$categorie1=strtoupper($row->cat_int);$date_effet=$row->dat_eff_det;$date_effet1=returnannee($row->dat_eff_det);$date_naiss=$row->date_naissance;$date_naiss1=returnannee($row->date_naissance);$date_int=$row->dat_int;$date_int1=returnannee($row->dat_int);$age=age($date_naiss);
+   if(retraite($categorie,$date_naiss)){ $etat="Retraité2";}else{$etat="En activité";} 
+}
+mysqli_free_result($result);
+$ligne_entete_esd='<br><br><h4><u>ETAT DE SOMMES DUES INDIVIDUEL</u></h4>';
+$ligne_entete_esd.='<table width="100%"><tr><td width="300px"><b>Matricule :</b>'.$matricule.'</td><td width="300px"><b>Noms</b>: '.$nom.' </td><td width="300px"><b>Prénoms</b>:  '.$prenom.' </td></tr><tr><td width="300px"><b>Catégorie :</b>'.$categorie1.'</td><td width="300px"><b>Indice</b>: '.$indice1.' </td><td width="300px"><b>Lieu de détachement :</b> '.$organisme.' </td></tr>
+<tr><td width="300px"><b>Date de détachement:</b>'.$date_effet1.' </td><td width="300px"><b>Date de naissance</b>:'.$date_naiss1.'  </td><td width="300px"><b>Date Intégration</b>:  '.$date_int1 .'</td></tr>
+<tr><td width="300px"><b>Date Prise de service:</b> '.returnannee($prise_service).'</td><td width="300px"><b>Fin de Détachement</b>: '.$dat_eff_det_fin1.' </td><td width="300px"><b>Age </b>:'.$age.' ans  </td></tr>
+
+</table><br><br>'; 
+return $ligne_entete_esd;
+}*/	
  
+	 
 

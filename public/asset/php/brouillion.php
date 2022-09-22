@@ -146,6 +146,46 @@ $nbBareme = 0;
   12 => "2021-11-01"
   13 => "2022-09-10"
   
+  <li class="nav-item dropdown me-4">
+    <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown" href="#" role="button"
+       aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+        Statistiques</a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a>
+    </div>
+</li>
+
+/**
+     * Retourne le salaire de base sur une période
+     * @return Integer
+     */
+    public function getSalaire($dateDebut, $dateFin, $grade, $indice, $echelon) {
+
+        //select salaire_base from bareme where grade="42210" AND classe="2" AND echelon="01"
+        // AND num_bar IN (select num_bar from type_bareme where date_debut <= "2003-09-01" and date_fin >= "2002-02-11");
+        //Liste des agants pour lesquels on n'a pas encore cotisé
+        return $this->manager->createQuery(
+            "SELECT MAX(b.salaireBase)
+                FROM App\Entity\Bareme b
+                WHERE b.grade = :grade AND b.classe = :classe AND b.echelon = :echelon AND b.numBar IN ( 
+                    SELECT t.numBar
+                    FROM App\Entity\TypeBareme t
+                    WHERE t.dateDebut <= :dateFin AND t.dateFin >= :dateDebut )
+            "
+        )
+        ->setParameter('dateDebut', $dateDebut)
+        ->setParameter('dateFin', $dateFin)
+        ->setParameter('grade', $grade)
+        ->setParameter('classe', $classe)
+        ->setParameter('echelon', $echelon)
+        ->getSingleScalarResult();
+    }
+  
   <div class="row-cols-2 justify-content-center d-flex align-items-center">
 
 

@@ -172,15 +172,15 @@ class Services
      * Retourne le salaire de base sur une période
      * @return Integer
      */
-    public function getSalaire($dateDebut, $dateFin, $grade, $classe, $echelon) {
+    public function getSalaire($dateDebut, $dateFin, $grade, $indice) {
 
-        //select salaire_base from bareme where grade="42210" AND classe="2" AND echelon="01"
+        //select salaire_base from bareme where grade="42110" AND indice = 430
         // AND num_bar IN (select num_bar from type_bareme where date_debut <= "2003-09-01" and date_fin >= "2002-02-11");
         //Liste des agants pour lesquels on n'a pas encore cotisé
         return $this->manager->createQuery(
             "SELECT MAX(b.salaireBase)
                 FROM App\Entity\Bareme b
-                WHERE b.grade = :grade AND b.classe = :classe AND b.echelon = :echelon AND b.numBar IN ( 
+                WHERE b.grade = :grade AND b.indice = :indice AND b.numBar IN ( 
                     SELECT t.numBar
                     FROM App\Entity\TypeBareme t
                     WHERE t.dateDebut <= :dateFin AND t.dateFin >= :dateDebut )
@@ -189,9 +189,17 @@ class Services
         ->setParameter('dateDebut', $dateDebut)
         ->setParameter('dateFin', $dateFin)
         ->setParameter('grade', $grade)
-        ->setParameter('classe', $classe)
-        ->setParameter('echelon', $echelon)
+        ->setParameter('indice', $indice)
         ->getSingleScalarResult();
+    }
+
+
+    public function getNextIndice($grade, $indice) {
+
+    }
+
+    public function getNextEchelon($grade, $indice) {
+
     }
 
     /**
@@ -206,7 +214,7 @@ class Services
         $dateF = date_create($tableauPeriode[1]);
         date_sub($dateF,date_interval_create_from_date_string("1 day"));
 
-        $sb = $this->getSalaire($dateD, $dateF, "42210", "2", "01");
+        $sb = $this->getSalaire($dateD, $dateF, "42110", 430);
 
         $pd = $dateD->diff($dateF)->format('%d');
 
@@ -222,7 +230,7 @@ class Services
             $dateF = date_create($tableauPeriode[$i+1]);
             date_sub($dateF,date_interval_create_from_date_string("1 day"));
 
-            $sb = $this->getSalaire($dateD, $dateF, "42210", "2", "01");
+            $sb = $this->getSalaire($dateD, $dateF, "42110", 430);
             //dd($sb);
             $pd = $dateD->diff($dateF)->days;
 

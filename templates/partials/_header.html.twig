@@ -82,19 +82,13 @@
                         </div>
                     </li>
                 {% endif %}
-                <li class="nav-item dropdown me-4">
-                    <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown" href="#" role="button"
-                       aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
-                        Statistiques</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
-                    </div>
+                <li class="nav-item active me-4">
+                    <a class="nav-link active taille fs-6 fw-bolder" href="{{ path('app_statistics') }}">
+                        <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
+                        Statistiques <span class="sr-only">(current)</span>
+                    </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link active fs-6" href="#">
                         <i class="fa fa-laptop" aria-hidden="true"></i>

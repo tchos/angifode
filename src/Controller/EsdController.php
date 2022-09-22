@@ -53,8 +53,8 @@ class EsdController extends AbstractController
             foreach ($periodes as $date){
                 $tableau[] = date_create($date);
             }
-            //dd($periodes);
-            dd($sar);
+            dd($periodes);
+            //dd($sar);
         }
 
         return $this->render('esd/esd_orga.html.twig', [

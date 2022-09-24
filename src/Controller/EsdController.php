@@ -45,16 +45,14 @@ class EsdController extends AbstractController
         {
             $dateDebut = $form->get('dateDebRev')->getData();
             $dateFin = $form->get('dateFinRev')->getData();
-            $sar = $services->getSommeAReverser($dateDebut, $dateFin, 1);
+
+            $sar = $services->getSommeAReverser($dateDebut, $dateFin, 420, "42210", date_create("1995-11-01"));
             //$sb = $services->getSalaire(date_create("2007-11-01"), date_create("2008-03-30"), "42210", "2", "01");
 
-            $periodes = $services->getPeriodes($dateDebut, $dateFin);
-            $tableau = [];
-            foreach ($periodes as $date){
-                $tableau[] = date_create($date);
-            }
-            dd($periodes);
-            //dd($sar);
+            //$periodes = $services->getPeriodes($dateDebut, $dateFin);
+
+            //dd($periodes);
+            dd($sar);
         }
 
         return $this->render('esd/esd_orga.html.twig', [

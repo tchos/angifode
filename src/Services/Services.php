@@ -82,6 +82,30 @@ class Services
         return $organismes;
     }
 */
+
+    /**
+     * Renvoie l'indice au détachement.
+     * @param $grade
+     * @param $classe
+     * @param $echelon
+     * @return float|int|mixed|string
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getIndice($gradeDet, $classeDet, $echelonDet){
+        // select MIN(indice) from bareme where grade = "42110" and classe = "1" and echelon = "01";
+        return $this->manager->createQuery(
+            'SELECT MIN(b.indice)
+            FROM App\Entity\Bareme b
+            WHERE b.grade = :grade AND b.classe = :classe AND b.echelon = :echelon'
+        )
+            ->setParameter('grade', $gradeDet)
+            ->setParameter('classe', $classeDet)
+            ->setParameter('echelon', $echelonDet)
+            ->getSingleScalarResult()
+        ;
+    }
+
     /**
      * Retourne la liste des agents pour lesquels on a pas encore cotisé
      */
@@ -109,11 +133,10 @@ class Services
     }
 
     /**
+     * Retourne le salaire de base sur une période donnée .
      * @return Bareme Returns an array of Bareme objects
      */
     public function dateSalaire($dateDebut, $dateFin) {
-
-        //Liste des agants pour lesquels on n'a pas encore cotisé
         return $this->manager->createQuery(
             "SELECT DISTINCT(b.dateSalaire)
                 FROM App\Entity\Bareme b
@@ -131,7 +154,7 @@ class Services
      * Retourne les sommes à reverser pour un agent détaché
      * @Return array
      */
-    public function getPeriodes($dateDebut, $dateFin){
+    public function getPeriodes($dateDebut, $dateFin, $dateIntegration){
 
         // Dates barème
         $bareme = $this->dateSalaire($dateDebut, $dateFin);
@@ -168,6 +191,18 @@ class Services
         return $tableauPeriode;
     }
 
+    public function getListeIndice($tableauPeriode, $indice) {
+        // Va contenir la liste des indicces sur les différentes périodes
+        $tableauIndice = [];
+
+        // Ajout de l'indice au détachement
+        $tableauIndice[0] = $indice;
+
+        for ($i = 1; i < count($tableauPeriode); $i++){
+
+        }
+    }
+
     /**
      * Retourne le salaire de base sur une période
      * @return Integer
@@ -193,9 +228,26 @@ class Services
         ->getSingleScalarResult();
     }
 
-
+    /**
+     * Cette fonction renvoie le prochain indice après un avancement dans un barème bien connu
+     * pour les fonctionnaires détachés
+     * @param $grade
+     * @param $indice
+     * @return float|int|mixed|string
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function getNextIndice($grade, $indice) {
-
+        //SELECT MIN(INDICE) AS ind_sol FROM `bareme` WHERE grade="42210" AND  `INDICE` > 485;
+        return $this->manager->createQuery(
+            "SELECT MIN(b.indice) 
+                FROM App\Entity\Bareme b
+                WHERE b.grade = :grade AND b.indice > :indice
+            "
+        )
+            ->setParameter('grade', $grade)
+            ->setParameter('indice', $indice)
+            ->getSingleScalarResult();
     }
 
     public function getNextEchelon($grade, $indice) {
@@ -206,17 +258,25 @@ class Services
      * Retourne la somme à reverser sur une période de date
      * @Return Integer
      */
-    public function getSommeAReverser($dateDebut, $dateFin, $typeAgent) {
+    public function getSommeAReverser($dateDebut, $dateFin, $indice, $gradeDet, $dateIntegration) {
         $sar = 0;
-        $tableauPeriode = $this->getPeriodes($dateDebut, $dateFin);
+
+        // On récupère le type agent selon le grade.
+        if ($gradeDet < "60000" || $gradeDet > "62000")
+            $typeAgent = 1;
+        else
+            $typeAgent = 0;
+
+        $tableauPeriode = $this->getPeriodes($dateDebut, $dateFin, $dateIntegration);
 
         $dateD = date_create($tableauPeriode[0]);
         $dateF = date_create($tableauPeriode[1]);
+
         date_sub($dateF,date_interval_create_from_date_string("1 day"));
 
-        $sb = $this->getSalaire($dateD, $dateF, "42110", 430);
+        $sb = $this->getSalaire($dateD, $dateF, $gradeDet, $indice);
 
-        $pd = $dateD->diff($dateF)->format('%d');
+        $pd = 1 + $dateD->diff($dateF)->days;
 
         if ($typeAgent == 1) {
             $sar = $sar + (($sb * 12 * 22 * $pd) / (360 * 100));
@@ -230,10 +290,20 @@ class Services
             $dateF = date_create($tableauPeriode[$i+1]);
             date_sub($dateF,date_interval_create_from_date_string("1 day"));
 
-            $sb = $this->getSalaire($dateD, $dateF, "42110", 430);
-            //dd($sb);
-            $pd = $dateD->diff($dateF)->days;
+            //Changement d'indice si avancement sinon l'indice reste inchangé
+            date_add($dateIntegration,date_interval_create_from_date_string("2 years"));
+            if ($dateD == $dateIntegration){
+                if ($this->getNextIndice($gradeDet, $indice) != NULL ) {
+                    $indice = $this->getNextIndice($gradeDet, $indice);
+                }
+            } else {
+                date_sub($dateIntegration,date_interval_create_from_date_string("2 years"));
+            }
 
+            $sb = $this->getSalaire($dateD, $dateF, $gradeDet, $indice);
+
+            $pd = 1 + $dateD->diff($dateF)->days;
+            //dd($pd);
             if ($typeAgent == 1) {
                 $sar = $sar + (($sb * 12 * 22 * $pd) / (360 * 100));
             } else {

@@ -24,6 +24,7 @@
                             <th>SIGLE</th>
                             <th>LIBELLE</th>
                             <th>VILLE</th>
+                            <th class="text-center">CONTACTS</th>
                             <th class="text-center">ACTION</th>
                         </tr>
                         </thead>
@@ -35,6 +36,7 @@
                                     <td>{{ organisme.sigle }}</td>
                                     <td>{{ organisme.libelleOrg }}</td>
                                     <td>{{ organisme.ville }}</td>
+                                    <td class="text-center">{{ organisme.telephone1 }}{% if organisme.telephone2 %} / {{ organisme.telephone2 }}{% endif %}</td>
                                     <td class="text-center">
                                         <a title="Modifier les informations sur l'organisme {{ organisme.sigle }}" href="{{ path('organisme_edit', {'id': organisme.id}) }}">
                                             <i class="fas fa-edit text-success"></i><span class="ms-4"></span>

@@ -127,7 +127,7 @@ class AgentController extends AbstractController
                 // Alerte succès de la mise à jour du détachement
                 $this->addFlash("warning","Les modifications apportées au détachement ont été enregistrés avec succès !!!");
 
-                return $this->redirectToRoute('agent_new');
+                return $this->redirectToRoute('agent_detache_list');
             }
         }
 

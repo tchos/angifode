@@ -105,6 +105,7 @@ class Services
             ->getSingleScalarResult()
         ;
     }
+    /** Fin de la function getIndice() */
 
     /**
      * Retourne la liste des agents pour lesquels on a pas encore cotisé
@@ -131,6 +132,7 @@ class Services
         }
         return $anc;
     }
+    /** Fin de la function getListeACotiser() */
 
     /**
      * Retourne le salaire de base sur une période donnée .
@@ -149,6 +151,7 @@ class Services
             ->setParameter('dateFin', $dateFin)
             ->getResult();
     }
+    /** Fin de la function dateSalaire() */
 
     /**
      * Retourne les sommes à reverser pour un agent détaché
@@ -173,7 +176,6 @@ class Services
         }
 
         // prochain avancement
-        $dateIntegration = date_create("1995-11-01");
         date_add($dateIntegration,date_interval_create_from_date_string("2 years"));
 
         while ($dateIntegration <= $dateFin) {
@@ -184,24 +186,12 @@ class Services
             date_add($dateIntegration,date_interval_create_from_date_string("2 years"));
         }
 
-
         // Tri du tableau
         sort($tableauPeriode);
 
         return $tableauPeriode;
     }
-
-    public function getListeIndice($tableauPeriode, $indice) {
-        // Va contenir la liste des indicces sur les différentes périodes
-        $tableauIndice = [];
-
-        // Ajout de l'indice au détachement
-        $tableauIndice[0] = $indice;
-
-        for ($i = 1; i < count($tableauPeriode); $i++){
-
-        }
-    }
+    /** Fin de la function getPeriodes() */
 
     /**
      * Retourne le salaire de base sur une période
@@ -227,6 +217,7 @@ class Services
         ->setParameter('indice', $indice)
         ->getSingleScalarResult();
     }
+    /** Fin de la function getSalaire() */
 
     /**
      * Cette fonction renvoie le prochain indice après un avancement dans un barème bien connu
@@ -249,6 +240,7 @@ class Services
             ->setParameter('indice', $indice)
             ->getSingleScalarResult();
     }
+    /** Fin de la function getNextIndice() */
 
     public function getNextEchelon($grade, $indice) {
 
@@ -260,6 +252,8 @@ class Services
      */
     public function getSommeAReverser($dateDebut, $dateFin, $indice, $gradeDet, $dateIntegration) {
         $sar = 0;
+        $detailsEsdAgent = [];
+        $dataEsd = [];
 
         // On récupère le type agent selon le grade.
         if ($gradeDet < "60000" || $gradeDet > "62000")
@@ -274,15 +268,31 @@ class Services
 
         date_sub($dateF,date_interval_create_from_date_string("1 day"));
 
+        //Données détaillant le calcul de l'ESD d'un agent sur une période .
+        $detailsEsdAgent["dateDebut"] = $dateD;
+        $detailsEsdAgent["dateFin"] = $dateF;
+        $detailsEsdAgent["indice"] = $indice;
+
         $sb = $this->getSalaire($dateD, $dateF, $gradeDet, $indice);
+        $detailsEsdAgent["sb"] = $sb;
 
         $pd = 1 + $dateD->diff($dateF)->days;
 
         if ($typeAgent == 1) {
-            $sar = $sar + (($sb * 12 * 22 * $pd) / (360 * 100));
+            $sarPD = (($sb * 12 * 22 * $pd) / (360 * 100));
+            $sar += $sarPD;
         } else {
-            $sar = $sar + (($sb * 12 * 18 * $pd) / (360 * 100));
+            $sarPD = (($sb * 12 * 18 * $pd) / (360 * 100));
+            $sar += $sarPD;
         }
+
+        //Données détaillant le calcul de l'ESD d'un agent sur une période .
+        $detailsEsdAgent["partSalariale"] = ($sar * 10)/22;
+        $detailsEsdAgent["partPatronale"] = ($sar * 12)/22;
+        $detailsEsdAgent["sar"] = $sarPD;
+
+        //Première ligne de détails sur le calcul des ESD de l'agent
+        $dataEsd[] = $detailsEsdAgent;
 
         for ($i = 1; $i < count($tableauPeriode)-1; $i++) {
 
@@ -290,8 +300,13 @@ class Services
             $dateF = date_create($tableauPeriode[$i+1]);
             date_sub($dateF,date_interval_create_from_date_string("1 day"));
 
+            //Données détaillant le calcul de l'ESD d'un agent sur une période .
+            $detailsEsdAgent["dateDebut"] = $dateD;
+            $detailsEsdAgent["dateFin"] = $dateF;
+
             //Changement d'indice si avancement sinon l'indice reste inchangé
             date_add($dateIntegration,date_interval_create_from_date_string("2 years"));
+            //dd($dateD, $dateIntegration);
             if ($dateD == $dateIntegration){
                 if ($this->getNextIndice($gradeDet, $indice) != NULL ) {
                     $indice = $this->getNextIndice($gradeDet, $indice);
@@ -302,16 +317,31 @@ class Services
 
             $sb = $this->getSalaire($dateD, $dateF, $gradeDet, $indice);
 
+            //Données détaillant le calcul de l'ESD d'un agent sur une période .
+            $detailsEsdAgent["indice"] = $indice;
+            $detailsEsdAgent["sb"] = $sb;
+
             $pd = 1 + $dateD->diff($dateF)->days;
             //dd($pd);
             if ($typeAgent == 1) {
-                $sar = $sar + (($sb * 12 * 22 * $pd) / (360 * 100));
+                $sarPD = (($sb * 12 * 22 * $pd) / (360 * 100));
+                $sar += $sarPD;
             } else {
-                $sar = $sar + (($sb * 12 * 18 * $pd) / (360 * 100));
+                $sarPD = (($sb * 12 * 18 * $pd) / (360 * 100));
+                $sar += $sarPD;
             }
+
+            //Données détaillant le calcul de l'ESD d'un agent sur une période .
+            $detailsEsdAgent["partSalariale"] = ($sar * 10)/22;
+            $detailsEsdAgent["partPatronale"] = ($sar * 12)/22;
+            $detailsEsdAgent["sar"] = $sarPD;
+
+            //Ligne i de détails sur le calcul des ESD de l'agent
+            $dataEsd[] = $detailsEsdAgent;
         }
 
-        return $sar;
+        return $dataEsd;
     }
+    /** Fin de la function getSommeAReverser() */
 
 }

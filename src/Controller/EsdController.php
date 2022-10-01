@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\AgentDetache;
 use App\Entity\Historique;
 use App\Entity\Organismes;
 use App\Entity\TypeBareme;
@@ -47,12 +48,30 @@ class EsdController extends AbstractController
             $dateFin = $form->get('dateFinRev')->getData();
 
             $sar = $services->getSommeAReverser($dateDebut, $dateFin, 420, "42210", date_create("1995-11-01"));
-            //$sb = $services->getSalaire(date_create("2007-11-01"), date_create("2008-03-30"), "42210", "2", "01");
+            $totalSar = 0;
+            $dataSar = [];
+
+            //dd($sar);
+            for ($i = 0; $i < count($sar); $i++) {
+                $totalSar += $sar[$i]["sar"];
+            }
+            $dataSar[] = $totalSar;
+
 
             //$periodes = $services->getPeriodes($dateDebut, $dateFin);
-
             //dd($periodes);
-            dd($sar);
+
+            // Alerte succès de l'enregistrement d'un nouveau détachement
+            $this->addFlash("success","La dette de l'organisme ". $organisme->getSigle() ." a été évaluée avec succès !!!");
+
+            return $this->render('esd/esd_result.html.twig', [
+                'dateDebut' => $dateDebut->format('d-m-Y'),
+                'dateFin' => $dateFin->format('d-m-Y'),
+                'dataSar' => $dataSar,
+                'sar' => $sar,
+                'totalSar' => $totalSar,
+                'organisme' => $organisme
+            ]);
         }
 
         return $this->render('esd/esd_orga.html.twig', [
@@ -60,12 +79,38 @@ class EsdController extends AbstractController
             'organisme' => $organisme
         ]);
     }
+    /** Fin esd_evaluate */
+
+
+    #[Route('/esd/agent/{id}∕{dateDebut}/{dateFin}', name: 'esd_agent_details')]
+    public function detailsESDAgent(Services $services, AgentDetache $agentDetache, Request $request,
+        \DateTime $dateDebut, \DateTime $dateFin): Response
+    {
+        $sar = $services->getSommeAReverser($dateDebut, $dateFin, 420, "42210", date_create("1995-11-01"));
+        $totalSar = 0;
+
+        for ($i = 0; $i < count($sar); $i++) {
+            $totalSar += $sar[$i]["sar"];
+        }
+        return $this->render('esd/esd_details.html.twig',[
+            'sar' => $sar,
+            'totalSar' => $totalSar,
+            'agentDetache' => $agentDetache
+        ]);
+    }
+    /** Fin esd_agent_details */
+
 
     #[Route('/esd', name: 'esd_orga')]
     public function listOrganisme(Services $services, OrganismesRepository $organismesRepository): Response
     {
+        if($this->getUser()->getOrganisme()->getSigle() === "MINFI" | $this->isGranted('ROLE_ADMIN'))
+            $listeOrganismes = $organismesRepository->findAll();
+        else
+            $listeOrganismes = $organismesRepository->findBy(['id' => $this->getUser()->getOrganisme()]);
+
         return $this->render('esd/orga.html.twig', [
-            'listeOrganismes' => $organismesRepository->findAll(),
+            'listeOrganismes' => $listeOrganismes,
         ]);
     }
 }

@@ -4,6 +4,9 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
+    {% if not is_granted('ROLE_ADMIN') %}
+        <link rel="stylesheet" href="{{ asset('asset/css/angifode.css') }}"/>
+    {% endif %}
 {% endblock %}
 
 {% block body %}

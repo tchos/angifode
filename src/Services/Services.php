@@ -254,6 +254,7 @@ class Services
         $sar = 0;
         $detailsEsdAgent = [];
         $dataEsd = [];
+        $dateTampon = date_format($dateIntegration, 'Y-m-d');
 
         // On récupère le type agent selon le grade.
         if ($gradeDet < "60000" || $gradeDet > "62000")
@@ -294,6 +295,12 @@ class Services
         //Première ligne de détails sur le calcul des ESD de l'agent
         $dataEsd[] = $detailsEsdAgent;
 
+        //Changement d'indice si avancement sinon l'indice reste inchangé
+        $dateAvct = date_create($dateTampon);
+        // Pour gérer les avancements, donc les changements d'indices
+        while ($dateAvct < $dateDebut)
+            date_add($dateAvct,date_interval_create_from_date_string("2 years"));
+
         for ($i = 1; $i < count($tableauPeriode)-1; $i++) {
 
             $dateD = date_create($tableauPeriode[$i]);
@@ -304,15 +311,14 @@ class Services
             $detailsEsdAgent["dateDebut"] = $dateD;
             $detailsEsdAgent["dateFin"] = $dateF;
 
-            //Changement d'indice si avancement sinon l'indice reste inchangé
-            date_add($dateIntegration,date_interval_create_from_date_string("2 years"));
-            //dd($dateD, $dateIntegration);
-            if ($dateD == $dateIntegration){
+            date_add($dateAvct,date_interval_create_from_date_string("2 years"));
+            //dd($dateDebut, $dateD, $dateAvct);
+            if ($dateD == $dateAvct){
                 if ($this->getNextIndice($gradeDet, $indice) != NULL ) {
                     $indice = $this->getNextIndice($gradeDet, $indice);
                 }
             } else {
-                date_sub($dateIntegration,date_interval_create_from_date_string("2 years"));
+                date_sub($dateAvct,date_interval_create_from_date_string("2 years"));
             }
 
             $sb = $this->getSalaire($dateD, $dateF, $gradeDet, $indice);
@@ -332,8 +338,8 @@ class Services
             }
 
             //Données détaillant le calcul de l'ESD d'un agent sur une période .
-            $detailsEsdAgent["partSalariale"] = ($sar * 10)/22;
-            $detailsEsdAgent["partPatronale"] = ($sar * 12)/22;
+            $detailsEsdAgent["partSalariale"] = ($sarPD * 10)/22;
+            $detailsEsdAgent["partPatronale"] = ($sarPD * 12)/22;
             $detailsEsdAgent["sar"] = $sarPD;
 
             //Ligne i de détails sur le calcul des ESD de l'agent

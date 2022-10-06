@@ -277,7 +277,8 @@ class Services
         $sb = $this->getSalaire($dateD, $dateF, $gradeDet, $indice);
         $detailsEsdAgent["sb"] = $sb;
 
-        $pd = 1 + $dateD->diff($dateF)->days;
+        //$pd = 1 + $dateD->diff($dateF)->days;
+        $pd = 1 + $this->diff360($dateD, $dateF);
 
         if ($typeAgent == 1) {
             $sarPD = (($sb * 12 * 22 * $pd) / (360 * 100));
@@ -327,8 +328,9 @@ class Services
             $detailsEsdAgent["indice"] = $indice;
             $detailsEsdAgent["sb"] = $sb;
 
-            $pd = 1 + $dateD->diff($dateF)->days;
-            //dd($pd);
+            //$pd = 1 + $dateD->diff($dateF)->days;
+            $pd = 1 + $this->diff360($dateD, $dateF);
+
             if ($typeAgent == 1) {
                 $sarPD = (($sb * 12 * 22 * $pd) / (360 * 100));
                 $sar += $sarPD;
@@ -350,4 +352,17 @@ class Services
     }
     /** Fin de la function getSommeAReverser() */
 
+    /**
+     * Cette fonction calcule le nombre de jours entre 2 dates en prenant chaque mois comme un mois financier (30 jours)
+     * @param $date1
+     * @param $date2
+     * @return Integer
+     */
+    function diff360($date1, $date2) {
+
+        $diff = $date1->diff($date2);
+        $days = ($date2->format('d') + 30 - $date1->format('d')) % 30;
+
+        return $diff->y * 360 + $diff->m * 30 + $days;
+    }
 }

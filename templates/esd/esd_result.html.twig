@@ -38,7 +38,7 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     SOMME A REVERSER :
                     <span class="badge bg-success rounded-pill fw-bolder">
-                        {{ totalSar | number_format(0,'.',' ')}} FCFA
+                        {{ total_sar_organisme | number_format(0,'.',' ')}} FCFA
                     </span>
                 </li>
             </div>
@@ -51,23 +51,23 @@
                     <table id="agentsdetaches" class="table table-striped table-hover mt-4">
                         <thead>
                         <tr class="table-dark">
-                            <th>ID</th>
-                            <th>MATRICULE</th>
+                            <th>N°</th>
+                            <th>AGENTS DETACHES</th>
                             <th class="text-end pe-5">SOMME A REVERSER</th>
                             <th class="text-center">ACTION</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% set i = 1 %}
-                        {% for sar in dataSar %}
+                        {% set i = 0 %}
+                        {% for agent, sar in dataSar %}
                             <tr>
                                 <td>{{ i }}</td>
-                                <td>{{ i }}</td>
+                                <td>{{ agent }}</td>
                                 <td class="text-end pe-5">{{ sar | number_format(0,'.',' ') }}</td>
                                 <td class="text-center">
                                     <a title="Détails de l'évaluation la dette sociale de l'agent {{ i }}"
                                        href="{{ path('esd_agent_details',
-                                           {'id': 5,
+                                           {'id': id_agent[i],
                                                'dateDebut': dateDebut,
                                                'dateFin': dateFin}) }}">
                                         <span>Détails</span>

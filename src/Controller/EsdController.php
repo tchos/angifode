@@ -47,19 +47,42 @@ class EsdController extends AbstractController
             $dateDebut = $form->get('dateDebRev')->getData();
             $dateFin = $form->get('dateFinRev')->getData();
 
-            $sar = $services->getSommeAReverser($dateDebut, $dateFin, 420, "42210", date_create("1995-11-01"));
-            $totalSar = 0;
+            //Liste des agents détachés au sein de l'organisme .
+            $agents = $organisme->getAgentDetaches()->toArray();
+            // Tableau qui contient les id des agents détachés au sein de l'organisme
+            $id_agent = [];
+            // tableau: matricule => somme à reverser
+            $sar_organisme = [];
+
+            for ($i = 0; $i < count($agents); $i++){
+                $dateIntegration = $agents[$i]->getDateIntegration();
+                $gradeDet = $agents[$i]->getGradeDet();
+                $classeDet = $agents[$i]->getClasseDet();
+                $echelonDet = $agents[$i]->getEchelonDet();
+                $indiceDet = $services->getIndice($gradeDet, $classeDet, $echelonDet);
+
+                $first_indice = $services->getFirstindice($gradeDet, $indiceDet, $dateIntegration, $dateDebut);
+
+                // $sar = somme à reverser pour un agent détatché
+                $sar = $services->getSommeAReverser($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
+                $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
+
+                // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
+                $id_agent[] = $agents[$i]->getId();
+            }
+
+            //$sar = $services->getSommeAReverser($dateDebut, $dateFin, 420, "42210", date_create("1995-11-01"));
+            $total_sar_organisme = 0;
             $dataSar = [];
 
-            //dd($sar);
-            for ($i = 0; $i < count($sar); $i++) {
-                $totalSar += $sar[$i]["sar"];
+            foreach ($sar_organisme as $key => $value){
+                $totalSar = 0;
+                for($i = 0; $i < count($value); $i++) {
+                    $totalSar += $value[$i]["sar"];
+                    $total_sar_organisme += $value[$i]["sar"];
+                }
+                $dataSar[$key] = $totalSar;
             }
-            $dataSar[] = $totalSar;
-
-
-            //$periodes = $services->getPeriodes($dateDebut, $dateFin);
-            //dd($periodes);
 
             // Alerte succès de l'enregistrement d'un nouveau détachement
             $this->addFlash("success","La dette de l'organisme ". $organisme->getSigle() ." a été évaluée avec succès !!!");
@@ -67,9 +90,10 @@ class EsdController extends AbstractController
             return $this->render('esd/esd_result.html.twig', [
                 'dateDebut' => $dateDebut->format('d-m-Y'),
                 'dateFin' => $dateFin->format('d-m-Y'),
+                'id_agent' => $id_agent,
                 'dataSar' => $dataSar,
                 'sar' => $sar,
-                'totalSar' => $totalSar,
+                'total_sar_organisme' => $total_sar_organisme,
                 'organisme' => $organisme
             ]);
         }
@@ -86,7 +110,17 @@ class EsdController extends AbstractController
     public function detailsESDAgent(Services $services, AgentDetache $agentDetache, Request $request,
         \DateTime $dateDebut, \DateTime $dateFin): Response
     {
-        $sar = $services->getSommeAReverser($dateDebut, $dateFin, 420, "42210", date_create("1995-11-01"));
+        $gradeDet = $agentDetache->getGradeDet();
+        $classeDet = $agentDetache->getClasseDet();
+        $echelonDet = $agentDetache->getEchelonDet();
+        $indiceDet = $services->getIndice($gradeDet, $classeDet, $echelonDet);
+        $dateIntegration = $agentDetache->getDateIntegration();
+
+        $first_indice = $services->getFirstindice($gradeDet, $indiceDet, $dateIntegration, $dateDebut);
+
+        // $sar = somme à reverser pour un agent détatché
+        $sar = $services->getSommeAReverser($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
+
         $totalSar = 0;
 
         for ($i = 0; $i < count($sar); $i++) {

@@ -188,9 +188,6 @@ $nbBareme = 0;
   
   <div class="row-cols-2 justify-content-center d-flex align-items-center">
 
-
-                
-
                 {{ form_row(registrationForm.organisme) }}
                 {{ form_row(registrationForm.roles) }}
                 {{ form_row(registrationForm.activation) }}
@@ -202,6 +199,21 @@ $nbBareme = 0;
 
             </div>
   
+  function diff360($date1, $date2) {
+    $date1 = new DateTime($date1);
+    $date2 = new DateTime($date2);
+    $diff = $date1->diff($date2);
+    $days = ($date2->format('d') + 30 - $date1->format('d')) % 30;
+    return array(
+        "y" => $diff->y,
+        "m" => $diff->m,
+        "d" => $days,
+        "totaldays" => $diff->y * 360 + $diff->m * 30 + $days
+    );
+}
+
+$periodes = $services->getPeriodes($dateDebut, $dateFin);
+dd($periodes);
   
   
 

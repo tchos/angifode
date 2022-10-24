@@ -242,6 +242,33 @@ class Services
     }
     /** Fin de la function getNextIndice() */
 
+    /**
+     * Cette fonction retourne l'indice exacte à la date de début àp partir de laquelle on veut
+     * évaluer la dette.
+     * @param $grade
+     * @param $indicce
+     * @return mixed
+     */
+    public function getFirstindice($grade_det, $indice_det, $dateIntegration, $dateDebut)
+    {
+        $tableau_indice = [];
+        $tableau_indice[] = $indice_det;
+        $dateTampon = date_format($dateIntegration, 'Y-m-d');
+
+        //Changement d'indice si avancement sinon l'indice reste inchangé
+        $dateAvct = date_create($dateTampon);
+        // Pour gérer les avancements, donc les changements d'indices
+        while ($dateAvct < $dateDebut){
+            date_add($dateAvct,date_interval_create_from_date_string("2 years"));
+            if ($this->getNextIndice($grade_det, $indice_det) != NULL ) {
+                $indice_det = $this->getNextIndice($grade_det, $indice_det);
+                $tableau_indice[] = $indice_det;
+            }
+        }
+        return $tableau_indice[array_key_last($tableau_indice) -1 ];
+    }
+    /** Fin de la fonction getFirstIndice */
+
     public function getNextEchelon($grade, $indice) {
 
     }

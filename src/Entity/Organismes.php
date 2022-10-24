@@ -122,22 +122,22 @@ class Organismes
     private $siteWeb;
 
     /**
-     * @ORM\OneToMany(targetEntity=Utilisateurs::class, mappedBy="idOrg")
+     * @ORM\OneToMany(targetEntity=Utilisateurs::class, mappedBy="idOrg", fetch="EAGER")
      */
     private $utilisateurs;
 
     /**
-     * @ORM\OneToMany(targetEntity=PointsFocaux::class, mappedBy="idOrg")
+     * @ORM\OneToMany(targetEntity=PointsFocaux::class, mappedBy="idOrg", fetch="EAGER")
      */
     private $pointsFocaux;
 
     /**
-     * @ORM\OneToMany(targetEntity=Reversement::class, mappedBy="organisme")
+     * @ORM\OneToMany(targetEntity=Reversement::class, mappedBy="organisme", fetch="EAGER")
      */
     private $reversements;
 
     /**
-     * @ORM\OneToMany(targetEntity=AgentDetache::class, mappedBy="organisme")
+     * @ORM\OneToMany(targetEntity=AgentDetache::class, mappedBy="organisme", fetch="EAGER")
      */
     private $agentDetaches;
 

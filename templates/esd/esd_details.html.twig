@@ -25,7 +25,7 @@
                             <th class="text-center">ID</th>
                             <th class="text-center">Date début</th>
                             <th class="text-center">Date fin</th>
-                            <th class="text-center">Indice</th>
+                            <th class="text-center">Ind./Ech.</th>
                             <th class="text-end pe-5">Salaire de base</th>
                             <th class="text-end pe-5">Part salariale</th>
                             <th class="text-end pe-5">Part patronale</th>
@@ -40,7 +40,13 @@
                                 <td class="text-center">{{ i }}</td>
                                 <td class="text-center">{{ periode.dateDebut | format_datetime('short', 'none', locale='fr') }}</td>
                                 <td class="text-center">{{ periode.dateFin | format_datetime('short', 'none', locale='fr') }}</td>
-                                <td class="text-center">{{ periode.indice }}</td>
+                                <td class="text-center">
+                                    {% if (periode.indice is defined) %}
+                                        {{ periode.indice }}
+                                    {% else %}
+                                        {{ periode.echelon }}
+                                    {% endif %}
+                                </td>
                                 <td class="text-end pe-5">{{ periode.sb | number_format(0,'.',' ') }} FCFA</td>
                                 <td class="text-end pe-5">{{ periode.partSalariale | number_format(0,'.',' ') }} FCFA</td>
                                 <td class="text-end pe-5">{{ periode.partPatronale | number_format(0,'.',' ') }} FCFA</td>

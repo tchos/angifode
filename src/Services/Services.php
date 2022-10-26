@@ -197,7 +197,7 @@ class Services
      * Retourne le salaire de base sur une période
      * @return Integer
      */
-    public function getSalaire($dateDebut, $dateFin, $grade, $indice) {
+    public function getSalaireFC($dateDebut, $dateFin, $grade, $indice) {
 
         //select salaire_base from bareme where grade="42110" AND indice = 430
         // AND num_bar IN (select num_bar from type_bareme where date_debut <= "2003-09-01" and date_fin >= "2002-02-11");
@@ -217,7 +217,37 @@ class Services
         ->setParameter('indice', $indice)
         ->getSingleScalarResult();
     }
-    /** Fin de la function getSalaire() */
+    /** Fin de la function getSalaireFC() pour les fonctionnaires  */
+
+    /**
+     * Cette fonction retourne le salire de base d'un agent du code du travail
+     * @param $dateDebut
+     * @param $dateFin
+     * @param $grade
+     * @param $echelon
+     * @return float|int|mixed|string
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getSalaireCT($dateDebut, $dateFin, $grade, $echelon)
+    {   //select salaire_base from bareme where grade="61200" AND echelon = "02"
+        // AND num_bar IN (select num_bar from type_bareme where date_debut <= "2003-09-01" and date_fin >= "2002-02-11");
+        return $this->manager->createQuery(
+            "SELECT MAX(b.salaireBase)
+                FROM App\Entity\Bareme b
+                WHERE b.grade = :grade AND b.echelon = :echelon AND b.numBar IN ( 
+                    SELECT t.numBar
+                    FROM App\Entity\TypeBareme t
+                    WHERE t.dateDebut <= :dateFin AND t.dateFin >= :dateDebut )
+            "
+        )
+            ->setParameter('dateDebut', $dateDebut)
+            ->setParameter('dateFin', $dateFin)
+            ->setParameter('grade', $grade)
+            ->setParameter('echelon', $echelon)
+            ->getSingleScalarResult();
+    }
+    /** Fin de la function getSalaireCT() pour les agents du code du travail  */
 
     /**
      * Cette fonction renvoie le prochain indice après un avancement dans un barème bien connu
@@ -229,7 +259,7 @@ class Services
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getNextIndice($grade, $indice) {
-        //SELECT MIN(INDICE) AS ind_sol FROM `bareme` WHERE grade="42210" AND  `INDICE` > 485;
+        //SELECT MIN(INDICE) AS indice_solde FROM `bareme` WHERE grade="42210" AND  `INDICE` > 485;
         return $this->manager->createQuery(
             "SELECT MIN(b.indice) 
                 FROM App\Entity\Bareme b
@@ -243,13 +273,12 @@ class Services
     /** Fin de la function getNextIndice() */
 
     /**
-     * Cette fonction retourne l'indice exacte à la date de début àp partir de laquelle on veut
-     * évaluer la dette.
+     * Cette fonction retourne l'indice exacte à la date de début àp partir de laquelle on veut évaluer la dette
      * @param $grade
      * @param $indicce
      * @return mixed
      */
-    public function getFirstindice($grade_det, $indice_det, $dateIntegration, $dateDebut)
+    public function getFirstIndice($grade_det, $indice_det, $dateIntegration, $dateDebut)
     {
         $tableau_indice = [];
         $tableau_indice[] = $indice_det;
@@ -265,29 +294,75 @@ class Services
                 $tableau_indice[] = $indice_det;
             }
         }
-        return $tableau_indice[array_key_last($tableau_indice) -1 ];
-    }
-    /** Fin de la fonction getFirstIndice */
 
-    public function getNextEchelon($grade, $indice) {
-
+        if (count($tableau_indice) > 1) return $tableau_indice[array_key_last($tableau_indice) -1 ];
+        else return $tableau_indice[array_key_last($tableau_indice) ];
     }
+    /** Fin de la fonction getFirstIndice() */
 
     /**
-     * Retourne la somme à reverser sur une période de date
+     * Cette fonction renvoie le prochain echelon suivant un avct d'un agent du code du travail
+     * @param $grade
+     * @param $echelon
+     * @return float|int|mixed|string
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getNextEchelon($grade, $echelon) {
+        //SELECT MIN(ECHELON) AS echelon_solde FROM `bareme` WHERE grade="61200" AND  `ECHELON` > "11";
+        return $this->manager->createQuery(
+            "SELECT MIN(b.echelon) 
+                FROM App\Entity\Bareme b
+                WHERE b.grade = :grade AND b.echelon > :echelon
+            "
+        )
+            ->setParameter('grade', $grade)
+            ->setParameter('echelon', $echelon)
+            ->getSingleScalarResult();
+    }
+    /** Fin de la fonction getNextEchelon() */
+
+    /**
+     * Cette fonction retourne l'indice exacte à la date de début àp partir de laquelle on veut évaluer la dette
+     * @param $grade_det
+     * @param $echelon_det
+     * @param $dateIntegration
+     * @param $dateDebut
+     * @return $echelon_det
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getFirstEchelon($grade_det, $echelon_det, $dateIntegration, $dateDebut)
+    {
+        $tableau_echelon = [];
+        $tableau_echelon[] = $echelon_det;
+        $dateTampon = date_format($dateIntegration, 'Y-m-d');
+
+        //Changement d'echelon si avancement sinon l'echelon reste inchangé
+        $dateAvct = date_create($dateTampon);
+        // Pour gérer les avancements, donc les changements d'echelon
+        while ($dateAvct < $dateDebut){
+            date_add($dateAvct,date_interval_create_from_date_string("2 years"));
+            if ($this->getNextEchelon($grade_det, $echelon_det) != NULL ) {
+                $echelon_det = $this->getNextEchelon($grade_det, $echelon_det);
+                $tableau_echelon[] = $echelon_det;
+            }
+        }
+        if(count($tableau_echelon) > 1 ) return $tableau_echelon[array_key_last($tableau_echelon) -1 ];
+        else $tableau_echelon[array_key_last($tableau_echelon) ];
+    }
+    /** Fin de la fonction getFirstEchelon() */
+
+    /**
+     * Retourne la somme à reverser sur une période de date pour les fonctionnaires
      * @Return Integer
      */
-    public function getSommeAReverser($dateDebut, $dateFin, $indice, $gradeDet, $dateIntegration) {
+    public function getSommeAReverserFC($dateDebut, $dateFin, $indice, $gradeDet, $dateIntegration)
+    {
         $sar = 0;
         $detailsEsdAgent = [];
         $dataEsd = [];
         $dateTampon = date_format($dateIntegration, 'Y-m-d');
-
-        // On récupère le type agent selon le grade.
-        if ($gradeDet < "60000" || $gradeDet > "62000")
-            $typeAgent = 1;
-        else
-            $typeAgent = 0;
 
         $tableauPeriode = $this->getPeriodes($dateDebut, $dateFin, $dateIntegration);
 
@@ -301,23 +376,107 @@ class Services
         $detailsEsdAgent["dateFin"] = $dateF;
         $detailsEsdAgent["indice"] = $indice;
 
-        $sb = $this->getSalaire($dateD, $dateF, $gradeDet, $indice);
+        $sb = $this->getSalaireFC($dateD, $dateF, $gradeDet, $indice);
         $detailsEsdAgent["sb"] = $sb;
 
         //$pd = 1 + $dateD->diff($dateF)->days;
         $pd = 1 + $this->diff360($dateD, $dateF);
-
-        if ($typeAgent == 1) {
-            $sarPD = (($sb * 12 * 22 * $pd) / (360 * 100));
-            $sar += $sarPD;
-        } else {
-            $sarPD = (($sb * 12 * 18 * $pd) / (360 * 100));
-            $sar += $sarPD;
-        }
+        $sarPD = (($sb * 12 * 22 * $pd) / (360 * 100));
+        $sar += $sarPD;
 
         //Données détaillant le calcul de l'ESD d'un agent sur une période .
         $detailsEsdAgent["partSalariale"] = ($sar * 10)/22;
         $detailsEsdAgent["partPatronale"] = ($sar * 12)/22;
+        $detailsEsdAgent["sar"] = $sarPD;
+
+        //Première ligne de détails sur le calcul des ESD de l'agent
+        $dataEsd[] = $detailsEsdAgent;
+
+        //Changement d'indice si avancement sinon l'indice reste inchangé
+        $dateAvct = date_create($dateTampon);
+        // Pour gérer les avancements, donc les changements d'indices
+        while ($dateAvct < $dateDebut)
+            date_add($dateAvct,date_interval_create_from_date_string("2 years"));
+
+        for ($i = 1; $i < count($tableauPeriode)-1; $i++)
+        {
+            $dateD = date_create($tableauPeriode[$i]);
+            $dateF = date_create($tableauPeriode[$i+1]);
+            date_sub($dateF,date_interval_create_from_date_string("1 day"));
+
+            //Données détaillant le calcul de l'ESD d'un agent sur une période .
+            $detailsEsdAgent["dateDebut"] = $dateD;
+            $detailsEsdAgent["dateFin"] = $dateF;
+
+            date_add($dateAvct,date_interval_create_from_date_string("2 years"));
+            //dd($dateDebut, $dateD, $dateAvct);
+            if ($dateD == $dateAvct){
+                if ($this->getNextIndice($gradeDet, $indice) != NULL ) {
+                    $indice = $this->getNextIndice($gradeDet, $indice);
+                }
+            } else {
+                date_sub($dateAvct,date_interval_create_from_date_string("2 years"));
+            }
+
+            $sb = $this->getSalaireFC($dateD, $dateF, $gradeDet, $indice);
+
+            //Données détaillant le calcul de l'ESD d'un agent sur une période .
+            $detailsEsdAgent["indice"] = $indice;
+            $detailsEsdAgent["sb"] = $sb;
+
+            //$pd = 1 + $dateD->diff($dateF)->days;
+            $pd = 1 + $this->diff360($dateD, $dateF);
+            //Somme à reverser sur la période
+            $sarPD = (($sb * 12 * 22 * $pd) / (360 * 100));
+            $sar += $sarPD;
+
+            //Données détaillant le calcul de l'ESD d'un agent sur une période .
+            $detailsEsdAgent["partSalariale"] = ($sarPD * 10)/22;
+            $detailsEsdAgent["partPatronale"] = ($sarPD * 12)/22;
+            $detailsEsdAgent["sar"] = $sarPD;
+
+            //Ligne i de détails sur le calcul des ESD de l'agent
+            $dataEsd[] = $detailsEsdAgent;
+        }
+
+        return $dataEsd;
+    }
+    /** Fin de la function getSommeAReverserFC() pour les fonctionnaire */
+
+    /**
+     * Retourne la somme à reverser sur une période de date pour les agents du code du travail
+     * @Return Integer
+     */
+    public function getSommeAReverserCT($dateDebut, $dateFin, $echelon, $gradeDet, $dateIntegration)
+    {
+        $sar = 0;
+        $detailsEsdAgent = [];
+        $dataEsd = [];
+        $dateTampon = date_format($dateIntegration, 'Y-m-d');
+
+        $tableauPeriode = $this->getPeriodes($dateDebut, $dateFin, $dateIntegration);
+
+        $dateD = date_create($tableauPeriode[0]);
+        $dateF = date_create($tableauPeriode[1]);
+
+        date_sub($dateF,date_interval_create_from_date_string("1 day"));
+
+        //Données détaillant le calcul de l'ESD d'un agent sur une période .
+        $detailsEsdAgent["dateDebut"] = $dateD;
+        $detailsEsdAgent["dateFin"] = $dateF;
+        $detailsEsdAgent["echelon"] = $echelon;
+
+        $sb = $this->getSalaireCT($dateD, $dateF, $gradeDet, $echelon);
+        $detailsEsdAgent["sb"] = $sb;
+        //Période de détachement
+        $pd = 1 + $this->diff360($dateD, $dateF);
+        //Somme à réverser sur la période
+        $sarPD = (($sb * 12 * 18 * $pd) / (360 * 100));
+        $sar += $sarPD;
+
+        //Données détaillant le calcul de l'ESD d'un agent sur une période .
+        $detailsEsdAgent["partSalariale"] = ($sar * 6)/18;
+        $detailsEsdAgent["partPatronale"] = ($sar * 12)/18;
         $detailsEsdAgent["sar"] = $sarPD;
 
         //Première ligne de détails sur le calcul des ESD de l'agent
@@ -340,35 +499,30 @@ class Services
             $detailsEsdAgent["dateFin"] = $dateF;
 
             date_add($dateAvct,date_interval_create_from_date_string("2 years"));
-            //dd($dateDebut, $dateD, $dateAvct);
+            //A chaque avct, les echelon changent et donc le salaire de base augmente
             if ($dateD == $dateAvct){
-                if ($this->getNextIndice($gradeDet, $indice) != NULL ) {
-                    $indice = $this->getNextIndice($gradeDet, $indice);
+                if ($this->getNextEchelon($gradeDet, $echelon) != NULL ) {
+                    $echelon = $this->getNextEchelon($gradeDet, $echelon);
                 }
             } else {
                 date_sub($dateAvct,date_interval_create_from_date_string("2 years"));
             }
 
-            $sb = $this->getSalaire($dateD, $dateF, $gradeDet, $indice);
+            $sb = $this->getSalaireCT($dateD, $dateF, $gradeDet, $echelon);
 
             //Données détaillant le calcul de l'ESD d'un agent sur une période .
-            $detailsEsdAgent["indice"] = $indice;
+            $detailsEsdAgent["echelon"] = $echelon;
             $detailsEsdAgent["sb"] = $sb;
 
             //$pd = 1 + $dateD->diff($dateF)->days;
             $pd = 1 + $this->diff360($dateD, $dateF);
-
-            if ($typeAgent == 1) {
-                $sarPD = (($sb * 12 * 22 * $pd) / (360 * 100));
-                $sar += $sarPD;
-            } else {
-                $sarPD = (($sb * 12 * 18 * $pd) / (360 * 100));
-                $sar += $sarPD;
-            }
+            //Somme à reverser sur la période de détachement
+            $sarPD = (($sb * 12 * 18 * $pd) / (360 * 100));
+            $sar += $sarPD;
 
             //Données détaillant le calcul de l'ESD d'un agent sur une période .
-            $detailsEsdAgent["partSalariale"] = ($sarPD * 10)/22;
-            $detailsEsdAgent["partPatronale"] = ($sarPD * 12)/22;
+            $detailsEsdAgent["partSalariale"] = ($sarPD * 6)/18;
+            $detailsEsdAgent["partPatronale"] = ($sarPD * 12)/18;
             $detailsEsdAgent["sar"] = $sarPD;
 
             //Ligne i de détails sur le calcul des ESD de l'agent
@@ -377,7 +531,7 @@ class Services
 
         return $dataEsd;
     }
-    /** Fin de la function getSommeAReverser() */
+    /** Fin de la function getSommeAReverser() pour les agents du code du travail */
 
     /**
      * Cette fonction calcule le nombre de jours entre 2 dates en prenant chaque mois comme un mois financier (30 jours)

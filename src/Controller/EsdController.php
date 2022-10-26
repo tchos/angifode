@@ -61,14 +61,22 @@ class EsdController extends AbstractController
                 $echelonDet = $agents[$i]->getEchelonDet();
                 $indiceDet = $services->getIndice($gradeDet, $classeDet, $echelonDet);
 
-                $first_indice = $services->getFirstindice($gradeDet, $indiceDet, $dateIntegration, $dateDebut);
-
-                // $sar = somme à reverser pour un agent détatché
-                $sar = $services->getSommeAReverser($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
-                $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
-
-                // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
-                $id_agent[] = $agents[$i]->getId();
+                //Somme à reverser selon que l'agent détaché soit fonctionnnaire ou du code du travail
+                if($gradeDet >= "60000" && $gradeDet < "62000") {
+                    $first_echelon = $services->getFirstEchelon($gradeDet, $echelonDet, $dateIntegration, $dateDebut);
+                    // $sar = somme à reverser pour un agent détatché du code du travail
+                    $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration);
+                    $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
+                    // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
+                    $id_agent[] = $agents[$i]->getId();
+                } else {
+                    $first_indice = $services->getFirstIndice($gradeDet, $indiceDet, $dateIntegration, $dateDebut);
+                    // $sar = somme à reverser pour un agent détatché fonction
+                    $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
+                    $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
+                    // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
+                    $id_agent[] = $agents[$i]->getId();
+                }
             }
 
             //$sar = $services->getSommeAReverser($dateDebut, $dateFin, 420, "42210", date_create("1995-11-01"));
@@ -116,13 +124,17 @@ class EsdController extends AbstractController
         $indiceDet = $services->getIndice($gradeDet, $classeDet, $echelonDet);
         $dateIntegration = $agentDetache->getDateIntegration();
 
-        $first_indice = $services->getFirstindice($gradeDet, $indiceDet, $dateIntegration, $dateDebut);
-
-        // $sar = somme à reverser pour un agent détatché
-        $sar = $services->getSommeAReverser($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
+        if($gradeDet >= "60000" && $gradeDet < "62000") {
+            $first_echelon = $services->getFirstEchelon($gradeDet, $echelonDet, $dateIntegration, $dateDebut);
+            // $sar = somme à reverser pour un agent détatché
+            $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration);
+        } else {
+            $first_indice = $services->getFirstIndice($gradeDet, $indiceDet, $dateIntegration, $dateDebut);
+            // $sar = somme à reverser pour un agent détatché
+            $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
+        }
 
         $totalSar = 0;
-
         for ($i = 0; $i < count($sar); $i++) {
             $totalSar += $sar[$i]["sar"];
         }

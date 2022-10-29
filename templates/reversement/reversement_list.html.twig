@@ -40,7 +40,7 @@
                                 <td>{{ organisme }}</td>
                                 <td>{{ reversement.typeRev }}</td>
                                 <td>{{ reversement.dateTitre | format_datetime('full', 'none', locale='fr') }}</td>
-                                <td>{{ reversement.montantRev }}</td>
+                                <td>{{ reversement.montantRev | number_format(0,'.',' ') }}</td>
                                 <td class="text-center">
                                     <a title="Preuve de reversement"
                                        href="{{ asset("asset/preuves/" ~ organisme ~ "/" ~ year ~ "/" ~ "/" ~ reversement.preuveRev ) }}">

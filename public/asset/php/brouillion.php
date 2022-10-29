@@ -218,6 +218,41 @@ dd($periodes);
 select salaire_base from bareme where grade="61200" AND echelon = "02" AND num_bar IN (select num_bar from type_bareme where date_debut <= "2003-09-01" and date_fin >= "2002-02-11");
 select DISTINCT(grade) from bareme where corps = "60" OR corps ="61";
 SELECT MIN(ECHELON) AS echelon_solde FROM `bareme` WHERE grade="61200" AND  `ECHELON` > "11";
+
+{{ organisme.telephone1 }}{% if organisme.telephone2 %} / {{ organisme.telephone2 }}{% endif %}
+{#
+{{ asset("asset/preuves/") }}{{ organisme }}/{{ year }}/{{ reversement.preuveRev }}
+    href="{{ asset("asset/preuves/" ~ organisme ~ "/" ~ year ~ "/" ~ "/" ~ reversement.preuveRev ) }}"
+#}
+
+<script>
+        $(document).ready(function(){
+            var azemDataTable = $('#agentsdetaches').DataTable({
+                dom: 'Blfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        text:      '<i class="fas fa-copy" style="font-size:25px;color:blue;"></i>',
+                    },
+                    {
+                        extend: 'pdf',
+                        text:      '<i class="fas fa-file-pdf" style="font-size:25px;color:red;"></i>',
+                        exportOptions: {
+                            columns: [0,1,2] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        text:      '<i class="fas fa-file-alt" style="font-size:25px;color:black;"></i>',
+                    },
+                    {
+                        extend: 'excel',
+                        text:      '<i class="fas fa-file-excel" style="font-size:25px;color:darkgreen;"></i>',
+                    }
+                ]
+            });
+        });
+    </script>
   
   
 

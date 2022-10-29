@@ -124,27 +124,26 @@
 
     <script>
         $(document).ready(function(){
-            var azemDataTable = $('#agentsdetaches').DataTable({
+            var theDataTable = $('#agentsdetaches').DataTable({
                 dom: 'Blfrtip',
                 buttons: [
                     {
                         extend: 'copy',
-                        text:      '<i class="fas fa-copy" style="font-size:25px;color:blue;"></i>',
+                        text:      '<span class="fw-bolder">Copier</span>',
+                        titleAttr: 'Copier les données du tableau',
+                        className: 'btn btn-dark btn-sm',
                     },
                     {
                         extend: 'pdf',
-                        text:      '<i class="fas fa-file-pdf" style="font-size:25px;color:red;"></i>',
-                        exportOptions: {
-                            columns: [0,1,2] // Column index which needs to export
-                        }
-                    },
-                    {
-                        extend: 'csv',
-                        text:      '<i class="fas fa-file-alt" style="font-size:25px;color:black;"></i>',
+                        text:      '<span class="fw-bolder">PDF</span>',
+                        titleAttr: 'Exporter les données du tableau au format pdf',
+                        className: 'btn btn-dark btn-sm',
                     },
                     {
                         extend: 'excel',
-                        text:      '<i class="fas fa-file-excel" style="font-size:25px;color:darkgreen;"></i>',
+                        text:      '<span class="fw-bolder">MS Excel</span>',
+                        titleAttr: 'Exporter les données du tableau au format excel',
+                        className: 'btn btn-dark btn-sm',
                     }
                 ]
             });

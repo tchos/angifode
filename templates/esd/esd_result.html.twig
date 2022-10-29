@@ -99,29 +99,30 @@
 
     <script>
         $(document).ready(function(){
-            var azemDataTable = $('#agentsdetaches').DataTable({
-                dom: 'Blfrtip',
-                buttons: [
-                    {
-                        extend: 'copy',
-                        text:      '<i class="fas fa-copy" style="font-size:25px;color:blue;"></i>',
-                    },
-                    {
-                        extend: 'pdf',
-                        text:      '<i class="fas fa-file-pdf" style="font-size:25px;color:red;"></i>',
-                        exportOptions: {
-                            columns: [0,1,2] // Column index which needs to export
+            $(document).ready(function(){
+                var theDataTable = $('#agentsdetaches').DataTable({
+                    dom: 'Blfrtip',
+                    buttons: [
+                        {
+                            extend: 'copy',
+                            text:      '<span class="fw-bolder">Copier</span>',
+                            titleAttr: 'Copier les données du tableau',
+                            className: 'btn btn-dark btn-sm',
+                        },
+                        {
+                            extend: 'pdf',
+                            text:      '<span class="fw-bolder">PDF</span>',
+                            titleAttr: 'Exporter les données du tableau au format pdf',
+                            className: 'btn btn-dark btn-sm',
+                        },
+                        {
+                            extend: 'excel',
+                            text:      '<span class="fw-bolder">MS Excel</span>',
+                            titleAttr: 'Exporter les données du tableau au format excel',
+                            className: 'btn btn-dark btn-sm',
                         }
-                    },
-                    {
-                        extend: 'csv',
-                        text:      '<i class="fas fa-file-alt" style="font-size:25px;color:black;"></i>',
-                    },
-                    {
-                        extend: 'excel',
-                        text:      '<i class="fas fa-file-excel" style="font-size:25px;color:darkgreen;"></i>',
-                    }
-                ]
+                    ]
+                });
             });
         });
     </script>

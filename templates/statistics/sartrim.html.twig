@@ -92,7 +92,7 @@
                 </ul>
             </div>
             <div class="col">
-                <h4>Total des sommes reversées par année</h4>
+                <h4>Total des sommes réversées par structure et par trimestre au cours de l'année {{ year }}</h4>
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -100,17 +100,17 @@
                                 <thead>
                                 <tr class="table-primary">
                                     <th class="text-center fw-bolder">ID</th>
-                                    <th class="text-center fw-bolder">ANNEE</th>
+                                    <th class="text-center fw-bolder">TRIMESTRE</th>
                                     <th class="ps-5 fw-bolder">ORGANISME</th>
                                     <th class="text-end fw-bolder">TOTAL MONTANT REVERSE (FCFA)</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% set i = 1 %}
-                                {% for sar in totalsaryearorganisme %}
+                                {% for sar in sartrim %}
                                     <tr>
                                         <td class="text-center fw-bolder pe-5">{{ i }}</td>
-                                        <td class="text-center fw-bolder pe-5">{{ sar.annee_reversement }}</td>
+                                        <td class="text-center fw-bolder pe-5">{{ sar.trimestre }}</td>
                                         <td class="ps-5 fw-bolder">{{ sar.organisme }}</td>
                                         <td class="text-end fw-bolder pe-5">{{ sar.total_reverse | number_format(0,'.',' ') }}</td>
                                     </tr>

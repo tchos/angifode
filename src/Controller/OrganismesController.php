@@ -6,6 +6,7 @@ use App\Entity\Historique;
 use App\Entity\Organismes;
 use App\Entity\User;
 use App\Form\OrganismesType;
+use App\Repository\AgentDetacheRepository;
 use App\Repository\OrganismesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -134,6 +135,21 @@ class OrganismesController extends AbstractController
         $listeOrganismes = $repos->findAll();
         return $this->render('organismes/orga_list.html.twig',[
             'listeOrganismes' => $listeOrganismes
+        ]);
+    }
+
+    # Pour afficher la liste des détachés pour un organisme donné.
+    #[Route('/organisme/{id}/detaches', name: 'show_list_detache')]
+    public function detachesOrganisme(Organismes $organisme): Response
+    {
+        if($this->getUser()->getOrganisme()->getSigle() === "MINFI" | $this->isGranted('ROLE_ADMIN')){
+            $listeAgentDetaches = $organisme->getAgentDetaches();
+        }else{
+            // return $this->redirectToRoute(''); page 403 à développer.
+        }
+
+        return $this->render('agent/agent_detache_list.html.twig',[
+            'listeAgentDetaches' => $listeAgentDetaches
         ]);
     }
 }

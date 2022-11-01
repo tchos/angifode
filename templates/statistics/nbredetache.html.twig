@@ -75,7 +75,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
                         Liste des structures qui n'ont pas encore reversé sur l'année en cours
-                        <a href="{{ path('anyreversementinyear') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
+                        <a href="{{ path('anypayinyear') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
                         Liste des structures qui n'ont jamais réversé
@@ -92,29 +92,32 @@
                 </ul>
             </div>
             <div class="col">
-                <h4>Total des sommes reversées par année</h4>
+                <h4>Liste des structures qui n'ont jamais réversé</h4>
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="totalsar" class="table table-striped table-hover">
+                            <table id="nbredetache" class="table table-striped table-hover">
                                 <thead>
                                 <tr class="table-primary">
                                     <th class="text-center fw-bolder">ID</th>
-                                    <th class="ps-5 fw-bolder">SIGLE</th>
-                                    <th class="ps-5 fw-bolder">LIBELLE</th>
-                                    <th class="text-center fw-bolder">TELEPHONES</th>
-                                    <th class="ps-5 fw-bolder">EMAIL</th>
+                                    <th class="ps-5 fw-bolder">NOM DE LA STRUCTURE</th>
+                                    <th class="text-end fw-bolder">EFFECTIF DES DETACHES</th>
+                                    <th class="text-center fw-bolder">ACTION</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% set i = 1 %}
-                                {% for organisme in anyreversementinyear %}
+                                {% for organisme in nbredetache %}
                                     <tr>
                                         <td class="text-center fw-bolder pe-5">{{ i }}</td>
-                                        <td class="ps-5 fw-bolder">{{ organisme.sigle }}</td>
-                                        <td class="ps-5 fw-bolder">{{ organisme.libelleOrg }}</td>
-                                        <td class="text-center fw-bolder">{{ organisme.telephone1 }}{% if organisme.telephone2 %} / {{ organisme.telephone2 }}{% endif %}</td>
-                                        <td class="ps-5 fw-bolder">{{ organisme.email }}</td>
+                                        <td class="ps-5 fw-bolder" title="{{ organisme.sigle }}">{{ organisme.libelleOrganisme }}</td>
+                                        <td class="text-end pe-5 fw-bolder">{{ organisme.nbreDetaches | number_format(0,'.',' ') }}</td>
+                                        <td class="text-center fw-bolder pe-4">
+                                            <a class="text-decoration-none" target="_blank" title="Mettre fin au détachement"
+                                               href="{{ path('show_list_detache', {'id': organisme.id}) }}">
+                                                <i class="fa fa-eye" aria-hidden="true"></i> Voir la liste
+                                            </a>
+                                        </td>
                                     </tr>
                                     {% set i = i + 1 %}
                                 {% endfor %}
@@ -143,7 +146,7 @@
 
     <script>
         $(document).ready(function(){
-            var theDataTable = $('#totalsar').DataTable({
+            var theDataTable = $('#nbredetache').DataTable({
                 dom: 'Blfrtip',
                 buttons: [
                     {

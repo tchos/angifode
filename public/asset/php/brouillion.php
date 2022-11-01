@@ -218,6 +218,7 @@ dd($periodes);
 select salaire_base from bareme where grade="61200" AND echelon = "02" AND num_bar IN (select num_bar from type_bareme where date_debut <= "2003-09-01" and date_fin >= "2002-02-11");
 select DISTINCT(grade) from bareme where corps = "60" OR corps ="61";
 SELECT MIN(ECHELON) AS echelon_solde FROM `bareme` WHERE grade="61200" AND  `ECHELON` > "11";
+SELECT YEAR(date_det) as annee_detachement, COUNT(matricule) AS nbreDetaches FROM agent_detache GROUP BY annee_detachement ORDER BY annee_detachement;
 
 {{ organisme.telephone1 }}{% if organisme.telephone2 %} / {{ organisme.telephone2 }}{% endif %}
 {#

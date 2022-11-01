@@ -75,7 +75,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
                         Liste des structures qui n'ont pas encore reversé sur l'année en cours
-                        <a href="#" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
+                        <a href="{{ path('anyreversementinyear') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
                         Liste des structures qui n'ont jamais réversé
@@ -92,7 +92,7 @@
                 </ul>
             </div>
             <div class="col">
-                <h4>Total des sommes reversées par année</h4>
+                <h4>Liste des structures qui n'ont pas encore reversé sur l'année en cours</h4>
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -100,19 +100,21 @@
                                 <thead>
                                 <tr class="table-primary">
                                     <th class="text-center fw-bolder">ID</th>
-                                    <th class="text-center fw-bolder">ANNEE</th>
-                                    <th class="ps-5 fw-bolder">ORGANISME</th>
-                                    <th class="text-end fw-bolder">TOTAL MONTANT REVERSE (FCFA)</th>
+                                    <th class="ps-5 fw-bolder">SIGLE</th>
+                                    <th class="ps-5 fw-bolder">LIBELLE</th>
+                                    <th class="text-center fw-bolder">TELEPHONES</th>
+                                    <th class="ps-5 fw-bolder">EMAIL</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% set i = 1 %}
-                                {% for sar in totalsaryearorganisme %}
+                                {% for organisme in anyreversementinyear %}
                                     <tr>
                                         <td class="text-center fw-bolder pe-5">{{ i }}</td>
-                                        <td class="text-center fw-bolder pe-5">{{ sar.annee_reversement }}</td>
-                                        <td class="ps-5 fw-bolder">{{ sar.organisme }}</td>
-                                        <td class="text-end fw-bolder pe-5">{{ sar.total_reverse | number_format(0,'.',' ') }}</td>
+                                        <td class="ps-5 fw-bolder">{{ organisme.sigle }}</td>
+                                        <td class="ps-5 fw-bolder">{{ organisme.libelleOrg }}</td>
+                                        <td class="text-center fw-bolder">{{ organisme.telephone1 }}{% if organisme.telephone2 %} / {{ organisme.telephone2 }}{% endif %}</td>
+                                        <td class="ps-5 fw-bolder">{{ organisme.email }}</td>
                                     </tr>
                                     {% set i = i + 1 %}
                                 {% endfor %}

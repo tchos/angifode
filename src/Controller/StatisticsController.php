@@ -52,16 +52,70 @@ class StatisticsController extends AbstractController
         ]);
     }
 
-    #[Route('/statistics/anyreversementinyear', name: 'anyreversementinyear')]
-    public function anyReversementInYear(BI $bi, Services $statistiques)
+    # Affiche le total des sommes reversées par trim pour une année donnée
+    #[Route('/statistics/sartrim/{year<\d+>?2022}', name: 'sartrim')]
+    public function sarByTrimByOrganisme(BI $bi, Services $statistiques, String $year)
     {
         // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
         $stats = $statistiques->getStats();
-        $anyreversementinyear = $bi->getAnyReversementInYear();
+        $sartrim = $bi->getSarByTrimByOrganisme($year);
 
-        return $this->render('statistics/anyreversementinyear.html.twig', [
+        return $this->render('statistics/sartrim.html.twig', [
             'stats' => $stats,
-            'anyreversementinyear' => $anyreversementinyear,
+            'sartrim' => $sartrim,
+            'year' => $year,
+        ]);
+    }
+
+    #[Route('/statistics/anypayinyear', name: 'anypayinyear')]
+    public function anyPayInYear(BI $bi, Services $statistiques)
+    {
+        // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
+        $stats = $statistiques->getStats();
+        $anypayinyear = $bi->getAnyPayInYear();
+
+        return $this->render('statistics/anypayinyear.html.twig', [
+            'stats' => $stats,
+            'anypayinyear' => $anypayinyear,
+        ]);
+    }
+
+    #[Route('/statistics/neverpay', name: 'neverpay')]
+    public function neverPay(BI $bi, Services $statistiques)
+    {
+        // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
+        $stats = $statistiques->getStats();
+        $neverpay = $bi->getAnyPayInYear();
+
+        return $this->render('statistics/neverpay.html.twig', [
+            'stats' => $stats,
+            'neverpay' => $neverpay,
+        ]);
+    }
+
+    #[Route('/statistics/nbredetache', name: 'nbredetache')]
+    public function numberDetacheByOrganisme(BI $bi, Services $statistiques)
+    {
+        // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
+        $stats = $statistiques->getStats();
+        $nbredetache = $bi->getNbreDetacheByOrganisme();
+
+        return $this->render('statistics/nbredetache.html.twig', [
+            'stats' => $stats,
+            'nbredetache' => $nbredetache,
+        ]);
+    }
+
+    #[Route('/statistics/newdetachebyyear', name: 'newdetachebyyear')]
+    public function newDetacheByYear(BI $bi, Services $statistiques)
+    {
+        // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
+        $stats = $statistiques->getStats();
+        $newdetachebyyear = $bi->getNewDetacheByYear();
+
+        return $this->render('statistics/newdetachebyyear.html.twig', [
+            'stats' => $stats,
+            'newdetachebyyear' => $newdetachebyyear
         ]);
     }
 }

@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\AgentDetache;
 use App\Entity\Historique;
+use App\Entity\Organismes;
 use App\Form\DetachementType;
 use App\Repository\AgentDetacheRepository;
 use App\Repository\OrganismesRepository;
+use App\Services\BI;
 use App\Services\Services;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -148,6 +150,26 @@ class AgentController extends AbstractController
 
         return $this->render('agent/agent_detache_list.html.twig',[
             'listeAgentDetaches' => $listeAgentDetaches
+        ]);
+    }
+
+    # Pour afficher la liste des détachés sur une année donnée
+    #[Route('/agent/{year<\d+>?1999}', name: 'agent_detache_year')]
+    public function listDetacheYear(String $year, BI $bi, Services $statistiques): Response
+    {
+        // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
+        $stats = $statistiques->getStats();
+
+        if($this->getUser()->getOrganisme()->getSigle() === "MINFI" | $this->isGranted('ROLE_ADMIN')){
+            $listeAgentDetaches = $bi->getDetachesByYear($year);
+        }else {
+            // return $this->redirectToRoute(''); page 403 à développer.
+        }
+
+        return $this->render('agent/agent_detache_year.html.twig',[
+            'listeAgentDetaches' => $listeAgentDetaches,
+            'year' => $year,
+            'stats' => $stats,
         ]);
     }
 }

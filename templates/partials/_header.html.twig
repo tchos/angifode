@@ -59,10 +59,8 @@
                         ESD</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path('esd_orga') }}">Evaluation dette</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
+                        <a class="dropdown-item" href="{{ path('esd_orga_mensuel') }}">Evaluation du reversement mensuel</a>
                     </div>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}

@@ -32,7 +32,7 @@ class EsdController extends AbstractController
         // pour l'historisation de l'action
         $history = new Historique();
 
-        // constructeur de formulaire de creation d'un organisme
+        // constructeur du formulaire qui va capter les dates de début et de fin
         $form = $this->createForm(EsdType::class);
 
         // handlerequest() permet de parcourir la requête et d'extraire les informations du formulaire
@@ -46,6 +46,7 @@ class EsdController extends AbstractController
         {
             $dateDebut = $form->get('dateDebRev')->getData();
             $dateFin = $form->get('dateFinRev')->getData();
+            $vraiDateDebut = $dateDebut;
 
             //Liste des agents détachés au sein de l'organisme .
             $agents = $organisme->getAgentDetaches()->toArray();
@@ -56,10 +57,16 @@ class EsdController extends AbstractController
 
             for ($i = 0; $i < count($agents); $i++){
                 $dateIntegration = $agents[$i]->getDateIntegration();
+                $dateDet = $agents[$i]->getDateDet();
                 $gradeDet = $agents[$i]->getGradeDet();
                 $classeDet = $agents[$i]->getClasseDet();
                 $echelonDet = $agents[$i]->getEchelonDet();
                 $indiceDet = $services->getIndice($gradeDet, $classeDet, $echelonDet);
+
+                //Si la date de début est inférieure à la date de détachement, la date de début sera la date de détachement
+                if ($dateDet >= $dateDebut){
+                    $dateDebut = $dateDet;
+                }
 
                 //Somme à reverser selon que l'agent détaché soit fonctionnnaire ou du code du travail
                 if($gradeDet >= "60000" && $gradeDet < "62000") {
@@ -69,6 +76,7 @@ class EsdController extends AbstractController
                     $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
                     // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
                     $id_agent[] = $agents[$i]->getId();
+                    $grade_agent[] = $agents[$i]->getGradeDet();
                 } else {
                     $first_indice = $services->getFirstIndice($gradeDet, $indiceDet, $dateIntegration, $dateDebut);
                     // $sar = somme à reverser pour un agent détatché fonction
@@ -76,6 +84,7 @@ class EsdController extends AbstractController
                     $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
                     // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
                     $id_agent[] = $agents[$i]->getId();
+                    $grade_agent[] = $agents[$i]->getGradeDet();
                 }
             }
 
@@ -96,13 +105,14 @@ class EsdController extends AbstractController
             $this->addFlash("success","La dette de l'organisme ". $organisme->getSigle() ." a été évaluée avec succès !!!");
 
             return $this->render('esd/esd_result.html.twig', [
-                'dateDebut' => $dateDebut->format('d-m-Y'),
+                'dateDebut' => $vraiDateDebut->format('d-m-Y'),
                 'dateFin' => $dateFin->format('d-m-Y'),
                 'id_agent' => $id_agent,
                 'dataSar' => $dataSar,
                 'sar' => $sar,
                 'total_sar_organisme' => $total_sar_organisme,
-                'organisme' => $organisme
+                'organisme' => $organisme,
+                'grade_agent' => $grade_agent,
             ]);
         }
 
@@ -123,6 +133,12 @@ class EsdController extends AbstractController
         $echelonDet = $agentDetache->getEchelonDet();
         $indiceDet = $services->getIndice($gradeDet, $classeDet, $echelonDet);
         $dateIntegration = $agentDetache->getDateIntegration();
+        $dateDet = $agentDetache->getDateDet();
+
+        //Si la date de début est inférieure à la date de détachement, la date de début sera la date de détachement
+        if ($dateDet >= $dateDebut){
+            $dateDebut = $dateDet;
+        }
 
         if($gradeDet >= "60000" && $gradeDet < "62000") {
             $first_echelon = $services->getFirstEchelon($gradeDet, $echelonDet, $dateIntegration, $dateDebut);
@@ -148,7 +164,7 @@ class EsdController extends AbstractController
 
 
     #[Route('/esd', name: 'esd_orga')]
-    public function listOrganisme(Services $services, OrganismesRepository $organismesRepository): Response
+    public function listOrganisme(OrganismesRepository $organismesRepository): Response
     {
         if($this->getUser()->getOrganisme()->getSigle() === "MINFI" | $this->isGranted('ROLE_ADMIN'))
             $listeOrganismes = $organismesRepository->findAll();
@@ -159,4 +175,99 @@ class EsdController extends AbstractController
             'listeOrganismes' => $listeOrganismes,
         ]);
     }
+
+    #[Route('/esdmensuel', name: 'esd_orga_mensuel')]
+    public function listOrganisme2(OrganismesRepository $organismesRepository): Response
+    {
+        if($this->getUser()->getOrganisme()->getSigle() === "MINFI" | $this->isGranted('ROLE_ADMIN'))
+            $listeOrganismes = $organismesRepository->findAll();
+        else
+            $listeOrganismes = $organismesRepository->findBy(['id' => $this->getUser()->getOrganisme()]);
+
+        return $this->render('esd/orga2.html.twig', [
+            'listeOrganismes' => $listeOrganismes,
+        ]);
+    }
+
+    #[Route('/esdmensuel/{id}', name: 'reversement_mensuel')]
+    public function reversementMensuel(Services $services, Organismes $organisme, Request $request): Response
+    {
+        // utilisateur connecté
+        $user = $this->getUser();
+        // pour l'historisation de l'action
+        $history = new Historique();
+
+        $dateDebut = date_create(date("Y-m-d", mktime(0,0,0,date("m")-1,1,date("Y"))));
+        $dateFin     = date_create(date("Y-m-d", mktime(0,0,0,date("m"),0,date("Y"))));
+
+        //dd($dateDebut, $dateFin);
+        $vraiDateDebut = $dateDebut;
+
+        //Liste des agents détachés au sein de l'organisme .
+        $agents = $organisme->getAgentDetaches()->toArray();
+        // Tableau qui contient les id des agents détachés au sein de l'organisme
+        $id_agent = [];
+        // tableau: matricule => somme à reverser
+        $sar_organisme = [];
+
+        for ($i = 0; $i < count($agents); $i++){
+            $dateIntegration = $agents[$i]->getDateIntegration();
+            $dateDet = $agents[$i]->getDateDet();
+            $gradeDet = $agents[$i]->getGradeDet();
+            $classeDet = $agents[$i]->getClasseDet();
+            $echelonDet = $agents[$i]->getEchelonDet();
+            $indiceDet = $services->getIndice($gradeDet, $classeDet, $echelonDet);
+
+            //Si la date de début est inférieure à la date de détachement, la date de début sera la date de détachement
+            if ($dateDet >= $dateDebut){
+                $dateDebut = $dateDet;
+            }
+
+            //Somme à reverser selon que l'agent détaché soit fonctionnnaire ou du code du travail
+            if($gradeDet >= "60000" && $gradeDet < "62000") {
+                $first_echelon = $services->getFirstEchelon($gradeDet, $echelonDet, $dateIntegration, $dateDebut);
+                // $sar = somme à reverser pour un agent détatché du code du travail
+                $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration);
+                $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
+                // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
+                $id_agent[] = $agents[$i]->getId();
+                $grade_agent[] = $agents[$i]->getGradeDet();
+            } else {
+                $first_indice = $services->getFirstIndice($gradeDet, $indiceDet, $dateIntegration, $dateDebut);
+                // $sar = somme à reverser pour un agent détatché fonction
+                $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
+                $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
+                // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
+                $id_agent[] = $agents[$i]->getId();
+                $grade_agent[] = $agents[$i]->getGradeDet();
+            }
+        }
+
+        $total_sar_organisme = 0;
+        $dataSar = [];
+
+        foreach ($sar_organisme as $key => $value){
+            $totalSar = 0;
+            for($i = 0; $i < count($value); $i++) {
+                $totalSar += $value[$i]["sar"];
+                $total_sar_organisme += $value[$i]["sar"];
+            }
+            $dataSar[$key] = $totalSar;
+        }
+
+        // Alerte succès de l'enregistrement d'un nouveau détachement
+        $this->addFlash("success","La dette de l'organisme ". $organisme->getSigle() ." a été évaluée avec succès !!!");
+
+        return $this->render('esd/esd_result.html.twig', [
+            'dateDebut' => $vraiDateDebut->format('d-m-Y'),
+            'dateFin' => $dateFin->format('d-m-Y'),
+            'id_agent' => $id_agent,
+            'dataSar' => $dataSar,
+            'sar' => $sar,
+            'total_sar_organisme' => $total_sar_organisme,
+            'organisme' => $organisme,
+            'grade_agent' => $grade_agent,
+        ]);
+    }
+    /** Fin reversement_mensuel */
 }

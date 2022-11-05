@@ -53,6 +53,8 @@
                         <tr class="table-dark">
                             <th>N°</th>
                             <th>AGENTS DETACHES</th>
+                            <th class="text-end pe-5">PART SALARIALE</th>
+                            <th class="text-end pe-5">PART PATRONALE</th>
                             <th class="text-end pe-5">SOMME A REVERSER</th>
                             <th class="text-center">ACTION</th>
                         </tr>
@@ -63,6 +65,20 @@
                             <tr>
                                 <td>{{ i }}</td>
                                 <td>{{ agent }}</td>
+                                <td class="text-end pe-5">
+                                    {% if grade_agent[i] >= "60000" and grade_agent[i] < "62000" %}
+                                        {{ ((sar / 3) | round(1, 'ceil') ) | number_format(0,'.',' ') }}
+                                    {% else %}
+                                        {{ ((sar * 10) / 22)  | round(1, 'ceil') | number_format(0,'.',' ') }}
+                                    {% endif %}
+                                </td>
+                                <td class="text-end pe-5">
+                                    {% if grade_agent[i] >= "60000" and grade_agent[i] < "62000" %}
+                                        {{ ((sar * 2) / 3) | round(1, 'ceil') | number_format(0,'.',' ') }}
+                                    {% else %}
+                                        {{ ((sar * 12) / 22) | round(1, 'ceil') | number_format(0,'.',' ') }}
+                                    {% endif %}
+                                </td>
                                 <td class="text-end pe-5">{{ sar | number_format(0,'.',' ') }}</td>
                                 <td class="text-center">
                                     <a title="Détails de l'évaluation la dette sociale de l'agent {{ i }}"

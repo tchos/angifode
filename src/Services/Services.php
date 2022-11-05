@@ -402,7 +402,10 @@ class Services
         {
             $dateD = date_create($tableauPeriode[$i]);
             $dateF = date_create($tableauPeriode[$i+1]);
-            date_sub($dateF,date_interval_create_from_date_string("1 day"));
+            // La dernière date dans le tableau des périodes doit être la date de fin
+            if($dateFin != $dateF){
+                date_sub($dateF,date_interval_create_from_date_string("1 day"));
+            }
 
             //Données détaillant le calcul de l'ESD d'un agent sur une période .
             $detailsEsdAgent["dateDebut"] = $dateD;
@@ -492,7 +495,10 @@ class Services
 
             $dateD = date_create($tableauPeriode[$i]);
             $dateF = date_create($tableauPeriode[$i+1]);
-            date_sub($dateF,date_interval_create_from_date_string("1 day"));
+            // La dernière date dans le tableau des périodes doit être la date de fin
+            if($dateFin != $dateF){
+                date_sub($dateF,date_interval_create_from_date_string("1 day"));
+            }
 
             //Données détaillant le calcul de l'ESD d'un agent sur une période .
             $detailsEsdAgent["dateDebut"] = $dateD;

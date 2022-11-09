@@ -65,11 +65,51 @@ class DetachementType extends AbstractType
             ->add('dateActeDet', DateType::class, [
                 'label' => 'Date de signature',
                 'widget' => 'single_text'])
-            ->add('ministere', TextType::class,[
+            ->add('ministere', ChoiceType::class, [
                 'label' => 'Ministère',
-                'attr' => [
-                    'placeholder' => 'Ex: MINFOPRA'
-                ]
+                'choices' => [
+                    'PRC' => '01',
+                    'MINRA' => '02',
+                    'SPM' => '03',
+                    'DGSN' => '04',
+                    'MINREX' => '06',
+                    'MINREST' => '06',
+                    'MINAT' => '07',
+                    'MINJUSTICE' => '08',
+                    'MINDDEVEL' => '09',
+                    'MINMAP' => '10',
+                    'MINDEF' => '13',
+                    'MINAC' => '14',
+                    'MINEDUB' => '15',
+                    'MINSEP' => '16',
+                    'MINCOM' => '17',
+                    'MINESUP' => '18',
+                    'MINRESI' => '19',
+                    'MINFI' => '20',
+                    'MINCOMMERCE' => '21',
+                    'MINEPAT' => '22',
+                    'MINTOUL' => '23',
+                    'MINESEC' => '25',
+                    'MINJEC' => '26',
+                    'MINEPDED' => '28',
+                    'MINEE' => '32',
+                    'MINFOF' => '33',
+                    'MINEFOP' => '35',
+                    'MINTP' => '36',
+                    'MINHDU' => '38',
+                    'MINPMEESA' => '39',
+                    'MINSANTE' => '40',
+                    'MINTSS' => '41',
+                    'MINAS' => '42',
+                    'MINPROFF' => '43',
+                    'MINPOSTEL' => '45',
+                    'MINT' => '46',
+                    'MINFOPRA' => '50',
+                    'PENSIONNES' => '55',
+                    'CONSUPE' => '60',
+                    'COURSUP' => '81',
+                    'TAMPON' => '99',
+                ],
             ])
             ->add('gradeDet', TextType::class,[
                 'label' => 'Grade',

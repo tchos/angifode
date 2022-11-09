@@ -59,42 +59,170 @@ $nbBareme = 0;
                     $sommeAReverser = $sommeAReverser + ( ($salaire * 12 * 22 * $pd) / (360 * 100) );
                 else
                     $sommeAReverser = $sommeAReverser + ( ($salaire * 12 * 18 * $pd) / (360 * 100) );
-
+<script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_matricule").autocomplete({
+                source: '{{ asset('asset/php/search-matricule.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#detachement_matricule").blur(function(){
+                $("#detachement_noms").val(noms);
+                $("#detachement_dateNaissance").val(date_naissance);
+                $("#detachement_dateIntegration").val(date_integration);
+            });
+        });
+    </script>
                 $derniereDate = $prochaineAvct;
                 $prochaineAvct = $prochaineAvct + "2 ans";
             }
 
-            // dernière période
+            // dernière période<script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_matricule").autocomplete({
+                source: '{{ asset('asset/php/search-matricule.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#detachement_matricule").blur(function(){
+                $("#detachement_noms").val(noms);
+                $("#detachement_dateNaissance").val(date_naissance);
+                $("#detachement_dateIntegration").val(date_integration);
+            });
+        });
+    </script>
             $pd = $dateFin - $derniereDate - 1;
             if($typeAgent == 1 )
                 $sommeAReverser = $sommeAReverser + ( ($salaire * 12 * 22 * $pd) / (360 * 100) );
             else
-                $sommeAReverser = $sommeAReverser + ( ($salaire * 12 * 18 * $pd) / (360 * 100) );
+                $sommeAReverser = $sommeARe<script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_matricule").autocomplete({
+                source: '{{ asset('asset/php/search-matricule.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#detachement_matricule").blur(function(){
+                $("#detachement_noms").val(noms);
+                $("#detachement_dateNaissance").val(date_naissance);
+                $("#detachement_dateIntegration").val(date_integration);
+            });
+        });
+    </script>verser + ( ($salaire * 12 * 18 * $pd) / (360 * 100) );
 
             return $sommeAReverser;
 
         }else { // Il y aura plusieurs barèmes en jeu
-            $i = 0;
+            $i = 0;<script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_matricule").autocomplete({
+                source: '{{ asset('asset/php/search-matricule.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#detachement_matricule").blur(function(){
+                $("#detachement_noms").val(noms);
+                $("#detachement_dateNaissance").val(date_naissance);
+                $("#detachement_dateIntegration").val(date_integration);
+            });
+        });
+    </script>
 
             // on capte le premier barème
             while ($dateDebut > $bareme[$i]) {
                 $i++;
-                if($bareme[$i] >= $dateDebut)
+                if($bareme[$i] >= $dateDebu<script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_matricule").autocomplete({
+                source: '{{ asset('asset/php/search-matricule.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#detachement_matricule").blur(function(){
+                $("#detachement_noms").val(noms);
+                $("#detachement_dateNaissance").val(date_naissance);
+                $("#detachement_dateIntegration").val(date_integration);
+            });
+        });
+    </script>t)
                     $prochainBareme = $bareme;
             }
 
             //if($prochaineAvct < $prochainBareme)
-        }
+        }<script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_matricule").autocomplete({
+                source: '{{ asset('asset/php/search-matricule.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#detachement_matricule").blur(function(){
+                $("#detachement_noms").val(noms);
+                $("#detachement_dateNaissance").val(date_naissance);
+                $("#detachement_dateIntegration").val(date_integration);
+            });
+        });
+    </script>
         
 /**
      * Retourne les sommes à reverser pour un agent détaché
      * @Return array
-     */
+     */<script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_matricule").autocomplete({
+                source: '{{ asset('asset/php/search-matricule.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#detachement_matricule").blur(function(){
+                $("#detachement_noms").val(noms);
+                $("#detachement_dateNaissance").val(date_naissance);
+                $("#detachement_dateIntegration").val(date_integration);
+            });
+        });
+    </script>
     public function getPeriodes($dateDebut, $dateFin){
 
         // Dates barème
         $bareme = $this->dateSalaire($dateDebut, $dateFin);
-
+<script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_matricule").autocomplete({
+                source: '{{ asset('asset/php/search-matricule.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#detachement_matricule").blur(function(){
+                $("#detachement_noms").val(noms);
+                $("#detachement_dateNaissance").val(date_naissance);
+                $("#detachement_dateIntegration").val(date_integration);
+            });
+        });
+    </script>
         // Va contenir toutes les périodes de détachement
         $tableauPeriode = [];
 
@@ -102,7 +230,23 @@ $nbBareme = 0;
         //$tableauPeriode[] = date_format($dateDebut, 'Y-m-d');
         //$tableauPeriode[] = date_format($dateFin, 'Y-m-d');
         $tableauPeriode[] = $dateDebut;
-        $tableauPeriode[] = $dateFin;
+        $tableauPeriode[] = $dateFin;<script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_matricule").autocomplete({
+                source: '{{ asset('asset/php/search-matricule.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#detachement_matricule").blur(function(){
+                $("#detachement_noms").val(noms);
+                $("#detachement_dateNaissance").val(date_naissance);
+                $("#detachement_dateIntegration").val(date_integration);
+            });
+        });
+    </script>
         foreach ($bareme as $keys => $value) {
             foreach ($value as $key => $date) {
                 if ($dateDebut <= $date && $date <= $dateFin)
@@ -251,6 +395,24 @@ SELECT YEAR(date_det) as annee_detachement, COUNT(matricule) AS nbreDetaches FRO
                         text:      '<i class="fas fa-file-excel" style="font-size:25px;color:darkgreen;"></i>',
                     }
                 ]
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_matricule").autocomplete({
+                source: '{{ asset('asset/php/search-matricule.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#detachement_matricule").blur(function(){
+                $("#detachement_noms").val(noms);
+                $("#detachement_dateNaissance").val(date_naissance);
+                $("#detachement_dateIntegration").val(date_integration);
             });
         });
     </script>

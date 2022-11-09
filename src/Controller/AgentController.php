@@ -7,6 +7,7 @@ use App\Entity\Historique;
 use App\Entity\Organismes;
 use App\Form\DetachementType;
 use App\Repository\AgentDetacheRepository;
+use App\Repository\GradeRepository;
 use App\Repository\OrganismesRepository;
 use App\Services\BI;
 use App\Services\Services;
@@ -26,7 +27,8 @@ class AgentController extends AbstractController
 {
     # Enregistrer un nouveau détachement
     #[Route('/agent', name: 'agent_detache_new')]
-    public function detacher(EntityManagerInterface $manager, Request $request, Services $services, OrganismesRepository $organismesRepository): Response
+    public function detacher(EntityManagerInterface $manager, Request $request, Services $services,
+                             OrganismesRepository $organismesRepository, GradeRepository $gradeRepository): Response
     {
         // utilisateur connecté
         $user = $this->getUser()->getUsername();
@@ -58,12 +60,16 @@ class AgentController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $age = $detache->getDateNaissance()->diff($detache->getDateIntegration())->format('%y');
+            $grade = $gradeRepository->findOneBy(["libGrade" => $form->get("gradeDet")->getData()])->getCodeGrade();
 
             if ( $age < 17 )
             {
                 // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
                 $form->get('dateIntegration')->addError(new FormError("Le détaché ne peut être intégré avant 17 ans !"));
             }else {
+                $detache->setGradeDet($grade)
+                    ;
+
                 $history->setTypeAction("CREATE")
                     ->setAuteur($user)
                     ->setNature("AGENT_DETACHE")
@@ -89,7 +95,7 @@ class AgentController extends AbstractController
     # Apporter des modifications à un détachement
     #[Route('/agent/{id}/edit', name: 'agent_detache_edit')]
     public function update (EntityManagerInterface $manager, Request $request,
-                             AgentDetache $detache): Response
+                             AgentDetache $detache, GradeRepository $gradeRepository): Response
     {
         // utilisateur connecté
         $user = $this->getUser()->getUsername();
@@ -109,6 +115,7 @@ class AgentController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $age = $detache->getDateNaissance()->diff($detache->getDateIntegration())->format('%y');
+            //$grade =
 
             if ( $age < 17 )
             {

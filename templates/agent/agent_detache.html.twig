@@ -2,6 +2,11 @@
 
 {% block title %}Nouveau détachement{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('asset/css/jquery-ui.css') }}" />
+    <link rel="stylesheet" href="{{ asset('asset/php/auto_complete_tabul/ajax.css') }}" />
+{% endblock %}
+
 {% block body %}
     <div class="container">
         <div class="h4 text-success">Saisie d'un nouveau détachement</div>
@@ -44,7 +49,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col">{{ form_row(form.ministere) }}</div>
-                            <div class="col">{{ form_row(form.gradeDet) }}</div>
+                            <div class="col">{{ form_row(form.gradeDet, {'attr': {'autocomplete': 'on'}}) }}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">{{ form_row(form.classeDet) }}</div>
@@ -71,4 +76,33 @@
             </button>
         {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('asset/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('asset/js/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_gradeDet").autocomplete({
+                source: '{{ asset('asset/php/search-grade.php') }}',
+                minLength: 4,
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_matricule").autocomplete({
+                source: '{{ asset('asset/php/search-matricule.php') }}',
+                minLength: 4,
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#detachement_noms").autocomplete({
+                source: '{{ asset('asset/php/search-noms.php') }}',
+                minLength: 5,
+            });
+        });
+    </script>
 {% endblock %}

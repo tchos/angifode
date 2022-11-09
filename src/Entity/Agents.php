@@ -62,6 +62,11 @@ class Agents
      */
     private $nap;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateIntegration;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -171,6 +176,18 @@ class Agents
     public function setNap(?int $nap): self
     {
         $this->nap = $nap;
+
+        return $this;
+    }
+
+    public function getDateIntegration(): ?\DateTimeInterface
+    {
+        return $this->dateIntegration;
+    }
+
+    public function setDateIntegration(?\DateTimeInterface $dateIntegration): self
+    {
+        $this->dateIntegration = $dateIntegration;
 
         return $this;
     }

@@ -5,7 +5,7 @@
 
 {% block body %}
     <div class="container">
-        <div class="h4 text-success">Apporter des modifications sur le détachement de l'agent {{ detache.nom }}({{ detache.matricule }})</div>
+        <div class="h4 text-success">Apporter des modifications sur le détachement de l'agent {{ detache.noms }}({{ detache.matricule }})</div>
         {% for message in app.session.flashBag.get('warning') %}
             <div class="alert alert-warning">{{ message }}</div>
         {% endfor %}

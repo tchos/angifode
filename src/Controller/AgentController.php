@@ -94,16 +94,23 @@ class AgentController extends AbstractController
 
     # Apporter des modifications à un détachement
     #[Route('/agent/{id}/edit', name: 'agent_detache_edit')]
-    public function update (EntityManagerInterface $manager, Request $request,
+    public function update (EntityManagerInterface $manager, Request $request, OrganismesRepository $organismesRepository,
                              AgentDetache $detache, GradeRepository $gradeRepository): Response
     {
         // utilisateur connecté
         $user = $this->getUser()->getUsername();
         // pour l'historisation de l'action
         $history = new Historique();
+        // organisme de l'utilisateur connecté
+        $organisme = $this->getUser()->getOrganisme()->getSigle();
+        //Les users du MINFI ou alors les admin voyent tous les organismes
+        if ($this->isGranted('ROLE_ADMIN') | $organisme === "MINFI")
+            $organisme = "";
+
+        $listeOrganisme = $organismesRepository->findBySigle($organisme);
 
         // constructeur de formulaire de creation d'un nouveau détachement
-        $form = $this->createForm(DetachementType::class, $detache);
+        $form = $this->createForm(DetachementType::class, $detache, ['organisme' => $listeOrganisme]);
 
         // handlerequest() permet de parcourir la requête et d'extraire les informations du formulaire
         $form->handleRequest($request);

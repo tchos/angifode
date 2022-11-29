@@ -75,7 +75,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
                         Liste des structures qui n'ont pas encore reversé sur l'année en cours
-                        <a href="{{ path('anyreversementinyear') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
+                        <a href="{{ path('anypayinyear') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
                         Liste des structures qui n'ont jamais réversé
@@ -108,7 +108,7 @@
                                 </thead>
                                 <tbody>
                                 {% set i = 1 %}
-                                {% for organisme in anyreversementinyear %}
+                                {% for organisme in anypayinyear %}
                                     <tr>
                                         <td class="text-center fw-bolder pe-5">{{ i }}</td>
                                         <td class="ps-5 fw-bolder">{{ organisme.sigle }}</td>

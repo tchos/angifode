@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Classe\Esd;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,11 +13,11 @@ class EsdType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateDebRev', DateType::class,[
+            ->add('dateDebut', DateType::class,[
                 'label' => 'Date de début',
                 'widget' => 'single_text'
             ])
-            ->add('dateFinRev', DateType::class,[
+            ->add('dateFin', DateType::class,[
                 'label' => 'Date de fin',
                 'widget' => 'single_text'
             ])
@@ -27,6 +28,8 @@ class EsdType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
+            'data_class' => Esd::class,
+            'csrf_protection' => false
         ]);
     }
 }

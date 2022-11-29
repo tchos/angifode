@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Esd;
 use App\Entity\AgentDetache;
 use App\Entity\Historique;
 use App\Entity\Organismes;
@@ -32,8 +33,10 @@ class EsdController extends AbstractController
         // pour l'historisation de l'action
         $history = new Historique();
 
+        $esd = new Esd();
+
         // constructeur du formulaire qui va capter les dates de début et de fin
-        $form = $this->createForm(EsdType::class);
+        $form = $this->createForm(EsdType::class, $esd);
 
         // handlerequest() permet de parcourir la requête et d'extraire les informations du formulaire
         $form->handleRequest($request);
@@ -44,9 +47,10 @@ class EsdController extends AbstractController
          */
         if($form->isSubmitted() && $form->isValid())
         {
-            $dateDebut = $form->get('dateDebRev')->getData();
-            $dateFin = $form->get('dateFinRev')->getData();
+            $dateDebut = $form->get('dateDebut')->getData();
+            $dateFin = $form->get('dateFin')->getData();
             $vraiDateDebut = $dateDebut;
+            $vraiDateFin = $dateFin;
 
             //Liste des agents détachés au sein de l'organisme .
             $agents = $organisme->getAgentDetaches()->toArray();
@@ -58,6 +62,7 @@ class EsdController extends AbstractController
             for ($i = 0; $i < count($agents); $i++){
                 $dateIntegration = $agents[$i]->getDateIntegration();
                 $dateDet = $agents[$i]->getDateDet();
+                $dateFinDet = $agents[$i]->getDateFinDet();
                 $gradeDet = $agents[$i]->getGradeDet();
                 $classeDet = $agents[$i]->getClasseDet();
                 $echelonDet = $agents[$i]->getEchelonDet();
@@ -66,6 +71,13 @@ class EsdController extends AbstractController
                 //Si la date de début est inférieure à la date de détachement, la date de début sera la date de détachement
                 if ($dateDet >= $dateDebut){
                     $dateDebut = $dateDet;
+                }
+
+                //Si la date de fin est supérieure à la date de fin de détachement, la date de fin sera la date de fin de détachement
+                if ($dateFinDet > date_create("0001-01-01")){
+                    if ($dateFinDet < $dateFin){
+                        $dateFin = $dateFinDet;
+                    }
                 }
 
                 //Somme à reverser selon que l'agent détaché soit fonctionnnaire ou du code du travail

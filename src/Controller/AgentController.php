@@ -186,4 +186,13 @@ class AgentController extends AbstractController
             'stats' => $stats,
         ]);
     }
+
+    # Pour mettre fin au détachement de l'agent dans un organisme
+    #[Route('/agent/findetachement/{id}', name: 'fin_detachement')]
+    public function finDetachement(): Response
+    {
+        return $this->render('agent/fin_detachement.html.twig', [
+            ''
+        ]);
+    }
 }

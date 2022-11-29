@@ -168,6 +168,11 @@ class AgentDetache
     private $organisme;
 
     /**
+     * @ORM\OneToMany(targetEntity=FinDetachement::class, mappedBy="agentDetache")
+     */
+    private $finDetachements;
+
+    /**
      * CallBack appelé à chaque fois que l'on veut enregistrer un agent détaché pour
      * calculer sa date de saisie et sa date de fin détachement. *
      *
@@ -193,6 +198,7 @@ class AgentDetache
     {
         $this->cotisations = new ArrayCollection();
         $this->avancements = new ArrayCollection();
+        $this->finDetachements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -496,5 +502,35 @@ class AgentDetache
         // TODO: Implement __toString() method.
         $resultat = $this->noms . "(" . $this->matricule . ") ";
         return $resultat;
+    }
+
+    /**
+     * @return Collection<int, FinDetachement>
+     */
+    public function getFinDetachements(): Collection
+    {
+        return $this->finDetachements;
+    }
+
+    public function addFinDetachement(FinDetachement $finDetachement): self
+    {
+        if (!$this->finDetachements->contains($finDetachement)) {
+            $this->finDetachements[] = $finDetachement;
+            $finDetachement->setAgentDetache($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFinDetachement(FinDetachement $finDetachement): self
+    {
+        if ($this->finDetachements->removeElement($finDetachement)) {
+            // set the owning side to null (unless already changed)
+            if ($finDetachement->getAgentDetache() === $this) {
+                $finDetachement->setAgentDetache(null);
+            }
+        }
+
+        return $this;
     }
 }

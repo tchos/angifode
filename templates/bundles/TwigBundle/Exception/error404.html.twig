@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page non trouvée !!!{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ asset('asset/css/angifode.css') }}"/>{% endblock %}
+{% block body %}
+    <main class="container">
+        <section class="row">
+            <div class="col-6">
+                <h3>ANGIFODE: Page non trouvée !!!</h3>
+                <p>La page à laquelle vous tentez d'accéder n'a pas été trouvée.</p>
+                <a href="{{ path('app_home') }}" title="Retournez à la page d'acceuil" class="btn btn-success btn-sm">
+                    <span class="font-weight-bold">Cliquez ici pour retrouner à la page d'accueil.</span>
+                </a>
+            </div>
+        </section>
+    </main>
+{% endblock %}

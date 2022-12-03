@@ -1,3 +1,30 @@
+body {
+background: linear-gradient(
+rgba(255, 255, 255, 0.9),
+rgba(255, 255, 255, 0.9)
+), url("{{ asset('asset/images/angifode.png') }}") white no-repeat center center;
+}
+
+<style>
+    #div2 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        filter:alpha(opacity=10);
+        -moz-opacity:0.1;
+        opacity: 0.1;
+    }
+    #main{
+        position: relative;
+        height: 100vh;
+    }
+</style>
+<main id="div2">
+    <img src="{{ asset('asset/images/angifode.png') }}" width="800px" alt="">
+</main>
+
+
 SELECT agent_id FROM cotisation WHERE reversement_id = 5;
 SELECT id, matricule, noms FROM agent_detache WHERE id NOT IN (SELECT agent_id FROM cotisation WHERE reversement_id = 5);
 

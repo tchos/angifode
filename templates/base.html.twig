@@ -9,6 +9,18 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <style>
+            body {
+                background-image: linear-gradient(
+                        rgba(255, 255, 255, 0.9),
+                        rgba(255, 255, 255, 0.9)
+                ), url("{{ asset('asset/images/angifode.png') }}");
+                background-position: center;
+                background-color: white;
+                background-repeat: no-repeat;
+                height: 100vh;
+            }
+        </style>
         <div id="main">
             {% if is_granted('ROLE_USER') %}
                 {# Inclusion du header dans le template de base  avec twig #}

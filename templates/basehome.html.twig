@@ -17,15 +17,17 @@
             </div>
             <div class="col-1 me-auto"><img src="{{ asset('asset/images/logo_dgb.png') }}" class="float-end d-block" width="60" height="60"></div>
         </div>
-        {# Inclusion du header dans le template de base  avec twig #}
-        {% include "partials/_header.html.twig" %}
+        <div class="main">
+            {# Inclusion du header dans le template de base  avec twig #}
+            {% include "partials/_header.html.twig" %}
 
-        {% block body %}{% endblock %}
+            {% block body %}{% endblock %}
 
-        {# Inclusion du footer dans le template de base avec twig #}
-        {% include "partials/_footer.html.twig" %}
-        {% block javascripts %}{% endblock %}
-        <script src="{{ asset('asset/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('asset/js/all.min.js') }}"></script>
+            {# Inclusion du footer dans le template de base avec twig #}
+            {% include "partials/_footer.html.twig" %}
+            {% block javascripts %}{% endblock %}
+            <script src="{{ asset('asset/js/bootstrap.bundle.min.js') }}"></script>
+            <script src="{{ asset('asset/js/all.min.js') }}"></script>
+        </div>
     </body>
 </html>

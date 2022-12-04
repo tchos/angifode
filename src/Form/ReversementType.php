@@ -20,6 +20,7 @@ class ReversementType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $organismes = $options['organisme'];
         $builder
             ->add('typeRev',ChoiceType::class,[
                 'label' => "Quel moyen de réversement avez-vous utilisé ?",
@@ -75,7 +76,8 @@ class ReversementType extends AbstractType
             ])
             ->add('organisme', EntityType::class,[
                 'label' => 'Organisme ayant effectué le reversement',
-                'class' => Organismes::class
+                'class' => Organismes::class,
+                'choices' => $organismes
             ])
         ;
     }
@@ -85,5 +87,8 @@ class ReversementType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Reversement::class,
         ]);
+
+        $resolver->setDefined('organisme');
+        $resolver->setRequired(['organisme']);
     }
 }

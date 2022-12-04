@@ -110,19 +110,21 @@ class Services
     /**
      * Retourne la liste des agents pour lesquels on a pas encore cotisé
      */
-    public function getListeACotiser($reversement)
+    public function getListeACotiser($reversement, $organisme)
     {
         //Liste des agants pour lesquels on n'a pas encore cotisé
         $agentsNonCotiser = $this->manager->createQuery(
             "SELECT a.id, CONCAT(a.noms,' - (', a.matricule,')') as nom
                 FROM App\Entity\AgentDetache a
-                WHERE a.id NOT IN ( SELECT ad.id
+                JOIN a.organisme o
+                WHERE ( o = :organisme AND a.id NOT IN ( SELECT ad.id
                                 FROM App\Entity\Cotisation c
                                 JOIN c.agent ad
                                 JOIN c.reversement r
-                                WHERE r = :reversement )
+                                WHERE r = :reversement ) )
                 ORDER BY nom"
         )
+            ->setParameter('organisme', $organisme)
             ->setParameter('reversement', $reversement)
             ->getResult();
 

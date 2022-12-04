@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page non trouvée !!!{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ asset('asset/css/angifode.css') }}"/>{% endblock %}
+{% block body %}
+    <style>
+        body {
+            background-image: linear-gradient(
+                    rgba(255, 255, 255, 0.95),
+                    rgba(255, 255, 255, 0.95)
+            ), url("{{ asset('asset/images/angifode.png') }}");
+            background-position: center;
+            background-color: white;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+    </style>
+    <main id="div1" class="container mt-5">
+        <section class="row">
+            <div class="col-6">
+                <h3>ANGIFODE: page restreinte à certains utilisateurs !!!</h3>
+                <p>Vous n'avez pas les droits requis pour accéder à cette page.</p>
+                <a href="{{ path('app_home') }}" title="Retournez à la page d'acceuil" class="btn btn-success btn-sm">
+                    <span class="font-weight-bold">Cliquez ici pour retrouner à la page d'accueil.</span>
+                </a>
+            </div>
+        </section>
+    </main>
+{% endblock %}

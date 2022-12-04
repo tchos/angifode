@@ -9,6 +9,7 @@ use App\Form\CotisationEditType;
 use App\Form\CotisationType;
 use App\Repository\AgentDetacheRepository;
 use App\Repository\CotisationRepository;
+use App\Repository\OrganismesRepository;
 use App\Services\Services;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -34,9 +35,11 @@ class CotisationController extends AbstractController
         $cotisation = new Cotisation();
         // User connecté
         $user = $this->getUser();
+        // Organisme pour lequel on enregistre la cotisation
+        $organisme = $reversement->getOrganisme();
 
         //Liste des agants pour lesquels on n'a pas encore cotisé
-        $anc = $services->getListeACotiser($reversement);
+        $anc = $services->getListeACotiser($reversement,$organisme);
 
         //dd($anc);
         // Formulaire de cotisation

@@ -6,6 +6,7 @@ use App\Entity\Historique;
 use App\Entity\Reversement;
 use App\Form\ReversementType;
 use App\Repository\AgentDetacheRepository;
+use App\Repository\OrganismesRepository;
 use App\Repository\ReversementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -24,7 +25,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class ReversementController extends AbstractController
 {
     #[Route('/reversement', name: 'reversement_new')]
-    public function create_reversement(EntityManagerInterface $manager, Request $request, SluggerInterface $slugger): Response
+    public function create_reversement(EntityManagerInterface $manager, Request $request, SluggerInterface $slugger,
+                                       OrganismesRepository $organismesRepository): Response
     {
         // utilisateur connecté
         $user = $this->getUser();
@@ -32,9 +34,17 @@ class ReversementController extends AbstractController
         $historique = new Historique();
         // Variable que nous allons utiliser pour enregistrer un nouveau reversement
         $reversement = new Reversement();
+        // organisme de l'utilisateur connecté
+        $organisme = $this->getUser()->getOrganisme()->getSigle();
+
+        //Les users du MINFI ou alors les admin voyent tous les organismes
+        if ($this->isGranted('ROLE_ADMIN') | $organisme === "MINFI")
+            $organisme = "";
+
+        $listeOrganisme = $organismesRepository->findBySigle($organisme);
 
         // constructeur de formulaire de creation d'un organisme
-        $form = $this->createForm(ReversementType::class, $reversement);
+        $form = $this->createForm(ReversementType::class, $reversement, ['organisme' => $listeOrganisme]);
 
         // handlerequest() permet de parcourir la requête et d'extraire les informations du formulaire
         $form->handleRequest($request);

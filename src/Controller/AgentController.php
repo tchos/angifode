@@ -3,14 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\AgentDetache;
+use App\Entity\FinDetachement;
 use App\Entity\Historique;
 use App\Entity\Organismes;
 use App\Form\DetachementType;
+use App\Form\FinDetachementType;
 use App\Repository\AgentDetacheRepository;
 use App\Repository\GradeRepository;
+use App\Repository\MinistereRepository;
 use App\Repository\OrganismesRepository;
 use App\Services\BI;
 use App\Services\Services;
+use Container2BVCigq\getMinistereRepositoryService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -189,10 +193,71 @@ class AgentController extends AbstractController
 
     # Pour mettre fin au détachement de l'agent dans un organisme
     #[Route('/agent/findetachement/{id}', name: 'fin_detachement')]
-    public function finDetachement(): Response
+    public function finDetachement(EntityManagerInterface $manager, Request $request, AgentDetache $agentDetache): Response
     {
-        return $this->render('agent/fin_detachement.html.twig', [
-            ''
+        // utilisateur connecté
+        $user = $this->getUser()->getUsername();
+        // pour l'historisation de l'action de fin de détachement
+        $history = new Historique();
+        //entité AgentDetache à associer au formulaire de fin de détachement
+        $detache = $agentDetache;
+
+        $finDetachement = new FinDetachement();
+
+        // constructeur de formulaire de creation de fin de détachement
+        $form = $this->createForm(FinDetachementType::class, $finDetachement);
+
+        // handlerequest() permet de parcourir la requête et d'extraire les informations du formulaire
+        $form->handleRequest($request);
+
+        /**
+         * Ayant extrait les infos saisies dans le formulaire,
+         * on vérifie que le formulaire a été soumis et qu'il est valide
+         */
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $dateFinDet = $form->get("dateFinDet")->getData();
+
+            $detache->setDateFinDet($dateFinDet);
+
+            $finDetachement->setAgentDetache($detache);
+
+            $history->setTypeAction("CREATE")
+                ->setAuteur($user)
+                ->setNature("FIN DETACHEMENT")
+                ->setClef($detache->getMatricule().' - '.$detache->getOrganisme()->getSigle())
+                ->setDateAction(new \DateTime())
+            ;
+            // Persistence de l'entité AgentDetache
+            $manager->persist($detache);
+            $manager->persist($history);
+            $manager->persist($finDetachement);
+            $manager->flush();
+
+            // Alerte succès de l'enregistrement d'un nouveau détachement
+            $this->addFlash("success","La fin de détachement a été enregistrée avec succès !!!");
+
+            return $this->redirectToRoute('agent_detache_list');
+        }
+        return $this->render('agent/fin_detache.html.twig', [
+            'form' => $form->createView(),
+            'detache' => $detache
+        ]);
+    }
+
+    # Apporter des modifications à un détachement
+    #[Route('/agent/details/{id<\d+>}', name: 'agent_detache_details')]
+    public function details (AgentDetache $agentDetache, MinistereRepository $ministereRepository,
+                             GradeRepository $gradeRepository): Response
+    {
+        $detache = $agentDetache;
+        $gradeDet = $gradeRepository->findOneBy(['codeGrade' => $detache->getGradeDet()]);
+        $ministere = $ministereRepository->findOneBy(['codeMinistere' => $detache->getMinistere()]);
+
+        return $this->render('agent/details_detache.html.twig', [
+            'agent' => $detache,
+            'grade' => $gradeDet,
+            'ministere' => $ministere,
         ]);
     }
 }

@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\FinDetachementRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=FinDetachementRepository::class)
+ * @UniqueEntity(fields = "agentDetache",
+ *      message = "Ce détachement a déjà pris fin par le passé")
  */
 class FinDetachement
 {

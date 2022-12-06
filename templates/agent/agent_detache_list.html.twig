@@ -41,9 +41,9 @@
                                         <i class="fas fa-edit"></i><span class="ms-4"></span></a>
                                     <a title="Supprimer le détachement" href="{{ path('agent_detache_edit', {'id': agentDetache.id}) }}">
                                         <i class="fa fa-window-close text-danger"></i><span class="ms-4"></span></a>
-                                    <a title="Détails du détachement" href="{{ path('agent_detache_edit', {'id': agentDetache.id}) }}">
+                                    <a title="Détails du détachement" href="{{ path('agent_detache_details', {'id': agentDetache.id}) }}">
                                         <i class="fas fa-info-circle text-success"></i><span class="ms-4"></span></a>
-                                    <a title="Mettre fin au détachement" href="{{ path('agent_detache_edit', {'id': agentDetache.id}) }}">
+                                    <a title="Mettre fin au détachement" href="{{ path('fin_detachement', {'id': agentDetache.id}) }}">
                                         <i class="fas fa-delete-left text-warning"></i><span class="ms-4"></span>
                                     </a>
                                 </td>

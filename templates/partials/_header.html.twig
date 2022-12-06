@@ -80,13 +80,14 @@
                         </div>
                     </li>
                 {% endif %}
-                <li class="nav-item active me-4">
-                    <a class="nav-link active taille fs-6 fw-bolder" href="{{ path('app_statistics') }}">
-                        <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
-                        Statistiques <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item active me-4">
+                        <a class="nav-link active taille fs-6 fw-bolder" href="{{ path('app_statistics') }}">
+                            <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
+                            Statistiques <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link active fs-6" href="#">
                         <i class="fa fa-laptop" aria-hidden="true"></i>

@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Modifier un détachement{% endblock %}
-{% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ asset('asset/css/angifode.css') }}"/>{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -64,17 +63,17 @@
             </div>
             <div class="row mt-4">
                 <div class="col-4 mt-4">
-                    <button type="submit" class="btn btn-success btn-sm">
+                    <button type="submit" class="btn btn-success">
                         <i class="fas fa-check"></i>
                         <span class="fw-bolder"> Enregistrer les modifications</span>
                     </button>
-                    <a class="btn btn-dark btn-sm" href="{{ path('agent_detache_list') }}">
+                    <a class="btn btn-dark" href="{{ path('agent_detache_list') }}">
                         <i class="fa fa-window-restore" aria-hidden="true"></i>
                         <span class="fw-bolder"> Annuler les modifications</span>
                     </a>
                 </div>
                 <div class="col-2 mt-4 ms-auto">
-                    <a title="Supprimer la cotisation" data-bs-toggle="modal" data-bs-target="#modal1" class="btn btn-danger btn-sm">
+                    <a title="Supprimer la cotisation" data-bs-toggle="modal" data-bs-target="#modal1" class="btn btn-danger">
                         <i class="fa fa-times text-danger"></i> Supprimer ce détachement
                     </a>
                     <div class="modal fade text-start" id="modal1" data-bs-backdrop="static">

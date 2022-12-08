@@ -14,12 +14,12 @@ class CotisationEditType extends AbstractType
     {
         $builder
             ->add('cotSalariale', MoneyType::class, [
-                'label' => 'Part salariale de la cotisation',
+                'label' => 'Part salariale',
                 'currency' => 'CFA',
                 'attr' => ['placeholder' => 'Ex: 100000']
             ])
             ->add('cotPatronale', MoneyType::class, [
-                'label' => 'Part patronale de la cotisation',
+                'label' => 'Contribution patronale',
                 'currency' => 'CFA',
                 'attr' => ['placeholder' => 'Ex: 120000']
             ])

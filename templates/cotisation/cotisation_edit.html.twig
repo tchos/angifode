@@ -96,3 +96,15 @@
         {{ form_end(form) }}
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script>
+        // cotTotal = cotSalariale + cotPatronale
+        $(function() {
+            $("#cotisation_edit_cotSalariale, #cotisation_edit_cotPatronale").on("keydown keyup", total);
+            function total() {
+                $("#cotisation_edit_cotTotale").val(Number($("#cotisation_edit_cotSalariale").val()) + Number($("#cotisation_edit_cotPatronale").val()));
+            }
+        });
+    </script>
+{% endblock %}

@@ -63,9 +63,9 @@ class AgentDetache
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Regex (pattern="/[A-Z0-9\/]+/", message="Mauvais format de la référence")
+     * @Assert\Regex (pattern="/[0-9]*\/([A-Z0-9\/])+/", message="Mauvais format de la référence")
      * @Assert\Expression ("this.getRefActeDet() != this.getRefActeInt()",
-     *     message="La référence d'intégration doit être de la référence de détachement")
+     *     message="La référence d'intégration doit être différente de la référence de détachement")
      */
     private $refActeInt;
 
@@ -93,7 +93,7 @@ class AgentDetache
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Regex (
-     *     pattern="/[A-Z0-9\/]+/",
+     *     pattern="/[0-9]*\/([A-Z0-9\/])+/",
      *     message="Mauvais format de la référence")
      * @Assert\Expression ("this.getRefActeDet() != this.getRefActeInt()",
      *     message="La référence d'intégration doit être de la référence de détachement")

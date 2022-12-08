@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\FinDetachementRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FinDetachementRepository::class)
@@ -37,6 +38,9 @@ class FinDetachement
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\Regex (
+     *     pattern="/[0-9]*\/([A-Z0-9\/])+/",
+     *     message="Mauvais format de la référence")
      */
     private $refActeFinDet;
 

@@ -23,7 +23,7 @@ class ReversementType extends AbstractType
         $organismes = $options['organisme'];
         $builder
             ->add('typeRev',ChoiceType::class,[
-                'label' => "Quel moyen de réversement avez-vous utilisé ?",
+                'label' => "Moyen de réversement",
                 'choices' => [
                     'CHEQUE' => 'CHEQUE',
                     'VIREMENT' => 'VIREMENT',
@@ -31,7 +31,7 @@ class ReversementType extends AbstractType
                 ]
             ])
             ->add('refTitre', TextType::class,[
-                'label' => 'Entrez les références du moyen de reversement',
+                'label' => 'Références du moyen de reversement',
                 'attr' => [
                     'placeholder' => 'Ex: 123456789'
                 ]

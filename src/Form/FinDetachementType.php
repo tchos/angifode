@@ -23,7 +23,7 @@ class FinDetachementType extends AbstractType
                 'label' => 'Motif du fin de détachement',
                 'choices' => [
                     'Par la structure' => 'La structure a mis fin au détachement',
-                    'Par l\'interessé' => 'L\'interessé a mis fin au détachement',
+                    'Retour au ministère d\'origine' => 'Retour au ministère d\'origine',
                     'Nommination à autre poste' => 'L\agent détaché a été nommé à un autre poste',
                     'Remplacé au poste' => 'L\'agent détaché a été remplacé à son poste suite à une nommination',
                     'Retraite' => 'Appelé à faire valoir ses droit à la retraite',

@@ -134,16 +134,24 @@ class ReversementController extends AbstractController
     }
 
     #[Route('/reversement/{id}/edit', name: 'reversement_edit')]
-    public function update_reversement(EntityManagerInterface $manager, Request $request,
+    public function update_reversement(EntityManagerInterface $manager, Request $request, OrganismesRepository $organismesRepository,
                                        Reversement $reversement, SluggerInterface $slugger): Response
     {
         // utilisateur connecté
         $user = $this->getUser();
         // pour l'historisation de l'action
         $history = new Historique();
+        // organisme de l'utilisateur connecté
+        $organisme = $this->getUser()->getOrganisme()->getSigle();
+
+        //Les users du MINFI ou alors les admin voyent tous les organismes
+        if ($this->isGranted('ROLE_ADMIN') | $organisme === "MINFI")
+            $organisme = "";
+
+        $listeOrganisme = $organismesRepository->findBySigle($organisme);
 
         // constructeur de formulaire de creation d'un organisme
-        $form = $this->createForm(ReversementType::class, $reversement);
+        $form = $this->createForm(ReversementType::class, $reversement, ['organisme' => $listeOrganisme]);
 
         // handlerequest() permet de parcourir la requête et d'extraire les informations du formulaire
         $form->handleRequest($request);

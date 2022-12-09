@@ -173,6 +173,11 @@ class AgentDetache
     private $finDetachements;
 
     /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateDernierAvct;
+
+    /**
      * CallBack appelé à chaque fois que l'on veut enregistrer un agent détaché pour
      * calculer sa date de saisie et sa date de fin détachement. *
      *
@@ -530,6 +535,18 @@ class AgentDetache
                 $finDetachement->setAgentDetache(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateDernierAvct(): ?\DateTimeInterface
+    {
+        return $this->dateDernierAvct;
+    }
+
+    public function setDateDernierAvct(?\DateTimeInterface $dateDernierAvct): self
+    {
+        $this->dateDernierAvct = $dateDernierAvct;
 
         return $this;
     }

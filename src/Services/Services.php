@@ -275,19 +275,40 @@ class Services
     /** Fin de la function getNextIndice() */
 
     /**
+     * Cette fonction retourne la date du dernier avancement
+     * @param $dateIntegration
+     * @param $dateDet
+     * @return \DateTime|false
+     */
+    public function getDateDernierAvct($dateIntegration, $dateDet){
+        $dateTampon = date_format($dateIntegration, 'Y-m-d');
+        $dateDernAvct = date_create($dateTampon);
+        if ($dateDernAvct < $dateDet) {
+            while ($dateDernAvct < $dateDet) {
+                date_add($dateDernAvct,date_interval_create_from_date_string("2 years"));
+            }
+            date_sub($dateDernAvct,date_interval_create_from_date_string("2 years"));
+        }
+        return $dateDernAvct;
+    }
+    /** Fin de la function getDateDernierAvct() */
+
+    /**
      * Cette fonction retourne l'indice exacte à la date de début àp partir de laquelle on veut évaluer la dette
      * @param $grade
      * @param $indicce
      * @return mixed
      */
-    public function getFirstIndice($grade_det, $indice_det, $dateIntegration, $dateDebut)
+    public function getFirstIndice($grade_det, $indice_det, $dateIntegration, $dateDebut, $dateDet)
     {
         $tableau_indice = [];
         $tableau_indice[] = $indice_det;
         $dateTampon = date_format($dateIntegration, 'Y-m-d');
 
         //Changement d'indice si avancement sinon l'indice reste inchangé
-        $dateAvct = date_create($dateTampon);
+        //$dateAvct = date_create($dateTampon);
+        $dateAvct = $this->getDateDernierAvct($dateIntegration,$dateDet);
+
         // Pour gérer les avancements, donc les changements d'indices
         while ($dateAvct < $dateDebut){
             date_add($dateAvct,date_interval_create_from_date_string("2 years"));
@@ -297,6 +318,7 @@ class Services
             }
         }
 
+        //dd(array_key_last($tableau_indice) -1, $tableau_indice);
         if (count($tableau_indice) > 1) return $tableau_indice[array_key_last($tableau_indice) -1 ];
         else return $tableau_indice[array_key_last($tableau_indice) ];
     }
@@ -334,14 +356,16 @@ class Services
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getFirstEchelon($grade_det, $echelon_det, $dateIntegration, $dateDebut)
+    public function getFirstEchelon($grade_det, $echelon_det, $dateIntegration, $dateDebut, $dateDet)
     {
         $tableau_echelon = [];
         $tableau_echelon[] = $echelon_det;
         $dateTampon = date_format($dateIntegration, 'Y-m-d');
 
         //Changement d'echelon si avancement sinon l'echelon reste inchangé
-        $dateAvct = date_create($dateTampon);
+        //$dateAvct = date_create($dateTampon);
+        $dateAvct = $this->getDateDernierAvct($dateIntegration,$dateDet);
+
         // Pour gérer les avancements, donc les changements d'echelon
         while ($dateAvct < $dateDebut){
             date_add($dateAvct,date_interval_create_from_date_string("2 years"));
@@ -396,9 +420,13 @@ class Services
 
         //Changement d'indice si avancement sinon l'indice reste inchangé
         $dateAvct = date_create($dateTampon);
+        /**
         // Pour gérer les avancements, donc les changements d'indices
         while ($dateAvct < $dateDebut)
             date_add($dateAvct,date_interval_create_from_date_string("2 years"));
+         * */
+
+        $dateAvct = $this->getDateDernierAvct(date_create($dateTampon), $dateDebut);
 
         for ($i = 1; $i < count($tableauPeriode)-1; $i++)
         {
@@ -414,7 +442,7 @@ class Services
             $detailsEsdAgent["dateFin"] = $dateF;
 
             date_add($dateAvct,date_interval_create_from_date_string("2 years"));
-            //dd($dateDebut, $dateD, $dateAvct);
+
             if ($dateD == $dateAvct){
                 if ($this->getNextIndice($gradeDet, $indice) != NULL ) {
                     $indice = $this->getNextIndice($gradeDet, $indice);
@@ -422,7 +450,7 @@ class Services
             } else {
                 date_sub($dateAvct,date_interval_create_from_date_string("2 years"));
             }
-
+            //dd($dateD, $dateAvct, $indice);
             $sb = $this->getSalaireFC($dateD, $dateF, $gradeDet, $indice);
 
             //Données détaillant le calcul de l'ESD d'un agent sur une période .
@@ -493,6 +521,7 @@ class Services
         while ($dateAvct < $dateDebut)
             date_add($dateAvct,date_interval_create_from_date_string("2 years"));
 
+        $dateAvct = $this->getDateDernierAvct(date_create($dateTampon), $dateDebut);
         for ($i = 1; $i < count($tableauPeriode)-1; $i++) {
 
             $dateD = date_create($tableauPeriode[$i]);

@@ -98,13 +98,26 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('asset/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('asset/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('asset/js/popper.min.js') }}"></script>
+    <script src="{{ asset('asset/php/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('asset/js/dataTables.bootstrap4.min.js') }}"></script>
+
+    <script src="{{ asset('asset/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('asset/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('asset/js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('asset/js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('asset/js/buttons.html5.min.js') }}"></script>
     <script>
-        // cotTotal = cotSalariale + cotPatronale
-        $(function() {
-            $("#cotisation_edit_cotSalariale, #cotisation_edit_cotPatronale").on("keydown keyup", total);
-            function total() {
-                $("#cotisation_edit_cotTotale").val(Number($("#cotisation_edit_cotSalariale").val()) + Number($("#cotisation_edit_cotPatronale").val()));
-            }
+        $(document).ready(function(){
+            // cotTotal = cotSalariale + cotPatronale
+            $(function() {
+                $("#cotisation_edit_cotSalariale, #cotisation_edit_cotPatronale").on("keydown keyup", total);
+                function total() {
+                    $("#cotisation_edit_cotTotale").val(Number($("#cotisation_edit_cotSalariale").val()) + Number($("#cotisation_edit_cotPatronale").val()));
+                }
+            });
         });
     </script>
 {% endblock %}

@@ -248,15 +248,17 @@ class AgentController extends AbstractController
     # Apporter des modifications à un détachement
     #[Route('/agent/details/{id<\d+>}', name: 'agent_detache_details')]
     public function details (AgentDetache $agentDetache, MinistereRepository $ministereRepository,
-                             GradeRepository $gradeRepository): Response
+                             GradeRepository $gradeRepository, Services $services): Response
     {
         $detache = $agentDetache;
         $gradeDet = $gradeRepository->findOneBy(['codeGrade' => $detache->getGradeDet()]);
         $ministere = $ministereRepository->findOneBy(['codeMinistere' => $detache->getMinistere()]);
+        $indiceDet = $services->getIndice($detache->getGradeDet(), $detache->getClasseDet(), $detache->getEchelonDet());
 
         return $this->render('agent/details_detache.html.twig', [
             'agent' => $detache,
             'grade' => $gradeDet,
+            'indiceDet' => $indiceDet,
             'ministere' => $ministere,
         ]);
     }

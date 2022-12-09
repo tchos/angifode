@@ -68,42 +68,64 @@ class EsdController extends AbstractController
                 $echelonDet = $agents[$i]->getEchelonDet();
                 $indiceDet = $services->getIndice($gradeDet, $classeDet, $echelonDet);
 
-                //Si la date de début est inférieure à la date de détachement, la date de début sera la date de détachement
-                if ($dateDet >= $dateDebut){
-                    $dateDebut = $dateDet;
-                }
-
-                //Si la date de fin est supérieure à la date de fin de détachement, la date de fin sera la date de fin de détachement
-                if ($dateFinDet > date_create("0001-01-01")){
-                    if ($dateFinDet < $dateFin){
-                        $dateFin = $dateFinDet;
+                if($vraiDateFin <= $dateDet)
+                {
+                    $dataEsd = [];
+                    $detailsEsdAgent["dateDebut"] = $vraiDateDebut;
+                    $detailsEsdAgent["dateFin"] = $vraiDateFin;
+                    $detailsEsdAgent["sb"] = 0;
+                    $detailsEsdAgent["partSalariale"] = 0;
+                    $detailsEsdAgent["partPatronale"] = 0;
+                    $detailsEsdAgent["sar"] = 0;
+                    if($gradeDet >= "60000" && $gradeDet < "62000") {
+                        $detailsEsdAgent["echelon"] = $echelon;
+                    } else {
+                        $detailsEsdAgent["indice"] = $indiceDet;
                     }
+                    $dataEsd[] = $detailsEsdAgent;
+                    $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $dataEsd;
+                    // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
+                    $id_agent[] = $agents[$i]->getId();
+                    $grade_agent[] = $agents[$i]->getGradeDet();
                 }
+                else {
+                    //Si la date de début est inférieure à la date de détachement, la date de début sera la date de détachement
+                    if ($dateDet >= $dateDebut && $dateDet <= $dateFin){
+                        $dateDebut = $dateDet;
+                    }
 
-                //Somme à reverser selon que l'agent détaché soit fonctionnnaire ou du code du travail
-                if($gradeDet >= "60000" && $gradeDet < "62000") {
-                    $first_echelon = $services->getFirstEchelon($gradeDet, $echelonDet, $dateIntegration, $dateDebut);
-                    // $sar = somme à reverser pour un agent détatché du code du travail
-                    $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration);
-                    $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
-                    // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
-                    $id_agent[] = $agents[$i]->getId();
-                    $grade_agent[] = $agents[$i]->getGradeDet();
-                } else {
-                    $first_indice = $services->getFirstIndice($gradeDet, $indiceDet, $dateIntegration, $dateDebut);
-                    // $sar = somme à reverser pour un agent détatché fonction
-                    $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
-                    $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
-                    // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
-                    $id_agent[] = $agents[$i]->getId();
-                    $grade_agent[] = $agents[$i]->getGradeDet();
+                    //Si la date de fin est supérieure à la date de fin de détachement, la date de fin sera la date de fin de détachement
+                    if ($dateFinDet > date_create("0001-01-01") && $dateFinDet <= date_create(date("Y-m-d"))){
+                        if ($dateFinDet < $dateFin){
+                            $dateFin = $dateFinDet;
+                        }
+                    }
+
+                    //Somme à reverser selon que l'agent détaché soit fonctionnnaire ou du code du travail
+                    if($gradeDet >= "60000" && $gradeDet < "62000") {
+                        $first_echelon = $services->getFirstEchelon($gradeDet, $echelonDet, $dateIntegration, $dateDebut, $dateDet);
+                        // $sar = somme à reverser pour un agent détatché du code du travail
+                        $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration);
+                        $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
+                        // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
+                        $id_agent[] = $agents[$i]->getId();
+                        $grade_agent[] = $agents[$i]->getGradeDet();
+                    } else {
+                        //$first_indice = $services->getFirstIndice("42120", 665, date_create("1995-07-21"), $dateDebut, $dateDet);
+                        $first_indice = $services->getFirstIndice($gradeDet, $indiceDet, $dateIntegration, $dateDebut, $dateDet);
+                        // $sar = somme à reverser pour un agent détatché fonction
+                        $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
+                        $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
+                        // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
+                        $id_agent[] = $agents[$i]->getId();
+                        $grade_agent[] = $agents[$i]->getGradeDet();
+                    }
                 }
             }
 
             //$sar = $services->getSommeAReverser($dateDebut, $dateFin, 420, "42210", date_create("1995-11-01"));
             $total_sar_organisme = 0;
             $dataSar = [];
-
             foreach ($sar_organisme as $key => $value){
                 $totalSar = 0;
                 for($i = 0; $i < count($value); $i++) {
@@ -146,26 +168,54 @@ class EsdController extends AbstractController
         $indiceDet = $services->getIndice($gradeDet, $classeDet, $echelonDet);
         $dateIntegration = $agentDetache->getDateIntegration();
         $dateDet = $agentDetache->getDateDet();
+        $dateFinDet = $agentDetache->getDateFinDet();
 
-        //Si la date de début est inférieure à la date de détachement, la date de début sera la date de détachement
-        if ($dateDet >= $dateDebut){
-            $dateDebut = $dateDet;
+        if($dateFin <= $dateDet)
+        {
+            $detailsEsdAgent["dateDebut"] = $dateDebut;
+            $detailsEsdAgent["dateFin"] = $dateFin;
+            $detailsEsdAgent["sb"] = 0;
+            $detailsEsdAgent["partSalariale"] = 0;
+            $detailsEsdAgent["partPatronale"] = 0;
+            $detailsEsdAgent["sar"] = 0;
+            if($gradeDet >= "60000" && $gradeDet < "62000") {
+                $detailsEsdAgent["echelon"] = $echelon;
+            } else {
+                $detailsEsdAgent["indice"] = $indiceDet;
+            }
+            $sar[0] = $detailsEsdAgent;
+            $totalSar = 0;
+        }
+        else {
+            //Si la date de début est inférieure à la date de détachement, la date de début sera la date de détachement
+            if ($dateDet >= $dateDebut && $dateDet <= $dateFin) {
+                $dateDebut = $dateDet;
+            }
+
+            //Si la date de fin est supérieure à la date de fin de détachement, la date de fin sera la date de fin de détachement
+            if ($dateFinDet > date_create("0001-01-01") && $dateFinDet <= date_create(date("Y-m-d"))) {
+                if ($dateFinDet < $dateFin) {
+                    $dateFin = $dateFinDet;
+                }
+            }
+
+            if ($gradeDet >= "60000" && $gradeDet < "62000") {
+                $first_echelon = $services->getFirstEchelon($gradeDet, $echelonDet, $dateIntegration, $dateDebut, $dateDet);
+                // $sar = somme à reverser pour un agent détatché
+                $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration);
+            } else {
+                $first_indice = $services->getFirstIndice($gradeDet, $indiceDet, $dateIntegration, $dateDebut, $dateDet);
+                // $sar = somme à reverser pour un agent détatché
+                $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
+            }
+
+            $totalSar = 0;
+
+            for ($i = 0; $i < count($sar); $i++) {
+                $totalSar += $sar[$i]["sar"];
+            }
         }
 
-        if($gradeDet >= "60000" && $gradeDet < "62000") {
-            $first_echelon = $services->getFirstEchelon($gradeDet, $echelonDet, $dateIntegration, $dateDebut);
-            // $sar = somme à reverser pour un agent détatché
-            $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration);
-        } else {
-            $first_indice = $services->getFirstIndice($gradeDet, $indiceDet, $dateIntegration, $dateDebut);
-            // $sar = somme à reverser pour un agent détatché
-            $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
-        }
-
-        $totalSar = 0;
-        for ($i = 0; $i < count($sar); $i++) {
-            $totalSar += $sar[$i]["sar"];
-        }
         return $this->render('esd/esd_details.html.twig',[
             'sar' => $sar,
             'totalSar' => $totalSar,

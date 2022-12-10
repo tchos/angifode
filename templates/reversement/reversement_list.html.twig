@@ -8,7 +8,7 @@
 
 {% block body %}
     <div class="container">
-        <h3 class="text-center">LISTE DES REVERSEMENTS ENREGISTRES </h3>
+        <h3 class="text-center">LISTE DES REVERSEMENTS EFFECTUES </h3>
         {% for message in app.session.flashBag.get('warning') %}
             <div class="alert alert-warning">{{ message }}</div>
         {% endfor %}
@@ -50,7 +50,7 @@
                                 <td class="text-center">
                                     <a title="Modifier le réversement {{ reversement.refTitre }}" href="{{ path('reversement_edit', {'id': reversement.id}) }}">
                                         <i class="fas fa-edit"></i><span class="ms-4"></span></a>
-                                    <a title="Enregistrer les cotisations sur le réversement {{ reversement.refTitre }}" href="{{ path('cotisation_new', {'reversement': reversement.id}) }}"
+                                    <a title="Répartir le réversement {{ reversement.refTitre }} en cotisations" href="{{ path('cotisation_new', {'reversement': reversement.id}) }}"
                                             class="text-dark">
                                         <i class="fas fa-user-plus"></i><span class="ms-4"></span>
                                     </a>

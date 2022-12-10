@@ -24,7 +24,7 @@ class DetachementType extends AbstractType
             ->add('matricule', TextType::class,[
                 'label' => 'Matricule de l\'agent',
                 'attr' => [
-                    'placeholder' => 'Ex: 999999Z ou A000000'
+                    'placeholder' => 'Ex: 999999Z/A000000'
                 ]
             ])
             ->add('noms', TextType::class,[
@@ -46,6 +46,10 @@ class DetachementType extends AbstractType
             ->add('dateIntegration', DateType::class, [
                 'label' => 'Date d\'intégration',
                 'widget' => 'single_text'])
+            ->add('dateDernierAvct', DateType::class, [
+                'label' => 'Date dernier avancement',
+                'widget' => 'single_text',
+            ])
             ->add('refActeInt', TextType::class,[
                 'label' => 'Référence de l\'acte d\'intégration',
                 'attr' => [

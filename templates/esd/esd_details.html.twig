@@ -12,10 +12,49 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col"><h4>Détails de l'évaluation de la dette sociale de l'agent {{ agentDetache.noms }} ({{ agentDetache.matricule }})</h4></div>
-            <div class="col-3"><span class="badge bg-success fs-5 fw-bolder">Total à reverser: {{ totalSar | number_format(0,'.',' ') }} FCFA</span></div>
+            <div class="col">
+                <h4>
+                    Détails de l'évaluation de la dette sociale de l'agent
+                    <span class="badge bg-dark fs-5 fw-bolder">{{ agentDetache.noms }} ({{ agentDetache.matricule }})</span>
+                </h4>
+            </div>
         </div>
         <hr>
+        <div class="row mb-2">
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    PERIODE :
+                    <span class="badge bg-warning fw-bolder">Du
+                        {{ dateDebut }} au
+                        {{ dateFin }}
+                    </span>
+                </li>
+            </div>
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    SOMME A REVERSER :
+                    <span class="badge bg-success fw-bolder">
+                        {{ totalSar | number_format(0,'.',' ') }} FCFA
+                    </span>
+                </li>
+            </div>
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    COTISATIONS :
+                    <span class="badge bg-primary fw-bolder">
+                        {{ totalCotis | number_format(0,'.',' ')}} FCFA
+                    </span>
+                </li>
+            </div>
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    DETTE :
+                    <span class="badge bg-danger fw-bolder">
+                        {{ (totalSar - totalCotis) | number_format(0,'.',' ')}} FCFA
+                    </span>
+                </li>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">

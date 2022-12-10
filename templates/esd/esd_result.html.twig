@@ -12,23 +12,18 @@
 {% block body %}
     <div class="container">
         <div class="h4 text-success">
-            Résultat de l'évaluation de la dette sociale de l'organisme {{ organisme.sigle }}
+            Résultat de l'évaluation de la dette sociale de l'organisme
+            <span class="badge bg-dark fw-bolder">{{ organisme.sigle }}</span>
         </div>
         {% for message in app.session.flashBag.get('success') %}
             <div class="alert alert-success">{{ message }}</div>
         {% endfor %}
         <hr>
-        <div class="row">
-            <div class="col">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    ORGANISME :
-                    <span class="badge bg-dark rounded-pill fw-bolder">{{ organisme.sigle }}</span>
-                </li>
-            </div>
+        <div class="row mb-2">
             <div class="col">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     PERIODE :
-                    <span class="badge bg-dark rounded-pill fw-bolder">Du
+                    <span class="badge bg-warning fw-bolder">Du
                         {{ dateDebut }} au
                         {{ dateFin }}
                     </span>
@@ -37,8 +32,24 @@
             <div class="col">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     SOMME A REVERSER :
-                    <span class="badge bg-success rounded-pill fw-bolder">
+                    <span class="badge bg-success fw-bolder">
                         {{ total_sar_organisme | number_format(0,'.',' ')}} FCFA
+                    </span>
+                </li>
+            </div>
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    REVERSEMENTS :
+                    <span class="badge bg-primary fw-bolder">
+                        {{ total_reversement | number_format(0,'.',' ')}} FCFA
+                    </span>
+                </li>
+            </div>
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    DETTE :
+                    <span class="badge bg-danger fw-bolder">
+                        {{ (total_sar_organisme - total_reversement) | number_format(0,'.',' ')}} FCFA
                     </span>
                 </li>
             </div>
@@ -53,9 +64,9 @@
                         <tr class="table-dark">
                             <th>N°</th>
                             <th>AGENTS DETACHES</th>
-                            <th class="text-end pe-5">PART SALARIALE</th>
-                            <th class="text-end pe-5">PART PATRONALE</th>
                             <th class="text-end pe-5">SOMME A REVERSER</th>
+                            <th class="text-end pe-5">TOTAL COTISE</th>
+                            <th class="text-end pe-5">RESTE A REVERSER</th>
                             <th class="text-center">ACTION</th>
                         </tr>
                         </thead>
@@ -66,20 +77,24 @@
                                 <td>{{ i }}</td>
                                 <td>{{ agent }}</td>
                                 <td class="text-end pe-5">
+                                    {{ sar | number_format(0,'.',' ') }}
+                                    {#
                                     {% if grade_agent[i] >= "60000" and grade_agent[i] < "62000" %}
                                         {{ ((sar / 3) | round(1, 'ceil') ) | number_format(0,'.',' ') }}
                                     {% else %}
                                         {{ ((sar * 10) / 22)  | round(1, 'ceil') | number_format(0,'.',' ') }}
-                                    {% endif %}
+                                    {% endif %}  #}
                                 </td>
                                 <td class="text-end pe-5">
+                                    {{ dataCotis[i] | number_format(0,'.',' ') }}
+                                    {#
                                     {% if grade_agent[i] >= "60000" and grade_agent[i] < "62000" %}
                                         {{ ((sar * 2) / 3) | round(1, 'ceil') | number_format(0,'.',' ') }}
                                     {% else %}
                                         {{ ((sar * 12) / 22) | round(1, 'ceil') | number_format(0,'.',' ') }}
-                                    {% endif %}
+                                    {% endif %}  #}
                                 </td>
-                                <td class="text-end pe-5">{{ sar | number_format(0,'.',' ') }}</td>
+                                <td class="text-end pe-5">{{ (sar - dataCotis[i]) | number_format(0,'.',' ') }}</td>
                                 <td class="text-center">
                                     <a title="Détails de l'évaluation la dette sociale de l'agent {{ i }}"
                                        href="{{ path('esd_agent_details',

@@ -82,6 +82,60 @@ class Services
         return $organismes;
     }
 */
+    /**
+     * Cette fonction retourne la somme totale des reversements effectués par un organisme sur une période définie
+     * @param $organisme
+     * @param $periodeDebut
+     * @param $periodeFin
+     * @return float|int|mixed|string
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getTotalReversements($organisme, $periodeDebut, $periodeFin)
+    {
+        /**
+         * select organisme_id, sigle, sum(montant_rev) as total_reverse
+         * from reversement, organismes
+         * where date_deb_rev >= "2022-01-01" and date_fin_rev <= "2022-12-31" and reversement.organisme_id = organismes.id and organisme_id=2
+         * group by organisme_id,sigle;
+         */
+        return $this->manager->createQuery(
+            "SELECT SUM(r.montantRev) AS totalReversements FROM App\Entity\Reversement r
+             WHERE (r.dateDebRev >= :periodeDebut AND r.dateFinRev <= :periodeFin AND r.organisme = :organisme)"
+        )
+            ->setParameter('periodeDebut', $periodeDebut)
+            ->setParameter('periodeFin', $periodeFin)
+            ->setParameter('organisme', $organisme)
+            ->getSingleScalarResult()
+        ;
+    }
+    /** Fin fonction getTotalReversements() */
+
+    /**
+     * Cette fonction permet de calculer le totat des cotisations reversés pour un agent sur une période définie
+     * @param $agent
+     * @param $periodeDebut
+     * @param $periodeFin
+     * @return \Doctrine\ORM\Query
+     */
+    public function getTotalCotisations($agent, $periodeDebut, $periodeFin)
+    {
+        /**
+         * select agent_id, sum(cot_totale) as total_cotise
+         * from cotisation where date_debut_cot >= "2022-01-01" and date_fin_cot <= "2022-12-31" and agent_id = 9
+         * group by agent_id;
+         */
+        return $this->manager->createQuery(
+            "SELECT SUM(c.cotTotale) as total_cotisations FROM App\Entity\Cotisation c 
+             WHERE c.dateDebutCot >= :periodeDebut AND c.dateFinCot <= :periodeFin AND c.agent = :agent"
+        )
+            ->setParameter('periodeDebut',$periodeDebut)
+            ->setParameter('periodeFin',$periodeFin)
+            ->setParameter('agent',$agent)
+            ->getSingleScalarResult()
+        ;
+    }
+    /** Fin fonction getTotalCotisations() */
 
     /**
      * Renvoie l'indice au détachement.
@@ -395,7 +449,10 @@ class Services
         $dateD = date_create($tableauPeriode[0]);
         $dateF = date_create($tableauPeriode[1]);
 
-        date_sub($dateF,date_interval_create_from_date_string("1 day"));
+        // La dernière date dans le tableau des périodes doit être la date de fin
+        if($dateFin != $dateF){
+            date_sub($dateF,date_interval_create_from_date_string("1 day"));
+        }
 
         //Données détaillant le calcul de l'ESD d'un agent sur une période .
         $detailsEsdAgent["dateDebut"] = $dateD;
@@ -433,6 +490,7 @@ class Services
             $dateD = date_create($tableauPeriode[$i]);
             $dateF = date_create($tableauPeriode[$i+1]);
             // La dernière date dans le tableau des périodes doit être la date de fin
+            //dd($dateFin, $tableauPeriode);
             if($dateFin != $dateF){
                 date_sub($dateF,date_interval_create_from_date_string("1 day"));
             }
@@ -492,7 +550,10 @@ class Services
         $dateD = date_create($tableauPeriode[0]);
         $dateF = date_create($tableauPeriode[1]);
 
-        date_sub($dateF,date_interval_create_from_date_string("1 day"));
+        // La dernière date dans le tableau des périodes doit être la date de fin
+        if($dateFin != $dateF){
+            date_sub($dateF,date_interval_create_from_date_string("1 day"));
+        }
 
         //Données détaillant le calcul de l'ESD d'un agent sur une période .
         $detailsEsdAgent["dateDebut"] = $dateD;

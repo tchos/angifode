@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Montant à reverser sur la période allant du  {{ dateDebut }} au {{ dateFin }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
+    {% if not is_granted('ROLE_ADMIN') %}
+        <link rel="stylesheet" href="{{ asset('asset/css/angifode.css') }}"/>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="h4 text-success">
+            Evaluation de la somme à reverser mensuellement pour l'organisme
+            <span class="badge bg-dark fw-bolder">{{ organisme.sigle }}</span>
+        </div>
+        {% for message in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        <hr>
+        <div class="row mb-2">
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    PERIODE :
+                    <span class="badge bg-warning fw-bolder">Du
+                        {{ dateDebut }} au
+                        {{ dateFin }}
+                    </span>
+                </li>
+            </div>
+            <div class="col">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    SOMME A REVERSER :
+                    <span class="badge bg-success fw-bolder">
+                        {{ total_sar_organisme | number_format(0,'.',' ')}} FCFA
+                    </span>
+                </li>
+            </div>
+        </div>
+        <h4 class="mt-5">Liste des agents publics détachés concernés par la dette sociale (ESD) </h4>
+        <hr>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="dettesociale" class="table table-striped table-hover mt-4">
+                        <thead>
+                        <tr class="table-dark">
+                            <th>N°</th>
+                            <th>AGENTS DETACHES</th>
+                            <th class="text-end pe-5">PART SALARIALE</th>
+                            <th class="text-end pe-5">CONTRIBUTION PATRONALE</th>
+                            <th class="text-end pe-5">SOMME A REVERSER</th>
+                            <th class="text-center">ACTION</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% set i = 0 %}
+                        {% for agent, sar in dataSar %}
+                            <tr>
+                                <td>{{ i }}</td>
+                                <td>{{ agent }}</td>
+                                <td class="text-end pe-5">
+                                    {% if grade_agent[i] >= "60000" and grade_agent[i] < "62000" %}
+                                        {{ ((sar / 3) | round(1, 'ceil') ) | number_format(0,'.',' ') }}
+                                    {% else %}
+                                        {{ ((sar * 10) / 22)  | round(1, 'ceil') | number_format(0,'.',' ') }}
+                                    {% endif %}
+                                </td>
+                                <td class="text-end pe-5">
+                                    {% if grade_agent[i] >= "60000" and grade_agent[i] < "62000" %}
+                                        {{ ((sar * 2) / 3) | round(1, 'ceil') | number_format(0,'.',' ') }}
+                                    {% else %}
+                                        {{ ((sar * 12) / 22) | round(1, 'ceil') | number_format(0,'.',' ') }}
+                                    {% endif %}
+                                </td>
+                                <td class="text-end pe-5">{{ sar | number_format(0,'.',' ') }}</td>
+                                <td class="text-center">
+                                    <a title="Détails de l'évaluation la somme à reverser mensuellement pour l'agent {{ i }}"
+                                       href="{{ path('esd_agent_details',
+                                           {'id': id_agent[i],
+                                               'dateDebut': dateDebut,
+                                               'dateFin': dateFin}) }}">
+                                        <span>Détails</span>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('asset/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('asset/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('asset/js/popper.min.js') }}"></script>
+    <script src="{{ asset('asset/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('asset/js/dataTables.bootstrap4.min.js') }}"></script>
+
+    <script src="{{ asset('asset/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('asset/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('asset/js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('asset/js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('asset/js/buttons.html5.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $(document).ready(function(){
+                var theDataTable = $('#dettesociale').DataTable({
+                    dom: 'Blfrtip',
+                    buttons: [
+                        {
+                            extend: 'copy',
+                            text:      '<span class="fw-bolder">Copier</span>',
+                            titleAttr: 'Copier les données du tableau',
+                            className: 'btn btn-dark btn-sm',
+                        },
+                        {
+                            extend: 'pdf',
+                            text:      '<span class="fw-bolder">PDF</span>',
+                            titleAttr: 'Exporter les données du tableau au format pdf',
+                            className: 'btn btn-dark btn-sm',
+                        },
+                        {
+                            extend: 'excel',
+                            text:      '<span class="fw-bolder">MS Excel</span>',
+                            titleAttr: 'Exporter les données du tableau au format excel',
+                            className: 'btn btn-dark btn-sm',
+                        }
+                    ]
+                });
+            });
+        });
+    </script>
+{% endblock %}

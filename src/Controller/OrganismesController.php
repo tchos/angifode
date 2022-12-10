@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Require ROLE_USER for all the actions of this controller
  */
-#[IsGranted('ROLE_USER')]
+#[IsGranted('ROLE_ADMIN')]
 class OrganismesController extends AbstractController
 {
     #[Route('/organisme', name: 'create_organisme')]

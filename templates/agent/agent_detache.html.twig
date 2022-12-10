@@ -5,6 +5,7 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('asset/css/jquery-ui.css') }}" />
     <link rel="stylesheet" href="{{ asset('asset/php/auto_complete_tabul/ajax.css') }}" />
+    <link rel="stylesheet" href="{{ asset('asset/css/angifode.css') }}"/>
 {% endblock %}
 
 {% block body %}
@@ -23,18 +24,19 @@
                         </legend>
                         <hr>
                         <div class="row mb-3">
-                            <div class="col-7">{{ form_row(form.matricule) }}</div>
+                            <div class="col-4">{{ form_row(form.matricule) }}</div>
+                            <div class="col">{{ form_row(form.noms) }}</div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-7">{{ form_row(form.noms) }}</div>
-                            <div class="col-5">{{ form_row(form.telephone) }}</div>
+                            <div class="col-4">{{ form_row(form.dateNaissance) }}</div>
+                            <div class="col">{{ form_row(form.telephone) }}</div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col">{{ form_row(form.dateNaissance) }}</div>
-                            <div class="col">{{ form_row(form.dateIntegration) }}</div>
-                        </div>
-                        <div class="row mb-3">
+                            <div class="col-4">{{ form_row(form.dateIntegration) }}</div>
                             <div class="col">{{ form_row(form.refActeInt) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4">{{ form_row(form.dateDernierAvct) }}</div>
                         </div>
                     </fieldset>
                 </div>

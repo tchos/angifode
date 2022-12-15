@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau détachement{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('asset/auto_tabx/jquery-ui-1.10.0.custom.css') }}" />
+    <link rel="stylesheet" href="{{ asset('asset/auto_tabx/ajax.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="h4 text-success">Saisie d'un nouveau détachement</div>
+        {% for message in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        <hr>
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-5 me-3">
+                    <fieldset>
+                        <legend class="bg-dark text-center text-white">
+                            Informations sur l'agent
+                        </legend>
+                        <hr>
+                        <div class="row mb-3">
+                            <div class="col-7">{{ form_row(form.matricule) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-7">{{ form_row(form.noms) }}</div>
+                            <div class="col-5">{{ form_row(form.telephone) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">{{ form_row(form.dateNaissance) }}</div>
+                            <div class="col">{{ form_row(form.dateIntegration) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">{{ form_row(form.refActeInt) }}</div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-6 ms-3">
+                    <fieldset>
+                        <legend class="bg-dark text-center text-white">Informations sur le détachement</legend>
+                        <hr>
+                        <div class="row mb-3">
+                            <div class="col">{{ form_row(form.typeActeDet) }}</div>
+                            <div class="col ">{{ form_row(form.refActeDet) }}</div>
+                            <div class="col">{{ form_row(form.dateActeDet) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">{{ form_row(form.ministere) }}</div>
+                            <div class="col">{{ form_row(form.gradeDet, {'attr': {'autocomplete': 'on'}}) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">{{ form_row(form.classeDet) }}</div>
+                            <div class="col">{{ form_row(form.echelonDet) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">{{ form_row(form.dateDet) }}</div>
+                            <div class="col">{{ form_row(form.datePriseService) }}</div>
+                            <div class="col">{{ form_row(form.dateSuspension) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">{{ form_row(form.organisme) }}</div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-check"></i>
+                <span class="fw-bolder">Créer le détachement</span>
+            </button>
+            <button type="reset" class="btn btn-dark">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                <span class="fw-bolder">Annuler le détachement</span>
+            </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('asset/auto_tabx/jquery-1.9.0.js') }}"></script>
+    <script src="{{ asset('asset/auto_tabx/jquery-ui-1.10.0.custom.js') }}"></script>
+ 
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $("#detachement_matricule").autocomplete({
+                
+                minLength: 4,
+                delay: 1, 
+
+                source: '{{ asset('asset/auto_tabx/auto_mat.php') }}'
+             
+            });
+
+
+ 
+  $('#detachement_matricule').change(function() {
+    
+    this.value=this.value.toUpperCase();
+    return;
+  });
+  
+ 
+ 
+ 
+  //---- Saisie de Matricule dans le formulaire Census
+    $('#detachement_matricule').change(function(){
+      var matricule =  $('#detachement_matricule').val();
+      //alert(matricule)
+      //--- ---------------------------------------------------------------
+      //alert('Retrait d information du Matricule');  
+      //----------------------------Connection a la base de donnees pour retrait des valeurs -------------------
+      url = '{{ asset('asset/auto_tabx/auto_data.php') }}?matricule='+ matricule; 
+
+    //  url = 'http://'+window.location.host+'/auto_tabx/auto_data.php?matricule='+ matricule; 
+          //alert(url);     
+      $.get(url,
+           function(data){ 
+          // alert(url); 
+           var tablxxx;
+           //alert("Données retournée: "+data);   
+                   
+           if (data==-1){ // Matricule Inexistant
+           alert("Matricule Inexistant"); $( "#matricule" ).focus(); return;
+            }
+           $("#matricule" ).css( "background-color", "#d6e89e"); 
+           //--- activation des champs a remplir
+         
+          //explication de la recuperation des donnees
+            //alert(data);
+ 
+           // Extraction des donnees
+           tablxxx=data.split("#"); 
+           noms=tablxxx[1];date_naiss=tablxxx[2]; date_int1=tablxxx[3]; 
+           
+           
+           //-- Traitement et affichage dans le formulaire
+
+           $("#detachement_noms").val(noms); 
+           $("#detachement_dateNaissance").val(date_naiss);
+           $("#detachement_dateIntegration").val(date_int1);
+
+           //date_int= date_int1.substring(8, 11) +'/'+date_int1.substring(5, 7)+'/'+ date_int1.substring(0, 4);
+           //$("#detachement_dateNaissance").val(date_int);
+           //dnaissance= date_naiss.substring(8, 11) +'/'+date_naiss.substring(5, 7)+'/'+ date_naiss.substring(0, 4);
+           //$("#detachement_dateIntegration").val(dnaissance);
+ 
+ 
+         
+           
+          
+       }) // Get  
+       
+      
+    return;
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+        });
+    </script>
+ 
+    
+{% endblock %}

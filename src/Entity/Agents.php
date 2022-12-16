@@ -67,6 +67,21 @@ class Agents
      */
     private $dateIntegration;
 
+    /**
+     * @ORM\Column(type="string", length=1, nullable=true)
+     */
+    private $classe;
+
+    /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    private $echelon;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateDernierAvct;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -188,6 +203,42 @@ class Agents
     public function setDateIntegration(?\DateTimeInterface $dateIntegration): self
     {
         $this->dateIntegration = $dateIntegration;
+
+        return $this;
+    }
+
+    public function getClasse(): ?string
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?string $classe): self
+    {
+        $this->classe = $classe;
+
+        return $this;
+    }
+
+    public function getEchelon(): ?string
+    {
+        return $this->echelon;
+    }
+
+    public function setEchelon(?string $echelon): self
+    {
+        $this->echelon = $echelon;
+
+        return $this;
+    }
+
+    public function getDateDernierAvct(): ?\DateTimeInterface
+    {
+        return $this->dateDernierAvct;
+    }
+
+    public function setDateDernierAvct(?\DateTimeInterface $dateDernierAvct): self
+    {
+        $this->dateDernierAvct = $dateDernierAvct;
 
         return $this;
     }

@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Détails du détachement{% endblock %}
-{% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ asset('asset/css/angifode.css') }}"/>{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -74,8 +73,14 @@
         <hr>
         <div class="row">
             <div class="col-6 pt-2 text-danger fw-bold">Veuillez apporter des modifications si les informations détaillées ci-dessus ne sont pas exactes.</div>
-            <div class="col-2"><a class="btn btn-danger" href="{{ path('agent_detache_edit', {'id': agent.id}) }}">Apporter des modifications</a></div>
-            <div class="col-3"><a class="btn btn-success" href="{{ path('agent_detache_list') }}">Retourner à la liste des détachés</a></div>
+            <div class="col-3"><a class="btn btn-danger fw-bolder" href="{{ path('agent_detache_edit', {'id': agent.id}) }}">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    Apporter des modifications</a>
+            </div>
+            <div class="col-3"><a class="btn btn-success fw-bolder" href="{{ path('agent_detache_list') }}">
+                    <i class="fa fa-backward" aria-hidden="true"></i>
+                    Retourner à la liste des détachés</a>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -3,8 +3,8 @@
 {% block title %}Nouveau détachement{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('asset/css/jquery-ui.css') }}" />
-    <link rel="stylesheet" href="{{ asset('asset/php/auto_complete_tabul/ajax.css') }}" />
+    <link rel="stylesheet" href="{{ asset('asset/auto_tabx/jquery-ui-1.10.0.custom.css') }}" />
+    <link rel="stylesheet" href="{{ asset('asset/auto_tabx/ajax.css') }}" />
     <link rel="stylesheet" href="{{ asset('asset/css/angifode.css') }}"/>
 {% endblock %}
 
@@ -81,29 +81,62 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('asset/js/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('asset/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('asset/auto_tabx/jquery-1.9.0.js') }}"></script>
+    <script src="{{ asset('asset/auto_tabx/jquery-ui-1.10.0.custom.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $("#detachement_gradeDet").autocomplete({
-                source: '{{ asset('asset/php/search-grade.php') }}',
-                minLength: 4,
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#detachement_matricule").autocomplete({
-                source: '{{ asset('asset/php/search-matricule.php') }}',
-                minLength: 4,
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#detachement_noms").autocomplete({
-                source: '{{ asset('asset/php/search-noms.php') }}',
                 minLength: 5,
+                delay: 1,
+                source: '{{ asset('asset/auto_tabx/auto_grade.php') }}'
+            });
+            $("#detachement_matricule").autocomplete({
+                minLength: 4,
+                delay: 1,
+                source: '{{ asset('asset/auto_tabx/auto_mat.php') }}'
+            });
+            $('#detachement_matricule').change(function() {
+                this.value=this.value.toUpperCase();
+                return;
+            });
+
+            //---- Saisie de Matricule dans le formulaire Census
+            $('#detachement_matricule').change(function(){
+                var matricule =  $('#detachement_matricule').val();
+                //alert(matricule)
+                //--- ---------------------------------------------------------------
+                //alert('Retrait d information du Matricule');
+                //----------------------------Connection a la base de donnees pour retrait des valeurs -------------------
+                url = '{{ asset('asset/auto_tabx/auto_data.php') }}?matricule='+ matricule;
+
+                //  url = 'http://'+window.location.host+'/auto_tabx/auto_data.php?matricule='+ matricule;
+                //alert(url);
+                $.get(url,
+                    function(data){
+                        // alert(url);
+                        var tablxxx;
+                        //alert("Données retournée: "+data);
+
+                        if (data==-1){ // Matricule Inexistant
+                            alert("Matricule Inexistant"); $( "#matricule" ).focus(); return;
+                        }
+                        $("#matricule" ).css( "background-color", "#d6e89e");
+                        //--- activation des champs a remplir
+
+                        //explication de la recuperation des donnees
+                        //alert(data);
+
+                        // Extraction des donnees
+                        tablxxx=data.split("#");
+                        noms=tablxxx[1];date_naiss=tablxxx[2]; date_int1=tablxxx[3];
+
+                        //-- Traitement et affichage dans le formulaire
+
+                        $("#detachement_noms").val(noms);
+                        $("#detachement_dateNaissance").val(date_naiss);
+                        $("#detachement_dateIntegration").val(date_int1);
+                    }) // Get
+                return;
             });
         });
     </script>

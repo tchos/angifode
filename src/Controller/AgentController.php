@@ -22,6 +22,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormError;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Sasedev\MpdfBundle\Factory\MpdfFactory;
 
 /**
  * Require ROLE_USER for all the actions of this controller
@@ -261,5 +265,75 @@ class AgentController extends AbstractController
             'indiceDet' => $indiceDet,
             'ministere' => $ministere,
         ]);
+    }
+
+    # Exportation des données vers un fichier pdf
+    #[Route('/agent/pdf/details/{id<\d+>}', name: 'agent_detache_details_pdf')]
+    public function detailsPdf (AgentDetache $agentDetache, MinistereRepository $ministereRepository,
+                             GradeRepository $gradeRepository, Services $services, MpdfFactory $mpdfFactory): Response
+    {
+        $detache = $agentDetache;
+        $gradeDet = $gradeRepository->findOneBy(['codeGrade' => $detache->getGradeDet()]);
+        $ministere = $ministereRepository->findOneBy(['codeMinistere' => $detache->getMinistere()]);
+        $indiceDet = $services->getIndice($detache->getGradeDet(), $detache->getClasseDet(), $detache->getEchelonDet());
+
+        /**
+        //Options du pdf
+        $pdfOptions = new Options();
+        //Police par défaut
+        $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions->setIsRemoteEnabled(true);
+
+        // On instancie domPdf
+        $domPdf = new Dompdf($pdfOptions);
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => FALSE,
+                'verify_peer_name' => FALSE,
+                'allow_self_signed' => TRUE
+            ]
+        ]);
+        $domPdf->setHttpContext($context);
+
+        // Page twig
+        $html = $this->renderView('agent/details_detache_pdf.html.twig', [
+            'agent' => $detache,
+            'grade' => $gradeDet,
+            'indiceDet' => $indiceDet,
+            'ministere' => $ministere,
+        ]);
+
+        $domPdf->loadHtml($html);
+        $domPdf->setPaper('A4', 'portrait');
+        $domPdf->render();
+
+        // On envoie le fichier au navigateur
+        $domPdf->stream('file.pdf', ['Attachement' => true]);
+
+        return new Response(); */
+        $mpdf = $mpdfFactory->createMpdfObject([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'orientation' => 'P'
+        ]);
+        $mpdf->WriteHTML($this->renderView('agent/details_detache_pdf.html.twig',[
+            'agent' => $detache,
+            'grade' => $gradeDet,
+            'indiceDet' => $indiceDet,
+            'ministere' => $ministere,
+        ]), 'c');
+        return $mpdfFactory->createDownloadResponse($mpdf, 'file.pdf', 'I');
+
+        /**
+        $html = $this->renderView('agent/details_detache_pdf.html.twig', [
+            'agent' => $detache,
+            'grade' => $gradeDet,
+            'indiceDet' => $indiceDet,
+            'ministere' => $ministere,
+        ]);
+
+        return new PdfResponse($knpSnapyPdf->getOutputFromHtml($html),
+            '/home/tchos/Documents/projets/symfony/angifode/public/asset/snappy/file.pdf');
+         */
     }
 }

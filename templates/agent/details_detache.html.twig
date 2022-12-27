@@ -4,8 +4,17 @@
 
 {% block body %}
     <div class="container">
-        <div class="h4 text-success">
-            Détails sur le détachement de l'agent {{ agent.noms }} ({{ agent.matricule }}) dans l'organisme {{ agent.organisme.sigle }}
+        <div class="row">
+            <div class="col-10">
+                <div class="h4 text-success">
+                    Détails sur le détachement de l'agent {{ agent.noms }} ({{ agent.matricule }}) dans l'organisme {{ agent.organisme.sigle }}
+                </div>
+            </div>
+            <div class="col-2 me-auto">
+                <a class="btn btn-dark btn-sm fw-bolder float-end" href="{{ path('agent_detache_details_pdf',{'id': agent.id}) }}">
+                    <i class="fa fa-backward" aria-hidden="true"></i>
+                    Exporter en PDF</a>
+            </div>
         </div>
         <hr>
         <div class="row mt-5">

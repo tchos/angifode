@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ANGIFODE - {% block title %}{% endblock %}</title>
+    <link rel="icon" href="{{ asset('asset/images/angifode.png') }}">
+    <link rel="stylesheet" href="{{ asset('asset/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('asset/css/all.min.css') }}"/>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<style>
+    body {
+        background-image: linear-gradient(
+                rgba(255, 255, 255, 0.9),
+                rgba(255, 255, 255, 0.9)
+        ), url("{{ asset('asset/images/angifode.png') }}");
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100%;
+    }
+</style>
+<div id="main">
+    {% if is_granted('ROLE_USER') %}
+        {# Inclusion de l'entête du pdf avec twig #}
+        {% include "partials/_entetepdf.html.twig" %}
+    {% endif %}
+
+    {% block body %}{% endblock %}
+</div>
+{# Inclusion du footer dans le template de base avec twig #}
+{% include "partials/_footer.html.twig" %}
+{% block javascripts %}{% endblock %}
+<script src="{{ asset('asset/js/all.min.js') }}"></script>
+<script src="{{ asset('asset/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('asset/js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

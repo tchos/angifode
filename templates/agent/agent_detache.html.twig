@@ -5,7 +5,6 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('asset/auto_tabx/jquery-ui-1.10.0.custom.css') }}" />
     <link rel="stylesheet" href="{{ asset('asset/auto_tabx/ajax.css') }}" />
-    <link rel="stylesheet" href="{{ asset('asset/css/angifode.css') }}"/>
 {% endblock %}
 
 {% block body %}
@@ -24,19 +23,25 @@
                         </legend>
                         <hr>
                         <div class="row mb-3">
-                            <div class="col-4">{{ form_row(form.matricule) }}</div>
+                            <div class="col">{{ form_row(form.matricule) }}</div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col">{{ form_row(form.noms) }}</div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-4">{{ form_row(form.dateNaissance) }}</div>
+                            <div class="col">{{ form_row(form.dateNaissance) }}</div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col">{{ form_row(form.telephone) }}</div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-4">{{ form_row(form.dateIntegration) }}</div>
                             <div class="col">{{ form_row(form.refActeInt) }}</div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-4">{{ form_row(form.dateDernierAvct) }}</div>
+                            <div class="col">{{ form_row(form.dateIntegration) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">{{ form_row(form.dateDernierAvct) }}</div>
                         </div>
                     </fieldset>
                 </div>
@@ -46,11 +51,13 @@
                         <hr>
                         <div class="row mb-3">
                             <div class="col">{{ form_row(form.typeActeDet) }}</div>
-                            <div class="col ">{{ form_row(form.refActeDet) }}</div>
-                            <div class="col">{{ form_row(form.dateActeDet) }}</div>
+                            <div class="col">{{ form_row(form.ministere) }}</div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col">{{ form_row(form.ministere) }}</div>
+                            <div class="col ">{{ form_row(form.refActeDet) }}</div>
+                            <div class="col-4">{{ form_row(form.dateActeDet) }}</div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col">{{ form_row(form.gradeDet, {'attr': {'autocomplete': 'on'}}) }}</div>
                         </div>
                         <div class="row mb-3">
@@ -60,6 +67,8 @@
                         <div class="row mb-3">
                             <div class="col">{{ form_row(form.dateDet) }}</div>
                             <div class="col">{{ form_row(form.datePriseService) }}</div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col">{{ form_row(form.dateSuspension) }}</div>
                         </div>
                         <div class="row mb-3">
@@ -68,11 +77,11 @@
                     </fieldset>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-sm btn-success">
                 <i class="fas fa-check"></i>
                 <span class="fw-bolder">Créer le détachement</span>
             </button>
-            <button type="reset" class="btn btn-dark">
+            <button type="reset" class="btn btn-sm btn-dark">
                 <i class="fa fa-times-circle" aria-hidden="true"></i>
                 <span class="fw-bolder">Annuler le détachement</span>
             </button>

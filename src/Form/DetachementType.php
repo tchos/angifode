@@ -100,6 +100,7 @@ class DetachementType extends AbstractType
                     'MINFOF' => '33',
                     'MINEFOP' => '35',
                     'MINTP' => '36',
+                    'MINDCAF' => '37',
                     'MINHDU' => '38',
                     'MINPMEESA' => '39',
                     'MINSANTE' => '40',

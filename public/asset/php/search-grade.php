@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli('localhost', 'root', 'TKL@wS0CF', 'angifode_db');
+$conn = new mysqli('localhost', 'root', 'lolo', 'angifode_db');
 
 if(!$conn){
     die("Error: Erreur de connexion à la base de données !!!");

@@ -43,7 +43,11 @@
                                 <td class="text-end pe-5">{{ reversement.montantRev | number_format(0,'.',' ') }}</td>
                                 <td class="text-center">
                                     <a title="Preuve de reversement"
-                                       href="{{ asset("asset/preuves/" ~ organisme ~ "/" ~ year ~ "/" ~ "/" ~ reversement.preuveRev ) }}">
+                                       href="{% if reversement.preuveRev != "MAGZI-20070706-6399a5973e9cf.pdf" %}
+                                                {{ asset("asset/preuves/" ~ organisme ~ "/" ~ year ~ "/" ~ "/" ~ reversement.preuveRev ) }}
+                                                {% else %}
+                                                    {{ path('reversement_edit', {'id': reversement.id}) }}
+                                                {% endif %}">
                                         <img src="{{ asset("asset/images/pdf_file_icon.png") }}" alt="{{ reversement.preuveRev }}" width="17px">
                                     </a>
                                 </td>

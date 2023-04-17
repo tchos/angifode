@@ -1,6 +1,6 @@
   
 <?php
-    $mysqli = new mysqli('127.0.0.1', 'root', 'TKL@wS0CF', 'angifode_db');
+    $mysqli = new mysqli('127.0.0.1', 'root', 'lolo', 'angifode_db');
     if ($mysqli->connect_errno) { die('Connect Error: ' . $mysqli->connect_errno); }
  
     //****************************charger les donnees dans les ID javascript****************************************.

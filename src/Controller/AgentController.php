@@ -116,6 +116,9 @@ class AgentController extends AbstractController
             $organisme = "";
 
         $listeOrganisme = $organismesRepository->findBySigle($organisme);
+        // On convertit le codeGrade en libelleGrade que l'on va afficher dans le formulaire
+        $libelleGrade = $gradeRepository->findOneBy(["codeGrade" => $detache->getGradeDet()])->getLibGrade();
+        $detache->setGradeDet($libelleGrade);
 
         // constructeur de formulaire de creation d'un nouveau détachement
         $form = $this->createForm(DetachementType::class, $detache, ['organisme' => $listeOrganisme]);
@@ -130,13 +133,16 @@ class AgentController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $age = $detache->getDateNaissance()->diff($detache->getDateIntegration())->format('%y');
-            //$grade =
+            //On récupère le code du grade .
+            $grade = $gradeRepository->findOneBy(["libGrade" => $form->get("gradeDet")->getData()])->getCodeGrade();
 
             if ( $age < 17 )
             {
                 // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
                 $form->get('dateIntegration')->addError(new FormError("Le détaché ne peut être intégré avant 17 ans !"));
             }else {
+                $detache->setGradeDet($grade);
+                //dd($detache->getGradeDet());
                 $history->setTypeAction("UPDATE")
                     ->setAuteur($user)
                     ->setNature("AGENT_DETACHE")

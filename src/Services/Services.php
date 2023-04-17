@@ -465,6 +465,7 @@ class Services
         //$pd = 1 + $dateD->diff($dateF)->days;
         $pd = 1 + $this->diff360($dateD, $dateF);
         $sarPD = (($sb * 12 * 22 * $pd) / (360 * 100));
+        //dd($sarPD, $sb, $dateD, $dateF, $pd, $this->diff360($dateD, $dateF));
         $sar += $sarPD;
 
         //Données détaillant le calcul de l'ESD d'un agent sur une période .
@@ -638,10 +639,16 @@ class Services
      * @return Integer
      */
     function diff360($date1, $date2) {
-
+        if ($date1->format('y') == $date2->format('y') && $date1->format('m') == $date2->format('m')){
+            /** On retourne 29 pour l'évaluation de l'ESD mensuelle
+             * à quoi on va ajouter 1 jour dans la fonction qui évalue la somme à reverser
+             */
+            //return 29;
+        };
+        // $date2 = date_create("2023-06-30"); $date1 = date_create("2023-06-01");
         $diff = $date1->diff($date2);
-        $days = ($date2->format('d') + 30 - $date1->format('d')) % 30;
+        $days = (($date2->format('d') + 30) - ($date1->format('d'))) % 30;
 
-        return $diff->y * 360 + $diff->m * 30 + $days;
+        return ($diff->y * 360) + ($diff->m * 30) + $days;
     }
 }

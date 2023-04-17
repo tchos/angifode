@@ -142,7 +142,7 @@ class EsdController extends AbstractController
 
             return $this->render('esd/esd_result.html.twig', [
                 'dateDebut' => $vraiDateDebut->format('d-m-Y'),
-                'dateFin' => $dateFin->format('d-m-Y'),
+                'dateFin' => $vraiDateFin->format('d-m-Y'),
                 'id_agent' => $id_agent,
                 'dataSar' => $dataSar,
                 'dataCotis' => $dataCotis,
@@ -268,7 +268,7 @@ class EsdController extends AbstractController
         $history = new Historique();
 
         $dateDebut = date_create(date("Y-m-d", mktime(0,0,0,date("m")-1,1,date("Y"))));
-        $dateFin     = date_create(date("Y-m-d", mktime(0,0,0,date("m"),0,date("Y"))));
+        $dateFin     = date_create(date("Y-m-d", mktime(0,0,0,date("m"),-1,date("Y"))));
 
         //dd($dateDebut, $dateFin);
         $vraiDateDebut = $dateDebut;

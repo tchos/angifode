@@ -63,7 +63,8 @@ class CotisationController extends AbstractController
             //dd($form->getData('cotTotale')->getCotTotale() + $totalCotisation);
             //dd($totalCotisation);
 
-            if($montantReversement > ($form->getData('cotTotale')->getCotTotale() + $totalCotisation)) {
+            // Il faut add 1 au montantReversement pour contourner le bug de l'égalité entre le int et le float.
+            if($montantReversement + 1 > ($form->getData('cotTotale')->getCotTotale() + $totalCotisation)) {
                 $cotisation ->setDateDebutCot($reversement->getDateDebRev())
                     ->setDateFinCot($reversement->getDateFinRev())
                     ->setReversement($reversement)

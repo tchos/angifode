@@ -41,7 +41,7 @@ class AgentDetache
      *      maxMessage = "Le nom doit avoir au maximum {{ limit }} caractères"
      * )
      * @Assert\Regex (
-     *     pattern="/^([A-Z\s0-9\-])*$/",
+     *     pattern="/([A-Z])+/",
      *     message="Le nom doit être en majuscule")
      */
     private $noms;
@@ -63,7 +63,7 @@ class AgentDetache
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Regex (pattern="/[0-9]*\/([A-Z0-9\/])+/", message="Mauvais format de la référence")
+     * @Assert\Regex (pattern="/[0-9]*\/([A-Z0-9\/]*)/", message="Mauvais format de la référence")
      * @Assert\Expression ("this.getRefActeDet() != this.getRefActeInt()",
      *     message="La référence d'intégration doit être différente de la référence de détachement")
      */
@@ -93,7 +93,7 @@ class AgentDetache
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Regex (
-     *     pattern="/[0-9]*\/([A-Z0-9\/])+/",
+     *     pattern="/[0-9]*\/([A-Z0-9\/]*)/",
      *     message="Mauvais format de la référence")
      * @Assert\Expression ("this.getRefActeDet() != this.getRefActeInt()",
      *     message="La référence d'intégration doit être de la référence de détachement")
@@ -146,6 +146,13 @@ class AgentDetache
 
     /**
      * @ORM\Column(type="string", length=32)
+     *
+     * @Assert\Length(
+     *      min = 9,
+     *      max = 32,
+     *      minMessage = "Le téléphone doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le téléphone doit avoir au maximum {{ limit }} caractères"
+     * )
      */
     private $telephone;
 

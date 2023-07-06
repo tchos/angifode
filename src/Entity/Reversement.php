@@ -33,8 +33,8 @@ class Reversement
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\GreaterThan (propertyPath="dateFinRev",
-     *  message="Cette date doit être postérieure aux dates de l'intervalle de reversement !")
+     * @Assert\GreaterThan (propertyPath="dateDebRev",
+     *  message="Cette date doit être postérieure à la date début de reversement !")
      */
     private $dateTitre;
 

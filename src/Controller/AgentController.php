@@ -15,6 +15,7 @@ use App\Repository\OrganismesRepository;
 use App\Services\BI;
 use App\Services\Services;
 use Container2BVCigq\getMinistereRepositoryService;
+use Doctrine\DBAL\Exception\ServerException;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -68,14 +69,17 @@ class AgentController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $age = $detache->getDateNaissance()->diff($detache->getDateIntegration())->format('%y');
-            $grade = $gradeRepository->findOneBy(["libGrade" => $form->get("gradeDet")->getData()])->getCodeGrade();
+            $grade = $gradeRepository->findOneBy(["libGrade" => $form->get("gradeDet")->getData()]);
 
             if ( $age < 17 )
             {
                 // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
                 $form->get('dateIntegration')->addError(new FormError("Le détaché ne peut être intégré avant 17 ans !"));
+            } elseif ($grade == null) {
+                // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
+                $form->get('gradeDet')->addError(new FormError("Le grade renseigné n'existe pas en base de données !"));
             }else {
-                $detache->setGradeDet($grade)
+                $detache->setGradeDet($grade->getCodeGrade())
                     ;
 
                 $history->setTypeAction("CREATE")

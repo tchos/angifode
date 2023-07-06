@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DetachementType extends AbstractType
+class DetachementTypeOld extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -122,31 +122,16 @@ class DetachementType extends AbstractType
                     'placeholder' => 'Ex: INGENIEUR INFORMATICIEN'
                 ]
             ])
-            ->add('echelonDet', ChoiceType::class,[
+            ->add('echelonDet', TextType::class,[
                 'label' => 'Echelon',
-                'choices' => [
-                    '01' => '01',
-                    '02' => '02',
-                    '03' => '03',
-                    '04' => '04',
-                    '05' => '05',
-                    '06' => '06',
-                    '07' => '07',
-                    '08' => '08',
-                    '09' => '09',
-                    '10' => '10',
-                    '11' => '11',
-                    '12' => '12'
+                'attr' => [
+                    'placeholder' => 'Ex: 05'
                 ]
             ])
-            ->add('classeDet', ChoiceType::class,[
+            ->add('classeDet', TextType::class,[
                 'label' => 'Classe',
-                'choices' => [
-                    '0' => '0',
-                    '2' => '2',
-                    '1' => '1',
-                    'E' => 'E',
-                    'H' => 'H'
+                'attr' => [
+                    'placeholder' => 'Ex: 1'
                 ]
             ])
             ->add('refActeDet', TextType::class,[

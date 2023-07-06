@@ -437,7 +437,7 @@ class Services
      * Retourne la somme à reverser sur une période de date pour les fonctionnaires
      * @Return Integer
      */
-    public function getSommeAReverserFC($dateDebut, $dateFin, $indice, $gradeDet, $dateIntegration)
+    public function getSommeAReverserFC($dateDebut, $dateFin, $indice, $gradeDet, $dateIntegration, $dateDet)
     {
         $sar = 0;
         $detailsEsdAgent = [];
@@ -455,6 +455,7 @@ class Services
         }
 
         //Données détaillant le calcul de l'ESD d'un agent sur une période .
+        $detailsEsdAgent["dateDet"] = $dateDet;
         $detailsEsdAgent["dateDebut"] = $dateD;
         $detailsEsdAgent["dateFin"] = $dateF;
         $detailsEsdAgent["indice"] = $indice;
@@ -497,6 +498,7 @@ class Services
             }
 
             //Données détaillant le calcul de l'ESD d'un agent sur une période .
+            $detailsEsdAgent["dateDet"] = $dateDet;
             $detailsEsdAgent["dateDebut"] = $dateD;
             $detailsEsdAgent["dateFin"] = $dateF;
 
@@ -539,7 +541,7 @@ class Services
      * Retourne la somme à reverser sur une période de date pour les agents du code du travail
      * @Return Integer
      */
-    public function getSommeAReverserCT($dateDebut, $dateFin, $echelon, $gradeDet, $dateIntegration)
+    public function getSommeAReverserCT($dateDebut, $dateFin, $echelon, $gradeDet, $dateIntegration, $dateDet)
     {
         $sar = 0;
         $detailsEsdAgent = [];
@@ -557,6 +559,7 @@ class Services
         }
 
         //Données détaillant le calcul de l'ESD d'un agent sur une période .
+        $detailsEsdAgent["dateDet"] = $dateDet;
         $detailsEsdAgent["dateDebut"] = $dateD;
         $detailsEsdAgent["dateFin"] = $dateF;
         $detailsEsdAgent["echelon"] = $echelon;
@@ -594,6 +597,7 @@ class Services
             }
 
             //Données détaillant le calcul de l'ESD d'un agent sur une période .
+            $detailsEsdAgent["dateDet"] = $dateDet;
             $detailsEsdAgent["dateDebut"] = $dateD;
             $detailsEsdAgent["dateFin"] = $dateF;
 

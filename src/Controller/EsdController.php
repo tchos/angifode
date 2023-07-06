@@ -47,13 +47,9 @@ class EsdController extends AbstractController
          */
         if($form->isSubmitted() && $form->isValid())
         {
-            $dateDebut = $form->get('dateDebut')->getData();
-            $dateFin = $form->get('dateFin')->getData();
-            $vraiDateDebut = $dateDebut;
-            $vraiDateFin = $dateFin;
-
             //Liste des agents détachés au sein de l'organisme .
             $agents = $organisme->getAgentDetaches()->toArray();
+
             // Tableau qui contient les id des agents détachés au sein de l'organisme
             $id_agent = [];
             // tableau: matricule => somme à reverser
@@ -61,6 +57,12 @@ class EsdController extends AbstractController
             $dataCotis = [];
 
             for ($i = 0; $i < count($agents); $i++){
+
+                $dateDebut = $form->get('dateDebut')->getData();
+                $dateFin = $form->get('dateFin')->getData();
+                $vraiDateDebut = $dateDebut;
+                $vraiDateFin = $dateFin;
+
                 $dateIntegration = $agents[$i]->getDateIntegration();
                 $dateDet = $agents[$i]->getDateDet();
                 $dateFinDet = $agents[$i]->getDateFinDet();
@@ -94,13 +96,13 @@ class EsdController extends AbstractController
                 }
                 else {
                     //Si la date de début est inférieure à la date de détachement, la date de début sera la date de détachement
-                    if ($dateDet >= $dateDebut && $dateDet <= $dateFin){
+                    if ($dateDet >= $vraiDateDebut && $dateDet <= $vraiDateFin){
                         $dateDebut = $dateDet;
                     }
 
                     //Si la date de fin est supérieure à la date de fin de détachement, la date de fin sera la date de fin de détachement
                     if ($dateFinDet > date_create("0001-01-01") && $dateFinDet <= date_create(date("Y-m-d"))){
-                        if ($dateFinDet < $dateFin){
+                        if ($dateFinDet < $vraiDateFin){
                             $dateFin = $dateFinDet;
                         }
                     }
@@ -109,15 +111,16 @@ class EsdController extends AbstractController
                     if($gradeDet >= "60000" && $gradeDet < "62000") {
                         $first_echelon = $services->getFirstEchelon($gradeDet, $echelonDet, $dateIntegration, $dateDebut, $dateDet);
                         // $sar = somme à reverser pour un agent détatché du code du travail
-                        $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration);
+                        $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration, $dateDet);
                         $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
 
                     } else {
                         //$first_indice = $services->getFirstIndice("42120", 665, date_create("1995-07-21"), $dateDebut, $dateDet);
                         $first_indice = $services->getFirstIndice($gradeDet, $indiceDet, $dateIntegration, $dateDebut, $dateDet);
                         // $sar = somme à reverser pour un agent détatché fonction
-                        $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
+                        $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration, $dateDet);
                         $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
+                        //dd($sar_organisme, $sar);
                     }
                 }
             }
@@ -125,6 +128,7 @@ class EsdController extends AbstractController
             //$sar = $services->getSommeAReverser($dateDebut, $dateFin, 420, "42210", date_create("1995-11-01"));
             $total_sar_organisme = 0;
             $dataSar = [];
+            //dd($sar_organisme);
 
             foreach ($sar_organisme as $key => $value){
                 $totalSar = 0;
@@ -136,8 +140,9 @@ class EsdController extends AbstractController
             }
 
             $total_reversements = $services->getTotalReversements($organisme, $vraiDateDebut, $vraiDateFin);
+            //dd($dataSar);
 
-            // Alerte succès de l'enregistrement d'un nouveau détachement
+            // Alerte succès du calcul de l'ESD
             $this->addFlash("success","La dette de l'organisme ". $organisme->getSigle() ." a été évaluée avec succès !!!");
 
             return $this->render('esd/esd_result.html.twig', [
@@ -207,11 +212,11 @@ class EsdController extends AbstractController
             if ($gradeDet >= "60000" && $gradeDet < "62000") {
                 $first_echelon = $services->getFirstEchelon($gradeDet, $echelonDet, $dateIntegration, $dateDebut, $dateDet);
                 // $sar = somme à reverser pour un agent détatché
-                $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration);
+                $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration, $dateDet);
             } else {
                 $first_indice = $services->getFirstIndice($gradeDet, $indiceDet, $dateIntegration, $dateDebut, $dateDet);
                 // $sar = somme à reverser pour un agent détatché
-                $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration);
+                $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration, $dateDet);
             }
 
             $totalSar = 0;
@@ -267,10 +272,19 @@ class EsdController extends AbstractController
         // pour l'historisation de l'action
         $history = new Historique();
 
-        $dateDebut = date_create(date("Y-m-d", mktime(0,0,0,date("m")-1,1,date("Y"))));
-        $dateFin     = date_create(date("Y-m-d", mktime(0,0,0,date("m"),-1,date("Y"))));
+        if ( in_array(date("m")-1, array(1,3,5,7,8,10,12)) ) {
+            $dateDebut = date_create(date("Y-m-d", mktime(0,0,0,date("m")-1,1,date("Y"))));
+            $dateFin     = date_create(date("Y-m-d", mktime(0,0,0,date("m"),-1,date("Y"))));
+        } elseif (date("m")-1 == 2) {
+            $dateDebut = date_create(date("Y-m-d", mktime(0,0,0,date("m")-1,1,date("Y"))));
+            $dateFin     = date_create(date("Y-m-d", mktime(0,0,0,date("m"),1,date("Y"))));
+        }
+        else {
+            $dateDebut = date_create(date("Y-m-d", mktime(0,0,0,date("m")-1,1,date("Y"))));
+            $dateFin     = date_create(date("Y-m-d", mktime(0,0,0,date("m"),0,date("Y"))));
+        }
 
-        //dd($dateDebut, $dateFin);
+        //dd($dateDebut, $dateFin, date("m")-0);
         $vraiDateDebut = $dateDebut;
 
         //Liste des agents détachés au sein de l'organisme .

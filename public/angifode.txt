@@ -43,6 +43,10 @@ indiceCot
 dateDebutCot
 dateFinCot
 
+connexion au serer d'application d'angifode en ligne:	ssh testangifode@angifode.minfi.cm -p 22222.
+connexion au server de bd angifode en ligne:		ssh testbdangifode@angifode.minfi.cm -p 64111.
+
+
 
 
 

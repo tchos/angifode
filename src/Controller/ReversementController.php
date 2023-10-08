@@ -43,7 +43,7 @@ class ReversementController extends AbstractController
 
         $listeOrganisme = $organismesRepository->findBySigle($organisme);
 
-        // constructeur de formulaire de creation d'un organisme
+        // constructeur de formulaire d'enregistrement d'un nouveau reversement
         $form = $this->createForm(ReversementType::class, $reversement, ['organisme' => $listeOrganisme]);
 
         // handlerequest() permet de parcourir la requête et d'extraire les informations du formulaire

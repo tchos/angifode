@@ -60,36 +60,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-4">
-                <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-                        Total des sommes réversées par année
-                        <a href="{{ path('totalsaryear') }}" class="btn btn-sm btn-primary d-block row fw-bolder fw-bolder">Voir</a>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-                        Total des sommes réversées par structure sur une année donnée
-                        <a href="{{ path('totalsaryearorganisme') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-                        Total des sommes réversées par structure et par trimestre sur une année donnée
-                        <a href="#" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-                        Liste des structures qui n'ont pas encore reversé sur l'année en cours
-                        <a href="{{ path('anypayinyear') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-                        Liste des structures qui n'ont jamais réversé
-                        <a href="#" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-                        Effectif des agents détachés par structure
-                        <a href="#" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-                        Effectif des nouveaux détachés par année
-                        <a href="#" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
-                    </li>
-                </ul>
+                {% include 'partials/_ulstats.html.twig' %}
             </div>
             <div class="col">
                 <h4>Liste des structures qui n'ont pas encore reversé sur l'année en cours</h4>

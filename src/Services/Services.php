@@ -325,6 +325,23 @@ class Services
     /** Fin de la function getSB()  */
 
     /**
+     * Verifie si le libellé du grade existe en BD
+     * @return string[]
+     */
+    public function getCodeGradeByLibelleGrade($libelleGrade) {
+        //SELECT code_grade FROM grade WHERE lib_grade = "INFORMATICIEN";
+        return $this->manager->createQuery(
+            "SELECT g.codeGrade
+                FROM App\Entity\Grade g
+                WHERE g.libGrade = :libelleGrade
+            "
+        )
+            ->setParameter('libelleGrade', $libelleGrade)
+            ->getScalarResult();
+    }
+    /** Fin de la function getCodeGradeByLibelleGrade()  */
+
+    /**
      * Cette fonction renvoie le prochain indice après un avancement dans un barème bien connu
      * pour les fonctionnaires détachés
      * @param $grade

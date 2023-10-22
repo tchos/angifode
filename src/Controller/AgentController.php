@@ -9,6 +9,7 @@ use App\Entity\Organismes;
 use App\Form\DetachementType;
 use App\Form\FinDetachementType;
 use App\Repository\AgentDetacheRepository;
+use App\Repository\BaremeRepository;
 use App\Repository\GradeRepository;
 use App\Repository\MinistereRepository;
 use App\Repository\OrganismesRepository;
@@ -70,15 +71,23 @@ class AgentController extends AbstractController
         {
             $age = $detache->getDateNaissance()->diff($detache->getDateIntegration())->format('%y');
             $grade = $gradeRepository->findOneBy(["libGrade" => $form->get("gradeDet")->getData()]);
+            $sb = $services->getSB(
+                                    $form->get("gradeDet")->getData(),
+                                    $form->get("classeDet")->getData(),
+                                    $form->get("echelonDet")->getData()
+            );
 
             if ( $age < 17 )
             {
                 // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
                 $form->get('dateIntegration')->addError(new FormError("Le détaché ne peut être intégré avant 17 ans !"));
             } elseif ($grade == null) {
-                // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
+                // $form->get('gradeDet') me donne accès au champ gradeDet du formulaire
                 $form->get('gradeDet')->addError(new FormError("Le grade renseigné n'existe pas en base de données !"));
-            }else {
+            } elseif ($sb == null) {
+                // $form->get('echelonDet') me donne accès au champ echelonDet du formulaire
+                $form->get('echelonDet')->addError(new FormError("Echelon inexistant pour la classe donnée !"));
+            } else {
                 $detache->setGradeDet($grade->getCodeGrade())
                     ;
 
@@ -107,7 +116,7 @@ class AgentController extends AbstractController
     # Apporter des modifications à un détachement
     #[Route('/agent/{id}/edit', name: 'agent_detache_edit')]
     public function update (EntityManagerInterface $manager, Request $request, OrganismesRepository $organismesRepository,
-                             AgentDetache $detache, GradeRepository $gradeRepository): Response
+                             AgentDetache $detache, GradeRepository $gradeRepository, Services $services): Response
     {
         // utilisateur connecté
         $user = $this->getUser()->getUsername();
@@ -139,12 +148,23 @@ class AgentController extends AbstractController
             $age = $detache->getDateNaissance()->diff($detache->getDateIntegration())->format('%y');
             //On récupère le code du grade .
             $grade = $gradeRepository->findOneBy(["libGrade" => $form->get("gradeDet")->getData()])->getCodeGrade();
+            $sb = $services->getSB(
+                $form->get("gradeDet")->getData(),
+                $form->get("classeDet")->getData(),
+                $form->get("echelonDet")->getData()
+            );
 
             if ( $age < 17 )
             {
                 // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
                 $form->get('dateIntegration')->addError(new FormError("Le détaché ne peut être intégré avant 17 ans !"));
-            }else {
+            } elseif ($grade == null) {
+                // $form->get('gradeDet') me donne accès au champ gradeDet du formulaire
+                $form->get('gradeDet')->addError(new FormError("Grade inexistant en base de données !"));
+            }  elseif ($sb == null) {
+                // $form->get('echelonDet') me donne accès au champ echelonDet du formulaire
+                $form->get('echelonDet')->addError(new FormError("Echelon inexistant pour la classe donnée !"));
+            } else {
                 $detache->setGradeDet($grade);
                 //dd($detache->getGradeDet());
                 $history->setTypeAction("UPDATE")

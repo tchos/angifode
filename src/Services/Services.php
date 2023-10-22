@@ -166,7 +166,7 @@ class Services
      */
     public function getListeACotiser($reversement, $organisme)
     {
-        //Liste des agants pour lesquels on n'a pas encore cotisé
+        //Liste des agents pour lesquels on n'a pas encore cotisé
         $agentsNonCotiser = $this->manager->createQuery(
             "SELECT a.id, CONCAT(a.noms,' - (', a.matricule,')') as nom
                 FROM App\Entity\AgentDetache a
@@ -257,7 +257,7 @@ class Services
 
         //select salaire_base from bareme where grade="42110" AND indice = 430
         // AND num_bar IN (select num_bar from type_bareme where date_debut <= "2003-09-01" and date_fin >= "2002-02-11");
-        //Liste des agants pour lesquels on n'a pas encore cotisé
+        //Liste des agents pour lesquels on n'a pas encore cotisé
         return $this->manager->createQuery(
             "SELECT MAX(b.salaireBase)
                 FROM App\Entity\Bareme b
@@ -304,6 +304,25 @@ class Services
             ->getSingleScalarResult();
     }
     /** Fin de la function getSalaireCT() pour les agents du code du travail  */
+
+    /**
+     * Verifie si le grade, la classe et l'echelon renvoie un salaire de base
+     * @return Integer
+     */
+    public function getSB($grade, $classe, $echelon) {
+        //select MAX(salaire_base) from bareme where grade="42110" AND classe="2" AND echelon="02";
+        return $this->manager->createQuery(
+            "SELECT MAX(b.salaireBase)
+                FROM App\Entity\Bareme b
+                WHERE b.grade = :grade AND b.classe = :classe AND b.echelon = :echelon
+            "
+        )
+            ->setParameter('grade', $grade)
+            ->setParameter('classe', $classe)
+            ->setParameter('echelon', $echelon)
+            ->getSingleScalarResult();
+    }
+    /** Fin de la function getSB()  */
 
     /**
      * Cette fonction renvoie le prochain indice après un avancement dans un barème bien connu

@@ -125,6 +125,7 @@ class DetachementType extends AbstractType
             ->add('echelonDet', ChoiceType::class,[
                 'label' => 'Echelon',
                 'choices' => [
+                    '00' => '00',
                     '01' => '01',
                     '02' => '02',
                     '03' => '03',

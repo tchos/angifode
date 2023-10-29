@@ -11,9 +11,20 @@
 
 {% block body %}
     <div class="container">
-        <div class="h4 text-success">
+        <div class="h5 text-success">
             Résultat de l'évaluation de la dette sociale de l'organisme
             <span class="badge bg-dark fw-bolder">{{ organisme.sigle }}</span>
+            {% set rar = (total_sar_organisme - total_reversement) %}
+            <a href="{{ path('esd_pdf',
+                {'id': organisme.id,
+                    'debut': dateDebut,
+                    'fin': dateFin,
+                    'sar': total_sar_organisme,
+                    'dr': total_reversement,
+                    'rar': rar })
+                }}" class="badge bg-primary fw-bolder float-end text-decoration-none">
+                Télécharger ESD
+            </a>
         </div>
         {% for message in app.session.flashBag.get('success') %}
             <div class="alert alert-success">{{ message }}</div>
@@ -54,7 +65,7 @@
                 </li>
             </div>
         </div>
-        <h4 class="mt-5">Liste des agents publics détachés concernés par la dette sociale (ESD) </h4>
+        <h5 class="mt-5">Liste des agents publics détachés concernés par la dette sociale (ESD) </h5>
         <hr>
         <div class="card">
             <div class="card-body">

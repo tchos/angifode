@@ -308,7 +308,6 @@ class AgentController extends AbstractController
         $ministere = $ministereRepository->findOneBy(['codeMinistere' => $detache->getMinistere()]);
         $indiceDet = $services->getIndice($detache->getGradeDet(), $detache->getClasseDet(), $detache->getEchelonDet());
 
-        /**
         //Options du pdf
         $pdfOptions = new Options();
         //Police par défaut
@@ -341,7 +340,8 @@ class AgentController extends AbstractController
         // On envoie le fichier au navigateur
         $domPdf->stream('file.pdf', ['Attachement' => true]);
 
-        return new Response(); */
+        return new Response();
+        /**  Ne marche pas encore
         $mpdf = $mpdfFactory->createMpdfObject([
             'mode' => 'utf-8',
             'format' => 'A4',
@@ -352,8 +352,8 @@ class AgentController extends AbstractController
             'grade' => $gradeDet,
             'indiceDet' => $indiceDet,
             'ministere' => $ministere,
-        ]), 'c');
-        return $mpdfFactory->createDownloadResponse($mpdf, 'file.pdf', 'I');
+        ]));
+        return $mpdfFactory->createDownloadResponse($mpdf, 'file.pdf', 'I'); */
 
         /**
         $html = $this->renderView('agent/details_detache_pdf.html.twig', [

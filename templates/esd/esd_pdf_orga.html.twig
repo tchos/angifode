@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ANGIFODE - {% block title %}{% endblock %}</title>
+    <link rel="icon" href="{{ absolute_url(asset('asset/images/angifode.png')) }}">
+    <link rel="stylesheet"  type="text/css" href="{{ absolute_url(asset('asset/css/bootstrap.min.css')) }}"/>
+    <link rel="stylesheet"  type="text/css" href="{{ absolute_url(asset('asset/css/all.min.css')) }}"/>
+</head>
+<body>
+    <style>
+        body {
+            background-image: url({{ absolute_url(asset('asset/images/angifode.png')) }}) !important;
+            background-position: center !important;
+            background-repeat: no-repeat;
+            min-height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            background-size: cover;
+        }
+    </style>
+    <div class="text-center h1">PDF</div>
+    {#
+    <div>
+        <img src="{{ absolute_url(asset('asset/images/angifode.png')) }}" alt="Merci">
+    </div>
+    #}
+    {# Inclusion du footer dans le template de base avec twig #}
+    <div class="mt-5">
+        {% include "partials/_footer.html.twig" %}
+    </div>
+    {% block javascripts %}{% endblock %}
+    <script src="{{ absolute_url(asset('asset/js/all.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('asset/js/bootstrap.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('asset/js/bootstrap.bundle.min.js')) }}"></script>
+</body>
+</html>

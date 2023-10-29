@@ -20,7 +20,7 @@
                 min-height: 100%;
             }
         </style>
-        <div id="main">
+        <div id="main" class="mb-5">
             {% if is_granted('ROLE_USER') %}
                 {# Inclusion du header dans le template de base  avec twig #}
                 {% include "partials/_header.html.twig" %}
@@ -29,7 +29,9 @@
             {% block body %}{% endblock %}
         </div>
         {# Inclusion du footer dans le template de base avec twig #}
-        {% include "partials/_footer.html.twig" %}
+        <div class="mt-5">
+            {% include "partials/_footer.html.twig" %}
+        </div>
         {% block javascripts %}{% endblock %}
         <script src="{{ asset('asset/js/all.min.js') }}"></script>
         <script src="{{ asset('asset/js/bootstrap.min.js') }}"></script>

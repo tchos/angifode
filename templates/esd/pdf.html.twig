@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ANGIFODE</title>
+</head>
+<body>
+<style>
+
+</style>
+<div>
+    PDF <br>
+    <img src="{{ absolute_url(asset('asset/images/angifode.png')) }}" alt="Merci">
+</div>
+{# Inclusion du footer dans le template de base avec twig #}
+<div class="mt-5">
+    <hr>
+    {% include "partials/_footer.html.twig" %}
+</div>
+</body>
+</html>

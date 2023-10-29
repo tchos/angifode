@@ -12,12 +12,16 @@ use App\Form\ReversementType;
 use App\Repository\BaremeRepository;
 use App\Repository\OrganismesRepository;
 use App\Repository\TypeBaremeRepository;
+use App\Services\PDFService;
 use App\Services\Services;
+use FontLib\Table\Type\name;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
 
 /**
  * Require ROLE_USER for all the actions of this controller
@@ -145,6 +149,9 @@ class EsdController extends AbstractController
             // Alerte succès du calcul de l'ESD
             $this->addFlash("success","La dette de l'organisme ". $organisme->getSigle() ." a été évaluée avec succès !!!");
 
+            if ($total_reversements == null)
+                $total_reversements = 0;
+
             return $this->render('esd/esd_result.html.twig', [
                 'dateDebut' => $vraiDateDebut->format('d-m-Y'),
                 'dateFin' => $vraiDateFin->format('d-m-Y'),
@@ -166,6 +173,36 @@ class EsdController extends AbstractController
     }
     /** Fin esd_evaluate */
 
+    #[Route('/esd/{id}/{debut}/{fin}/{sar}/{dr}/{rar}', name:'esd_pdf')]
+    public function esdOrganismePDF(Organismes $organisme, PDFService $pdf, \DateTime $debut, \DateTime $fin,
+        int $sar, int $dr, int $rar, Pdf $snappy)
+    {
+        $dateDebut = $debut->format('Ymd');
+        $dateFin = $fin->format('Ymd');
+        $sar = $sar;
+        $dr = $dr;
+        $rar = $rar;
+        $filename = $organisme->getSigle()."-".$dateDebut."-".$dateFin.".pdf";
+
+        //Page à télécharger en pdf
+        $html = $this->renderView('esd/esd_pdf_orga.html.twig', array(
+            'organisme' => $organisme,
+            'sar' => $sar,
+            'dejaReverser' => $dr,
+            'resteAreverser' => $rar,
+            'debut' => $debut->format('d-m-Y'),
+            'fin' => $fin->format('d-m-Y'),
+        ));
+
+        /** Pour KnpSnappyPdf */
+        return new PdfResponse($snappy->getOutputFromHtml($html), $filename, ['images' => true]);
+
+        /** pour domPDF
+        $pdf->showPdfFile($html, $filename);
+        return new Response(); */
+
+    }
+    /** Fin esdOrganismePDF */
 
     #[Route('/esd/agent/{id}∕{dateDebut}/{dateFin}', name: 'esd_agent_details')]
     public function detailsESDAgent(Services $services, AgentDetache $agentDetache, Request $request,

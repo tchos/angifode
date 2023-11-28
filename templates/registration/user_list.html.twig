@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des utilisateurs{% endblock %}
+{% block title %}{{ "Liste des utilisateurs" | trans }}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
@@ -8,7 +8,7 @@
 
 {% block body %}
     <div class="container">
-        <h3 class="text-center">LISTE DES UTILISATEURS </h3>
+        <h3 class="text-center">{{ "LISTE DES UTILISATEURS" | trans }} </h3>
         {% for message in app.session.flashBag.get('warning') %}
             <div class="alert alert-warning">{{ message }}</div>
         {% endfor %}
@@ -20,11 +20,11 @@
                         <thead>
                         <tr class="table-dark">
                             <th>ID</th>
-                            <th>USERNAME</th>
-                            <th>ORGANISME</th>
-                            <th>CREER PAR</th>
-                            <th>DERNIERE VISITE</th>
-                            <th class="text-center">ACTION</th>
+                            <th>{{ "NOM UTILISATEUR" | trans }}</th>
+                            <th>{{ "ORGANISME" | trans }}</th>
+                            <th>{{ "CREE PAR" | trans }}</th>
+                            <th>{{ "DERNIERE CONNEXION" | trans }}</th>
+                            <th class="text-center">{{ "ACTION" | trans }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,10 +38,12 @@
                                 <td>{{ user.createdBy }}</td>
                                 <td>{{ user.lastVisitDate | format_datetime('full', 'none', locale='fr') }}</td>
                                 <td class="text-center">
-                                    <a title="Modifier le profil de {{ user.username }}"
+                                    <a title="{{ "Modifier le profil de %user%" | trans({'user': user.username}) }}"
                                        href="{{ path('user_edit', {'id': user.id}) }}">
-                                        <i class="fas fa-edit"></i></i><span class="ms-4"></span>
-                                    </a>
+                                        <i class="fas fa-edit"></i><span class="ms-4"></span></a>
+                                    <a title="{{ "Réinitialiser le mode de passe de %user%" | trans({'user': user.username}) }}"
+                                       href="{{ path('user_resetpassword', {'id': user.id}) }}">
+                                        <i class="fa-solid fa-window-restore text-danger"></i><span class="ms-4"></span></a>
                                 </td>
                             </tr>
                             {% set i = i + 1 %}

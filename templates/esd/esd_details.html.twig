@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails de l'évaluation d'une dette{% endblock %}
+{% block title %}{{ "Détails de l'évaluation d'une dette" | trans }}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col">
                 <h4>
-                    Détails de l'évaluation de la dette sociale de l'agent
+                    {{ "Détails de l'évaluation de la dette sociale de l'agent" | trans }}
                     <span class="badge bg-dark fs-5 fw-bolder">{{ agentDetache.noms }} ({{ agentDetache.matricule }})</span>
                 </h4>
             </div>
@@ -23,7 +23,7 @@
         <div class="row mb-2">
             <div class="col">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    PERIODE :
+                    {{ "PERIODE :" | trans }}
                     <span class="badge bg-warning fw-bolder">Du
                         {{ dateDebut }} au
                         {{ dateFin }}
@@ -32,7 +32,7 @@
             </div>
             <div class="col">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    SOMME A REVERSER :
+                    {{ "SOMME A REVERSER :" | trans }}
                     <span class="badge bg-success fw-bolder">
                         {{ totalSar | number_format(0,'.',' ') }} FCFA
                     </span>
@@ -40,7 +40,7 @@
             </div>
             <div class="col">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    COTISATIONS :
+                    {{ "COTISATIONS :" | trans }}
                     <span class="badge bg-primary fw-bolder">
                         {{ totalCotis | number_format(0,'.',' ')}} FCFA
                     </span>
@@ -48,7 +48,7 @@
             </div>
             <div class="col">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    DETTE :
+                    {{ "DETTE :" | trans }}
                     <span class="badge bg-danger fw-bolder">
                         {{ (totalSar - totalCotis) | number_format(0,'.',' ')}} FCFA
                     </span>
@@ -62,13 +62,13 @@
                         <thead>
                         <tr class="table-dark">
                             <th class="text-center">ID</th>
-                            <th class="text-center">Date début</th>
-                            <th class="text-center">Date fin</th>
+                            <th class="text-center">{{ "Date début" | trans }}</th>
+                            <th class="text-center">{{ "Date fin" | trans }}</th>
                             <th class="text-center">Ind./Ech.</th>
-                            <th class="text-end pe-5">Salaire de base</th>
-                            <th class="text-end pe-5">Part salariale</th>
-                            <th class="text-end pe-5">Part patronale</th>
-                            <th class="text-end pe-5">Somme à reverser</th>
+                            <th class="text-end pe-5">{{ "Salaire de base" | trans }}</th>
+                            <th class="text-end pe-5">{{ "Part salariale" | trans }}</th>
+                            <th class="text-end pe-5">{{ "Contribution patronale" | trans }}</th>
+                            <th class="text-end pe-5">{{ "Somme à reverser" | trans }}</th>
                         </tr>
                         </thead>
                         <tbody>

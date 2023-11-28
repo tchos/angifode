@@ -37,7 +37,7 @@ class FinDetachementType extends AbstractType
                 ]
             ])
             ->add('dateSigneActFinDet', DateType::class, [
-                'label' => 'Date signature de l\'acte mettant fin au détachement',
+                'label' => 'Date de signature de l\'acte mettant fin au détachement',
                 'widget' => 'single_text'
             ])
         ;

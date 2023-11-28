@@ -1,70 +1,71 @@
 {% extends "pdfbase.html.twig" %}
 
-{% block title %}Détails du détachement{% endblock %}
+{% block title %}{{ "Détails du détachement" | trans }}{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="h4 text-success">
-            Détails sur le détachement de l'agent {{ agent.noms }} ({{ agent.matricule }}) dans l'organisme {{ agent.organisme.sigle }}
+            {{ "Détails sur le détachement de l'agent %name% (%matricule%) dans l'organisme %organisme%"
+                | trans({'%name%': agent.noms, '%matricule%': agent.matricule, '%organisme%': agent.organisme.sigle })}}
         </div>
         <hr>
         <div class="row mt-5">
             <div class="col-6">
                 <table class="table table-striped text-dark">
                     <tr>
-                        <th>Date de naissance</th>
+                        <th>{{ "Date de naissance" | trans }}</th>
                         <td class="text-end">{{ agent.dateNaissance | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                     <tr>
-                        <th>Date d'intégration</th>
+                        <th>{{ "Date d'intégration" | trans }}</th>
                         <td class="text-end">{{ agent.dateIntegration | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                     <tr>
-                        <th>Ministère</th>
+                        <th>{{ "Ministère" | trans }}</th>
                         <td class="text-end">{{ agent.ministere }}</td>
                     </tr>
                     <tr>
-                        <th>Date de détachement</th>
+                        <th>{{ "Date de détachement" | trans }}</th>
                         <td class="text-end">{{ agent.dateDet | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                     <tr>
-                        <th>Nature de l'acte de détachement</th>
+                        <th>{{ "Nature de l'acte de détachement" | trans }}</th>
                         <td class="text-end">{{ agent.typeActeDet }}</td>
                     </tr>
                     <tr>
-                        <th>Références de l'acte de détachement</th>
+                        <th>{{ "Références de l'acte de détachement" | trans }}</th>
                         <td class="text-end">{{ agent.refActeDet }}</td>
                     </tr>
                     <tr>
-                        <th>Date de signature de l'acte de détachement</th>
+                        <th>{{ "Date de signature de l'acte de détachement" | trans }}</th>
                         <td class="text-end">{{ agent.dateActeDet | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                     <tr>
-                        <th>Grade au détachement</th>
+                        <th>{{ "Grade au détachement" | trans }}</th>
                         <td class="text-end">{{ grade.libGrade }}</td>
                     </tr>
                     <tr>
-                        <th>Catégorie Fonction Publique</th>
+                        <th>{{ "Catégorie Fonction Publique" | trans }}</th>
                         <td class="text-end">{{ grade.categorie }}</td>
                     </tr>
                     <tr>
-                        <th>Classe au détachement</th>
+                        <th>{{ "Classe au détachement" | trans }}</th>
                         <td class="text-end">{{ agent.classeDet }}</td>
                     </tr>
                     <tr>
-                        <th>Echelon au détachement</th>
+                        <th>{{ "Echelon au détachement" | trans }}</th>
                         <td class="text-end">{{ agent.echelonDet }}</td>
                     </tr>
                     <tr>
-                        <th>Indice au détachement</th>
+                        <th>{{ "Indice au détachement" | trans }}</th>
                         <td class="text-end">{{ indiceDet }}</td>
                     </tr>
                     <tr>
-                        <th>Date prise de service dans l'organisme</th>
+                        <th>{{ "Date prise de service dans l'organisme" | trans }}</th>
                         <td class="text-end">{{ agent.datePriseService | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                     <tr>
-                        <th>Date fin de détachement dans l'organisme</th>
+                        <th>{{ "Date fin de détachement dans l'organisme" | trans }}</th>
                         <td class="text-end">{{ agent.dateFinDet | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                 </table>

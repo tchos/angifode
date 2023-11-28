@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Statistiques: Total des sommes réversées par structure et par trimestre au cours de l'année {{ year }}{% endblock %}
+{% block title %}
+    {{ "Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année %year%" | trans({'%year%': year}) }}
+{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
@@ -9,52 +11,7 @@
 {% block body %}
     <div class="container-fluid my-4">
         <hr>
-        <div class="row">
-            <div class="col">
-                <div class="card bg-primary text-white mb-3 text-center">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fas fa-university fa-3x"></i>
-                            </div>
-                            <div class="col-8">
-                                <h4 class="card-title">{{ stats.nbOrganismes }} organismes parapublics</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="col">
-                    <div class="card bg-success text-white mb-3 text-center">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-4">
-                                    <i class="fas fa-address-book fa-3x"></i>
-                                </div>
-                                <div class="col-8">
-                                    <h4 class="card-title">{{ stats.nbAgentsDetaches }} agents publics détachés</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card bg-dark text-white mb-3 text-center">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fas fa-users fa-3x"></i>
-                            </div>
-                            <div class="col-8">
-                                <h4 class="card-title">{{stats.nbUsers }} utilisateurs inscrits</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% include 'partials/_chiffres.html.twig' with {'stats': stats} %}
         <hr>
     </div>
     <div class="container-fluid">

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}CONNEXION{% endblock %}
+{% block title %}{{ "CONNEXION" | trans }}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('asset/css/login.css') }}"/>
@@ -22,26 +22,26 @@
                         <div class="row container d-flex align-items-center justify-content-center" >
                             <div style="width: 95%; height: 20px; border-bottom: 1px solid black; text-align: center">
                               <span style="font-size: 23px; background-color: #000; padding: 0 10px; color: white">
-                                Connectez-vous !
+                                {{ "Connectez-vous" | trans }} !
                               </span>
                             </div>
                             <div class="row mt-4">
                                 {% if error %}
                                     <div class="alert alert-dismissible alert-danger">
-                                        <strong>Erreur de connexion ! </strong>
-                                        Nom d'utilisateur ou mot de passe incorrect.
+                                        <strong>{{ "Erreur de connexion" | trans }} ! </strong>
+                                        {{ "Nom d'utilisateur ou mot de passe incorrect" | trans }}.
                                     </div>
                                 {% endif %}
                             </div>
                             <div class="row container d-flex align-items-center justify-content-center">
                                 <div class="row form-group mt-4">
-                                    <label for="inputUsername"><i class="fas fa-user-alt"></i>  Nom d'utilisateur</label>
+                                    <label for="inputUsername"><i class="fas fa-user-alt"></i>  {{ "Nom d'utilisateur" | trans }}</label>
                                     <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
                                            class="form-control" autocomplete="username" required autofocus
                                         placeholder="Entrer votre nom d'utilisateur">
                                 </div>
                                 <div class="row form-group mt-4">
-                                    <label for="inputPassword"><i class="fas fa-unlock-alt"></i>  Mot de passe</label>
+                                    <label for="inputPassword"><i class="fas fa-unlock-alt"></i>  {{ "Mot de passe" | trans }}</label>
                                     <input type="password" name="password" id="inputPassword" class="form-control"
                                            autocomplete="current-password" required
                                            placeholder="Entrer votre mot de passe">
@@ -54,10 +54,10 @@
                                 <div class="row mt-5">
                                     <button class="btn btn-lg btn-success" type="submit">
                                         <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                        Connexion
+                                        {{ "Connexion" | trans }}
                                     </button>
                                     <p class="fw-lighter mt-4 pt-1 mb-0 text-center">
-                                        Vous n'avez pas de compte ? Veuillez contacter la MINFI ∕ DDPP.
+                                        {{ "Vous n'avez pas de compte ? Veuillez contacter la DDPP / DGB / MINFI" | trans }}.
                                     </p>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Statistiques: Liste des structures qui n'ont jamais réversé{% endblock %}
+{% block title %}{{ "Statistiques: Liste des structures qui n'ont jamais réversé" | trans }}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
@@ -9,52 +9,7 @@
 {% block body %}
     <div class="container-fluid my-4">
         <hr>
-        <div class="row">
-            <div class="col">
-                <div class="card bg-primary text-white mb-3 text-center">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fas fa-university fa-3x"></i>
-                            </div>
-                            <div class="col-8">
-                                <h4 class="card-title">{{ stats.nbOrganismes }} organismes parapublics</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="col">
-                    <div class="card bg-success text-white mb-3 text-center">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-4">
-                                    <i class="fas fa-address-book fa-3x"></i>
-                                </div>
-                                <div class="col-8">
-                                    <h4 class="card-title">{{ stats.nbAgentsDetaches }} agents publics détachés</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card bg-dark text-white mb-3 text-center">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fas fa-users fa-3x"></i>
-                            </div>
-                            <div class="col-8">
-                                <h4 class="card-title">{{stats.nbUsers }} utilisateurs inscrits</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% include 'partials/_chiffres.html.twig' with {'stats': stats} %}
         <hr>
     </div>
     <div class="container-fluid">
@@ -63,7 +18,7 @@
                 {% include 'partials/_ulstats.html.twig' %}
             </div>
             <div class="col">
-                <h4>Liste des structures qui n'ont jamais réversé</h4>
+                <h4>{{ "Liste des structures qui n'ont jamais réversé" | trans }}</h4>
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -71,10 +26,10 @@
                                 <thead>
                                 <tr class="table-primary">
                                     <th class="text-center fw-bolder">ID</th>
-                                    <th class="ps-5 fw-bolder">SIGLE</th>
-                                    <th class="ps-5 fw-bolder">LIBELLE</th>
-                                    <th class="text-center fw-bolder">TELEPHONES</th>
-                                    <th class="ps-5 fw-bolder">EMAIL</th>
+                                    <th class="ps-5 fw-bolder">{{ "SIGLE" | trans }}</th>
+                                    <th class="ps-5 fw-bolder">{{ "LIBELLE" | trans }}</th>
+                                    <th class="text-center fw-bolder">{{ "TELEPHONES" | trans }}</th>
+                                    <th class="ps-5 fw-bolder">{{ "EMAIL" | trans }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>

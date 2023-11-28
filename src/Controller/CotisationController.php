@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Require ROLE_USER for all the actions of this controller
@@ -25,8 +26,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[IsGranted('ROLE_USER')]
 class CotisationController extends AbstractController
 {
-    #[Route('/cotisation/reversement/{reversement}', name: 'cotisation_new')]
-    public function index(EntityManagerInterface $manager, Request $request, Reversement $reversement,
+    #[Route('/{_locale<%app.supported_locales%>}/cotisation/reversement/{reversement}', name: 'cotisation_new')]
+    public function index(EntityManagerInterface $manager, Request $request, Reversement $reversement, TranslatorInterface $translator,
                           CotisationRepository   $repos, Services $services, AgentDetacheRepository $agRepos): Response
     {
         // Pour historiser l'ajout d'une nouvelle cotisation en bd
@@ -84,7 +85,8 @@ class CotisationController extends AbstractController
                 $manager->flush();
 
                 // Alerte succès de l'enregistrement d'un reversement
-                $this->addFlash("success","La cotisation a été enregistrée avec succès !!!");
+                $this->addFlash("success",
+                                $translator->trans("La cotisation a été enregistrée avec succès !!!"));
 
                 return $this->redirectToRoute('cotisation_new', [
                     'reversement' => $reversement->getId(),
@@ -92,8 +94,9 @@ class CotisationController extends AbstractController
             } else {
                 $ecart = ($form->getData('cotTotale')->getCotTotale() + $totalCotisation) - $montantReversement;
                 // $form->get('cotTotale') me donne accès au champ cotTotale du formulaire
+                $messages = $translator->trans("La somme des cotisations dépasse de " . $ecart . " FCFA le montant du reversement !");
                 $form->get('cotTotale')->addError(
-                    new FormError("La somme des cotisations dépasse de " . $ecart . " FCFA le montant du reversement !")
+                    new FormError($translator->trans("La somme des cotisations dépasse de " . $ecart . " FCFA le montant du reversement !"))
                 );
             }
         }
@@ -109,8 +112,8 @@ class CotisationController extends AbstractController
         ]);
     }
 
-    #[Route('/cotisation/{id}/edit', name: 'cotisation_edit')]
-    public function edit_cotisation(EntityManagerInterface $manager, Request $request, Cotisation $cotisation,
+    #[Route('/{_locale<%app.supported_locales%>}/cotisation/{id}/edit', name: 'cotisation_edit')]
+    public function edit_cotisation(EntityManagerInterface $manager, Request $request, Cotisation $cotisation, TranslatorInterface $translator,
                                     CotisationRepository   $repos, Services $statistiques, AgentDetacheRepository $agRepos): Response
     {
         // Pour historiser l'ajout d'une nouvelle cotisation en bd
@@ -165,7 +168,7 @@ class CotisationController extends AbstractController
                 $ecart = ($form->getData('cotTotale')->getCotTotale() + $totalCotisation) - $montantReversement;
                 // $form->get('cotTotale') me donne accès au champ cotTotale du formulaire
                 $form->get('cotTotale')->addError(
-                    new FormError("La somme des cotisations dépasse de " . $ecart . " FCFA le montant du reversement !")
+                    new FormError($translator->trans("La somme des cotisations dépasse de " . $ecart . " FCFA le montant du reversement !"))
                 );
             }
         }
@@ -189,8 +192,8 @@ class CotisationController extends AbstractController
      * @param Cotisation $cotisation
      * @return void
      */
-    #[Route("cotisation/{id}/delete", name:"cotisation_delete")]
-    public function delete_cotisation(EntityManagerInterface $manager, Cotisation $cotisation)
+    #[Route("/{_locale<%app.supported_locales%>}/cotisation/{id}/delete", name:"cotisation_delete")]
+    public function delete_cotisation(EntityManagerInterface $manager, Cotisation $cotisation, TranslatorInterface $translator)
     {
         // Reversement concernant la cotisation à supprimer
         $reversement = $cotisation->getReversement();
@@ -204,8 +207,8 @@ class CotisationController extends AbstractController
         //Message flash de la suppression de la cotisation
         $this->addFlash(
             "success",
-            "La cotisation de l'agent <strong>{$agent->getNoms()}({$agent->getMatricule()}) 
-                </strong> du reversement {$reversement} a bien été supprimé");
+            $translator->trans("La cotisation de l'agent <strong>{$agent->getNoms()}({$agent->getMatricule()}) 
+                </strong> du reversement {$reversement} a bien été supprimé"));
         /**
         if($this->getUser() == $acteDeces->getAgentSaisie())
         {

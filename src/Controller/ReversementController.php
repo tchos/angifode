@@ -11,12 +11,14 @@ use App\Repository\ReversementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Require ROLE_USER for all the actions of this controller
@@ -24,7 +26,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 #[IsGranted('ROLE_USER')]
 class ReversementController extends AbstractController
 {
-    #[Route('/reversement', name: 'reversement_new')]
+    #[Route('/{_locale<%app.supported_locales%>}/reversement', name: 'reversement_new')]
     public function create_reversement(EntityManagerInterface $manager, Request $request, SluggerInterface $slugger,
                                        OrganismesRepository $organismesRepository): Response
     {
@@ -117,7 +119,7 @@ class ReversementController extends AbstractController
         ]);
     }
 
-    #[Route('/reversement/list', name: 'reversement_list')]
+    #[Route('/{_locale<%app.supported_locales%>}/reversement/list', name: 'reversement_list')]
     public function lister_reversement(EntityManagerInterface $manager, Request $request,
                                        ReversementRepository $repos):Response
     {
@@ -133,9 +135,9 @@ class ReversementController extends AbstractController
         ]);
     }
 
-    #[Route('/reversement/{id}/edit', name: 'reversement_edit')]
+    #[Route('/{_locale<%app.supported_locales%>}/reversement/{id}/edit', name: 'reversement_edit')]
     public function update_reversement(EntityManagerInterface $manager, Request $request, OrganismesRepository $organismesRepository,
-                                       Reversement $reversement, SluggerInterface $slugger): Response
+                                       Reversement $reversement, SluggerInterface $slugger, TranslatorInterface $translator): Response
     {
         // utilisateur connecté
         $user = $this->getUser();
@@ -212,7 +214,7 @@ class ReversementController extends AbstractController
 
                 // Alerte succès de l'enregistrement d'un reversement
                 $this->addFlash("warning",
-                    "Les modifications apportées au reversement ont été enregistrées avec succès !!!");
+                    $translator->trans("Les modifications apportées au reversement ont été enregistrées avec succès !!!"));
 
                 return $this->redirectToRoute('reversement_list');
             }

@@ -6,6 +6,7 @@
 parameters:
     preuve_reversement_directory: '%kernel.project_dir%/public/asset/preuves'
     image_directory: '%kernel.project_dir%/public/asset/images'
+    app.supported_locales: 'en|fr'
 
 services:
     # default configuration for services in *this* file

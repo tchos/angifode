@@ -7,8 +7,10 @@
 {% block body %}
     <div class="container p-5 bg-light text-dark text-center">
         <p class="fs-4 text-success fw-bolder">
-            Cette application permet de faire un suivi rigoureux des reversements des cotisations pour pension du personnel
-            de l'Etat en détachement et de maitriser la dette sociale des organismes publics et parapublics.
+            {{
+            "Cette application permet de faire un suivi rigoureux des reversements des cotisations pour pension du personnel de
+                l'Etat en détachement et de maîtriser la dette sociale des organismes publics et parapublics." | trans
+             }}
         </p>
     </div>
     <div class="container my-4">
@@ -22,7 +24,7 @@
                                 <i class="fas fa-university fa-3x"></i>
                             </div>
                             <div class="col-8">
-                                <h4 class="card-title">{{ stats.nbOrganismes }} organismes parapublics</h4>
+                                <h4 class="card-title">{{ stats.nbOrganismes }} {{ "organismes parapublics" | trans }}</h4>
                             </div>
                         </div>
                     </div>
@@ -37,7 +39,7 @@
                                     <i class="fas fa-address-book fa-3x"></i>
                                 </div>
                                 <div class="col-8">
-                                    <h4 class="card-title">{{ stats.nbAgentsDetaches }} agents publics détachés</h4>
+                                    <h4 class="card-title">{{ stats.nbAgentsDetaches }} {{ "agents publics détachés" | trans }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +54,7 @@
                                 <i class="fas fa-users fa-3x"></i>
                             </div>
                             <div class="col-8">
-                                <h4 class="card-title">{{stats.nbUsers }} utilisateurs inscrits</h4>
+                                <h4 class="card-title">{{stats.nbUsers }} {{ "utilisateurs inscrits" | trans }}</h4>
                             </div>
                         </div>
                     </div>
@@ -63,47 +65,54 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-sm">
-                    <h4>Module de gestion des agents publics</h4>
-                    <p>Gérez les agents publics en détachement.</p>
-                    <p>Créer un nouveau détachement, listez, modifiez ou supprimez les infos sur les agents publics en détachment dans votre organisme.</p>
+                    <h4>{{ "Module de gestion des agents publics" | trans }}</h4>
+                    <p>{{ "Gérer les agents publics en détachement." | trans }}</p>
+                    <p>{{ "Créer un nouveau détachement, listez, modifiez ou supprimez les informations sur les agents publics en détachment dans votre organisme." | trans }}</p>
                     <p class="lead">
                         <a class="btn btn-primary" href="{{ path('agent_detache_new') }}" role="button">
                             <i class="fas fa-male"></i>
-                            Nouveau détachement !
+                            {{ "Nouveau détachement !" | trans }}
                         </a>
                     </p>
                 </div>
                 {% if is_granted('ROLE_ADMIN') %}
                 <div class="col-sm">
-                    <h4>Module de gestion des organismes</h4>
-                    <p>Gérez les organismes parapublics.</p>
-                    <p>Créez un nouvel organisme, listez, modifiez ou supprimez les infos sur les organismes parapublics existants au Cameroun.</p>
+                    <h4>{{ "Module de gestion des organismes" | trans }}</h4>
+                    <p>{{ "Gérer les organismes parapublics." | trans }}</p>
+                    <p>{{ "Créer un nouvel organisme, lister, modifier ou supprimer les informations
+                                sur les organismes publics et parapublics existants au Cameroun." | trans }}</p>
                     <p class="lead">
                         <a class="btn btn-primary" href="{{ path('create_organisme') }}" role="button">
                             <i class="fas fa-bank"></i>
-                            Nouvel organisme !
+                            {{ "Nouvel organisme !" | trans }}
                         </a>
                     </p>
                 </div>
                 {% endif %}
                 <div class="col-sm">
-                    <h4>Modules de gestion des reversements</h4>
-                    <p>Gérez les reversements effectués par les organismes.</p>
-                    <p>Enregistrez, listez, modifiez et supprimez tous les reversements effectués au sein d'un organisme pour les cotisations pour pensions des agents publics détachés.</p>
+                    <h4>{{ "Modules de gestion des reversements" | trans }}</h4>
+                    <p>{{ "Gérer les reversements effectués par les organismes." | trans }}</p>
+                    <p>
+                        {{ "Enregistrer, lister, modifier et supprimer tous les reversements effectués au sein d'un organisme pour les
+                            cotisations pour pension des agents publics en position de détachement." | trans }}
+                    </p>
                     <p class="lead">
                         <a class="btn btn-primary" href="{{ path('reversement_new') }}" role="button">
-                            <i class="fas fa-money-bill-transfer"></i> Nouveau reversement !
+                            <i class="fas fa-money-bill-transfer"></i> {{ "Nouveau reversement !" | trans }}
                         </a>
                     </p>
                 </div>
                 <div class="col-sm">
-                    <h4>Modules de gestion de la dette sociale.</h4>
-                    <p>Gérez les états des sommes dues sur les cotisations.</p>
-                    <p>Evaluez la dette de votre organisme sur les cotisations pour pension non encore reversées pour le compte des agents publics détachés au sein de votre structure.</p>
+                    <h4>{{ "Modules de gestion de la dette sociale." | trans }}</h4>
+                    <p>{{ "Gérez les états des sommes dues sur les cotisations." | trans }}</p>
+                    <p>
+                        {{ "Evaluez la dette de votre organisme sur les cotisations pour pension non encore
+                        reversées pour le compte des agents publics détachés au sein de votre structure." | trans }}
+                    </p>
                     <p class="lead">
                         <a class="btn btn-primary" href="{{ path('esd_orga') }}" role="button">
                             <i class="fas fa-money-bill"></i>
-                            Evaluer la dette sociale !
+                            {{ "Evaluer la dette sociale !" | trans }}
                         </a>
                     </p>
                 </div>

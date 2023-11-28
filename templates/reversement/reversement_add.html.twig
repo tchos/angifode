@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouveau reversement{% endblock %}
+{% block title %}{{ "Nouveau reversement" | trans }}{% endblock %}
 
 {% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ asset('asset/css/angifode.css') }}"/>{% endblock %}
 
 {% block body %}
     <div class="container">
-        <div class="h4 text-success">Saisie d'un nouveau reversement</div>
+        <div class="h4 text-success">{{ "Enregistrer un nouveau reversement" | trans }}</div>
         {% for message in app.session.flashBag.get('success') %}
             <div class="alert alert-info">{{ message }}</div>
         {% endfor %}
@@ -30,11 +30,11 @@
             </div>
             <button type="submit" class="btn btn-success mt-4">
                 <i class="fas fa-check"></i>
-                <span class="fw-bolder">Enregistrer le reversement</span>
+                <span class="fw-bolder">{{ "Enregistrer le reversement" | trans }}</span>
             </button>
             <button type="reset" class="btn btn-dark mt-4">
                 <i class="fa fa-times-circle" aria-hidden="true"></i>
-                <span class="fw-bolder">Annuler la saisie du reversement</span>
+                <span class="fw-bolder">{{ "Annuler la saisie du reversement" | trans }}</span>
             </button>
         {{ form_end(form) }}
     </div>

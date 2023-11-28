@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col">
+        <div class="card bg-primary text-white mb-3 text-center">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <i class="fas fa-university fa-3x"></i>
+                    </div>
+                    <div class="col-8">
+                        <h4 class="card-title">{{ stats.nbOrganismes }} {{ "organismes parapublics" | trans }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="col">
+            <div class="card bg-success text-white mb-3 text-center">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fas fa-address-book fa-3x"></i>
+                        </div>
+                        <div class="col-8">
+                            <h4 class="card-title">{{ stats.nbAgentsDetaches }} {{ "agents publics détachés" | trans }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card bg-dark text-white mb-3 text-center">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <i class="fas fa-users fa-3x"></i>
+                    </div>
+                    <div class="col-8">
+                        <h4 class="card-title">{{stats.nbUsers }} {{ "utilisateurs inscrits" | trans }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

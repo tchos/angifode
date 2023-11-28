@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Montant à reverser sur la période allant du  {{ dateDebut }} au {{ dateFin }}{% endblock %}
+{% block title %}
+    {{ "Montant à reverser sur la période allant du  %dateDebut% au %dateFin%"
+        | trans({'%dateDebut%': dateDebut, '%dateFin%': dateFin}) }}
+{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
@@ -12,7 +15,7 @@
 {% block body %}
     <div class="container">
         <div class="h5 text-success">
-            Résultat de l'évaluation de la dette sociale de l'organisme
+            {{ "Résultat de l'évaluation de la dette sociale de l'organisme" | trans }}
             <span class="badge bg-dark fw-bolder">{{ organisme.sigle }}</span>
             {% set rar = (total_sar_organisme - total_reversement) %}
             <a href="{{ path('esd_pdf',
@@ -23,7 +26,7 @@
                     'dr': total_reversement,
                     'rar': rar })
                 }}" class="badge bg-primary fw-bolder float-end text-decoration-none">
-                Télécharger ESD
+                {{ "Télécharger ESD" | trans }}
             </a>
         </div>
         {% for message in app.session.flashBag.get('success') %}
@@ -33,7 +36,7 @@
         <div class="row mb-2">
             <div class="col">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    PERIODE :
+                    {{ "PERIODE :" | trans }}
                     <span class="badge bg-warning fw-bolder">Du
                         {{ dateDebut }} au
                         {{ dateFin }}
@@ -42,7 +45,7 @@
             </div>
             <div class="col">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    A REVERSER :
+                    {{ "A REVERSER :" | trans }}
                     <span class="badge bg-success fw-bolder">
                         {{ total_sar_organisme | number_format(0,'.',' ')}} FCFA
                     </span>
@@ -50,7 +53,7 @@
             </div>
             <div class="col">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    REVERSEMENTS :
+                    {{ "REVERSEMENTS :" | trans }}
                     <span class="badge bg-primary fw-bolder">
                         {{ total_reversement | number_format(0,'.',' ')}} FCFA
                     </span>
@@ -58,14 +61,14 @@
             </div>
             <div class="col">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    DETTE :
+                    {{ "DETTE :" | trans }}
                     <span class="badge bg-danger fw-bolder">
                         {{ (total_sar_organisme - total_reversement) | number_format(0,'.',' ')}} FCFA
                     </span>
                 </li>
             </div>
         </div>
-        <h5 class="mt-5">Liste des agents publics détachés concernés par la dette sociale (ESD) </h5>
+        <h5 class="mt-5">{{ "Liste des agents publics détachés concernés par la dette sociale (ESD)" | trans }} </h5>
         <hr>
         <div class="card">
             <div class="card-body">
@@ -74,11 +77,11 @@
                         <thead>
                         <tr class="table-dark">
                             <th>N°</th>
-                            <th>AGENTS DETACHES</th>
-                            <th class="text-end pe-5">SOMME A REVERSER</th>
-                            <th class="text-end pe-5">TOTAL COTISE</th>
-                            <th class="text-end pe-5">RESTE A REVERSER</th>
-                            <th class="text-center">ACTION</th>
+                            <th>{{ "AGENTS DETACHES" | trans }}</th>
+                            <th class="text-end pe-5">{{ "SOMME A REVERSER" | trans }}</th>
+                            <th class="text-end pe-5">{{ "TOTAL COTISE" | trans }}</th>
+                            <th class="text-end pe-5">{{ "RESTE A REVERSER" | trans }}</th>
+                            <th class="text-center">{{ "ACTION" | trans }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -112,7 +115,7 @@
                                            {'id': id_agent[i],
                                                'dateDebut': dateDebut,
                                                'dateFin': dateFin}) }}">
-                                        <span>Détails</span>
+                                        <span>{{ "Détails" | trans }}</span>
                                     </a>
                                 </td>
                             </tr>

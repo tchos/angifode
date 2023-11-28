@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Création d'un compte{% endblock %}
+{% block title %}{{ "Création d'un compte" | trans }}{% endblock %}
 
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('asset/css/angifode.css') }}"/>{% endblock %}
 
 {% block body %}
 <div class="container">
-    <div class="h4 text-success">Créer un nouvel utilisateur</div>
+    <div class="h4 text-success">{{ "Créer un nouvel utilisateur" | trans }}</div>
     <hr>
     {{ form_start(registrationForm) }}
         <div class="row">
@@ -29,11 +29,11 @@
         </div>
         <button type="submit" class="btn btn-success btn-sm">
             <i class="fa fa-check-circle" aria-hidden="true"></i>
-            <span class="fw-bolder">Créer le compte</span>
+            <span class="fw-bolder">{{ "Créer le compte" | trans }}</span>
         </button>
         <button type="reset" class="btn btn-dark btn-sm">
             <i class="fa fa-times-circle" aria-hidden="true"></i>
-            <span class="fw-bolder">Annuler la création</span>
+            <span class="fw-bolder">{{ "Annuler la création" | trans }}</span>
         </button>
     {{ form_end(registrationForm) }}
 </div>

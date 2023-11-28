@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des organismes{% endblock %}
+{% block title %}{{ "Liste des organismes" | trans }}{% endblock %}
 
 {% block stylesheets %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +9,7 @@
 
 {% block body %}
     <div class="container">
-        <h3 class="text-center">LISTE DES ORGANISMES</h3>
+        <h3 class="text-center">{{ "LISTE DES ORGANISMES" | trans }}</h3>
         {% for message in app.session.flashBag.get('warning') %}
             <div class="alert alert-warning">{{ message }}</div>
         {% endfor %}
@@ -21,11 +21,11 @@
                         <thead>
                         <tr class="table-dark">
                             <th>ID</th>
-                            <th>SIGLE</th>
-                            <th>LIBELLE</th>
-                            <th>VILLE</th>
-                            <th class="text-center">CONTACTS</th>
-                            <th class="text-center">ACTION</th>
+                            <th>{{ "SIGLE" | trans }}</th>
+                            <th>{{ "LIBELLE" | trans }}</th>
+                            <th>{{ "VILLE" | trans }}</th>
+                            <th class="text-center">{{ "CONTACTS" | trans }}</th>
+                            <th class="text-center">{{ "ACTION" | trans }}</th>
                         </tr>
                         </thead>
                         <tbody>

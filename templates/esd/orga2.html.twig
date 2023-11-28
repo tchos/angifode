@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des organismes{% endblock %}
+{% block title %}{{ "Liste des organismes" | trans }}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
@@ -11,7 +11,7 @@
 
 {% block body %}
     <div class="container">
-        <h4>Choisissez l'organisme pour évaluer la somme à reverser mensuellement</h4>
+        <h4>{{ "Choisissez l'organisme pour évaluer la somme à reverser mensuellement" | trans }}</h4>
         <hr>
         <div class="card">
             <div class="card-body">
@@ -20,9 +20,9 @@
                         <thead>
                         <tr class="table-dark">
                             <th>ID</th>
-                            <th>SIGLE</th>
-                            <th>LIBELLE</th>
-                            <th class="text-center">ACTION</th>
+                            <th>{{ "SIGLE" | trans }}</th>
+                            <th>{{ "LIBELLE" | trans }}</th>
+                            <th class="text-center">{{ "ACTION" | trans }}</th>
                         </tr>
                         </thead>
                         <tbody>

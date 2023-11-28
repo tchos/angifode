@@ -8,19 +8,33 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle fw-bolder" href="#" id="dropdown-language" role="button"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ app.request.locale|locale_name(app.request.locale)|u.title }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-language">
+                        <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'en'}) }}">
+                                <img src="{{ asset('asset/images/eng.png') }}" width="20px" alt=""> ENG</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'fr'}) }}">
+                                <img src="{{ asset('asset/images/fra.png') }}" width="20px" alt=""> FRA</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item dropdown me-4">
                     <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown"
                        href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-male" aria-hidden="true"></i>
-                        Agents Publics </a>
+                        {{ 'Agents Publics' | trans }} </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path('agent_detache_new') }}">
                             <i class="fa fa-address-card" aria-hidden="true"></i>
-                            Nouveau détachement
+                            {{ 'Nouveau détachement' | trans }}
                         </a>
                         <a class="dropdown-item" href="{{ path('agent_detache_list') }}">
                             <i class="fa fa-list-ul" aria-hidden="true"></i>
-                            Liste des détachés
+                            {{ 'Liste des détachés' | trans }}
                         </a>
                     </div>
                 </li>
@@ -29,7 +43,7 @@
                         <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown" href="#" role="button"
                            aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-building" aria-hidden="true"></i>
-                            Organismes</a>
+                            {{ 'Organismes' | trans }}</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ path('create_organisme') }}">Créer un nouvel organisme</a>
                             <a class="dropdown-item" href="{{ path('organisme_list') }}">Liste des organismes</a>
@@ -40,15 +54,15 @@
                     <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown" href="#" role="button"
                        aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
-                        Reversements</a>
+                        {{ 'Reversements' | trans }}</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path('reversement_new') }}">
                             <i class="fa fa-plus-square" aria-hidden="true"></i>
-                            Nouveau reversement
+                            {{ 'Nouveau reversement' | trans }}
                         </a>
                         <a class="dropdown-item" href="{{ path('reversement_list') }}">
                             <i class="fa fa-list-alt" aria-hidden="true"></i>
-                            Liste des reversements
+                            {{ 'Liste des reversements' | trans }}
                         </a>
                     </div>
                 </li>
@@ -56,11 +70,11 @@
                     <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown" href="#" role="button"
                        aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-file-text" aria-hidden="true"></i>
-                        ESD</a>
+                        {{ 'ESD' | trans }}</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ path('esd_orga') }}">Evaluation de la dette</a>
+                        <a class="dropdown-item" href="{{ path('esd_orga') }}">{{ 'Evaluation de la dette' | trans }}</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ path('esd_orga_mensuel') }}">Evaluation du reversement mensuel</a>
+                        <a class="dropdown-item" href="{{ path('esd_orga_mensuel') }}">{{ 'Evaluation du reversement mensuel' | trans }}</a>
                     </div>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
@@ -68,14 +82,14 @@
                         <a class="nav-link active dropdown-toggle fs-6" data-bs-toggle="dropdown" href="#" role="button"
                            aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-users" aria-hidden="true"></i>
-                            <span class="fw-bolder">Utilisateurs</span>
+                            <span class="fw-bolder">{{ 'Utilisateurs' | trans }}</span>
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ path('app_register') }}">
-                                <i class="fa fa-user-plus" aria-hidden="true"></i> Créer un nouvel utilisateur
+                                <i class="fa fa-user-plus" aria-hidden="true"></i> {{ 'Créer un nouvel utilisateur' | trans }}
                             </a>
                             <a class="dropdown-item" href="{{ path('user_list') }}">
-                                <i class="fa fa-th-list" aria-hidden="true"></i> Liste des utilisateur
+                                <i class="fa fa-th-list" aria-hidden="true"></i> {{ 'Liste des utilisateur' | trans }}
                             </a>
                         </div>
                     </li>
@@ -84,17 +98,17 @@
                     <li class="nav-item active me-4">
                         <a class="nav-link active taille fs-6 fw-bolder" href="{{ path('app_statistics') }}">
                             <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
-                            Statistiques <span class="sr-only">(current)</span>
+                            {{ 'Statistiques' | trans }} <span class="sr-only">(current)</span>
                         </a>
                     </li>
                 {% endif %}
                 <li class="nav-item">
                     <a class="nav-link active fs-6" href="#">
                         <i class="fa fa-laptop" aria-hidden="true"></i>
-                        Guide</a>
+                        {{ 'Guide' | trans }}</a>
                 </li>
             </ul>
-            <ul class="navbar-nav me-5">
+            <ul class="navbar-nav me-1">
                 {% if app.user %}
                     <li class="nav-item dropdown">
                         <a class="nav-link active dropdown-toggle fw-bolder" data-bs-toggle="dropdown" href="#" role="button"
@@ -102,18 +116,18 @@
                         </a>
                         <div class="dropdown-menu" style="">
                             {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path("app_register") }}" class="dropdown-item">Créer un compte</a>
+                                <a href="{{ path("app_register") }}" class="dropdown-item">{{ 'Créer un compte' | trans }}</a>
                             {% endif %}
                             <div class="dropdown-divider"></div>
                             <a href="{{ path('password_edit') }}" class="dropdown-item">
-                                Modifier mot de passe
+                                {{ 'Modifier mot de passe' | trans }}
                             </a>
-                            <a href="#" class="dropdown-item">Modifier mon profile</a>
+                            <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="dropdown-item">{{ 'Modifier mon profile' | trans }}</a>
                             <div class="dropdown-divider"></div>
                             <a href="{{ path('app_logout') }}" class="dropdown-item"
                                id="myLinkToConfirm" data-confirm-title="Attention !"
                                data-confirm-message="Etes-vous sûr de vouloir vous déconnectez ?">
-                                Se déconnecter
+                                {{ 'Se déconnecter' | trans }}
                             </a>
                         </div>
                     </li>
@@ -121,7 +135,7 @@
                     <li class="nav-item active">
                         <a class="nav-link active taille fs-6 fw-bolder" href="{{ path('app_login') }}">
                             <i class="fas fa-sign-in-alt"></i>
-                            Se connecter <span class="sr-only">(current)</span>
+                            {{ 'Se connecter' | trans }} <span class="sr-only">(current)</span>
                         </a>
                     </li>
                 {% endif %}

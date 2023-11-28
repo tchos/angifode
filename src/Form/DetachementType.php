@@ -28,7 +28,7 @@ class DetachementType extends AbstractType
                 ]
             ])
             ->add('noms', TextType::class,[
-                'label' => 'Noms de l\'agent',
+                'label' => 'Nom de l\'agent',
                 'attr' => [
                     'placeholder' => 'Ex: TUKO BENEDICTO PACIFICO',
                 ]
@@ -70,7 +70,7 @@ class DetachementType extends AbstractType
                 'label' => 'Date de signature',
                 'widget' => 'single_text'])
             ->add('ministere', ChoiceType::class, [
-                'label' => 'Ministère',
+                'label' => 'Ministère d\'origine',
                 'choices' => [
                     'PRC' => '01',
                     'MINRA' => '02',
@@ -151,7 +151,7 @@ class DetachementType extends AbstractType
                 ]
             ])
             ->add('refActeDet', TextType::class,[
-                'label' => 'Références de l\'acte',
+                'label' => 'Référence de l\'acte',
                 'attr' => [
                     'placeholder' => 'Ex: 1234/SPM/DET',
                     'style' => 'text-transform:uppercase'

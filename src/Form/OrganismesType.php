@@ -18,7 +18,7 @@ class OrganismesType extends AbstractType
     {
         $builder
             ->add('libelleOrg', TextType::class, [
-                'label' => 'Libelle de l\'organisme',
+                'label' => 'Nom de l\'organisme',
                 'attr' => [
                     'placeholder' => 'Ex: CAMEROON TELECOMMUNICATION'
                 ]

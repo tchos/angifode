@@ -1,0 +1,53 @@
+DELETE FROM agent_detache WHERE matricule = "M040937" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "733767N" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "725061Y" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "651544P" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "601547X" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "601050B" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "588394X" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "576078M" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "570452N" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "559328J" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "558372D" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "508267B" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "662730Z" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "592586K" AND organisme_id = 72;
+
+/*
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+DELETE FROM agent_detache WHERE matricule = "774983A" AND organisme_id = 72;
+*/
+
+
+/*
+UPDATE agent_detache SET grade_det = "61150", classe_det = "0" WHERE matricule = "363085V";
+UPDATE agent_detache SET grade_det = "29310" WHERE matricule = "369332Z";
+UPDATE agent_detache SET grade_det = "30110" WHERE matricule = "693018J";
+UPDATE agent_detache SET grade_det = "29110" WHERE matricule = "719673A";
+UPDATE agent_detache SET grade_det = "30110", echelon_det = "04" WHERE matricule = "779579J";
+UPDATE agent_detache SET grade_det = "29210" WHERE matricule = "W046816"; */

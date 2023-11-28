@@ -10,13 +10,15 @@ use \Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserController extends AbstractController
 {
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/{_locale<%app.supported_locales%>}/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, EntityManagerInterface $manager,
         UserRepository $repos): Response
     {
@@ -39,16 +41,16 @@ class UserController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    #[Route(path: '/logout', name: 'app_logout')]
+    #[Route(path: '/{_locale<%app.supported_locales%>}/logout', name: 'app_logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    #[Route(path: '/updatepassword', name: 'password_edit')]
+    #[Route(path: '/{_locale<%app.supported_locales%>}/updatepassword', name: 'password_edit')]
     #[IsGranted('ROLE_USER')]
-    public function updatePassword (UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager,
-                          UserRepository $repos, Request $request): Response
+    public function updatePassword (UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager, TranslatorInterface $translator,
+                          UserRepository $repos, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = $this->getUser();
 
@@ -58,9 +60,9 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $old_password = $form->get('old_password')->getData();
             // Si l'ancien mot de passe est le bon
-            if($encoder->isPasswordValid($user, $old_password)){
+            if($userPasswordHasher->isPasswordValid($user, $old_password)){
                 $user->setPassword(
-                    $encoder->encodePassword(
+                    $userPasswordHasher->hashPassword(
                         $user,
                         $form->get('password')->getData()
                     )
@@ -69,13 +71,13 @@ class UserController extends AbstractController
                 $manager->flush();
 
                 // Notification du mot de passe modifié
-                $this->addFlash("success", "Mot de passe modifié avec succès !!!");
+                $this->addFlash("success", $translator->trans("Mot de passe modifié avec succès !!!"));
 
                 // Redirection vers la page de connexion
                 return $this->redirectToRoute('app_logout');
             }else{
                 // Notification du mot de passe modifié
-                $this->addFlash("danger", "Votre ancien mot de passe n'est pas valide !!!");
+                $this->addFlash("danger", $translator->trans("Votre ancien mot de passe n'est pas valide !!!"));
             }
         }
 

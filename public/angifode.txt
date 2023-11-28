@@ -46,7 +46,7 @@ dateFinCot
 connexion au serer d'application d'angifode en ligne:	ssh testangifode@angifode.minfi.cm -p 22222.
 connexion au server de bd angifode en ligne:		ssh testbdangifode@angifode.minfi.cm -p 64111.
 save: mysqldump --no-tablespaces -u angifode -p angifode_db > db_bkp_angifode_20231017.sql 
-pass: #mdp env#.
+pass: *DDPP2023angifode* .
 
 
 

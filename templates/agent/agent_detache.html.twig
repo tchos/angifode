@@ -9,7 +9,7 @@
 
 {% block body %}
     <div class="container">
-        <div class="h4 text-success">Saisie d'un nouveau détachement</div>
+        <div class="h4 text-success">{{ "Saisie d'un nouveau détachement" | trans }}</div>
         {% for message in app.session.flashBag.get('success') %}
             <div class="alert alert-success">{{ message }}</div>
         {% endfor %}
@@ -19,7 +19,7 @@
                 <div class="col-5 me-3">
                     <fieldset>
                         <legend class="bg-dark text-center text-white">
-                            Informations sur l'agent
+                            {{ "Informations sur l'agent" | trans }}
                         </legend>
                         <hr>
                         <div class="row mb-3">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-6 ms-3">
                     <fieldset>
-                        <legend class="bg-dark text-center text-white">Informations sur le détachement</legend>
+                        <legend class="bg-dark text-center text-white">{{ "Informations sur le détachement" | trans }}</legend>
                         <hr>
                         <div class="row mb-3">
                             <div class="col">{{ form_row(form.typeActeDet) }}</div>
@@ -79,11 +79,11 @@
             </div>
             <button type="submit" class="btn btn-sm btn-success">
                 <i class="fas fa-check"></i>
-                <span class="fw-bolder">Créer le détachement</span>
+                <span class="fw-bolder">{{ "Créer le détachement" | trans }}</span>
             </button>
             <button type="reset" class="btn btn-sm btn-dark">
                 <i class="fa fa-times-circle" aria-hidden="true"></i>
-                <span class="fw-bolder">Annuler le détachement</span>
+                <span class="fw-bolder">{{ "Annuler le détachement" | trans }}</span>
             </button>
         {{ form_end(form) }}
     </div>

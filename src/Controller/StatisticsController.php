@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[IsGranted('ROLE_ADMIN')]
 class StatisticsController extends AbstractController
 {
-    #[Route('/statistics', name: 'app_statistics')]
+    #[Route('/{_locale<%app.supported_locales%>}/statistics', name: 'app_statistics')]
     public function index(Services $statistiques): Response
     {
         // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
@@ -29,7 +29,7 @@ class StatisticsController extends AbstractController
         ]);
     }
 
-    #[Route('/statistics/totalsaryear', name: 'totalsaryear')]
+    #[Route('/{_locale<%app.supported_locales%>}/statistics/totalsaryear', name: 'totalsaryear')]
     public function totalSARByYear(BI $bi, Services $statistiques)
     {
         // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
@@ -42,7 +42,7 @@ class StatisticsController extends AbstractController
         ]);
     }
 
-    #[Route('/statistics/totalsaryearorganisme', name: 'totalsaryearorganisme')]
+    #[Route('/{_locale<%app.supported_locales%>}/statistics/totalsaryearorganisme', name: 'totalsaryearorganisme')]
     public function totalSARByYearByOrganisme(BI $bi, Services $statistiques)
     {
         // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
@@ -56,7 +56,7 @@ class StatisticsController extends AbstractController
     }
 
     # Affiche le total des sommes reversées par trim pour une année donnée
-    #[Route('/statistics/sartrim/{year<\d+>?2022}', name: 'sartrim')]
+    #[Route('/{_locale<%app.supported_locales%>}/statistics/sartrim/{year<\d+>?2022}', name: 'sartrim')]
     public function sarByTrimByOrganisme(Request $request, BI $bi, Services $statistiques, String $year)
     {
         $year = date('Y');
@@ -89,7 +89,7 @@ class StatisticsController extends AbstractController
     }
 
     # les organismes n'ayant pas encore reversé sur l'année en cours
-    #[Route('/statistics/anypayinyear', name: 'anypayinyear')]
+    #[Route('/{_locale<%app.supported_locales%>}/statistics/anypayinyear', name: 'anypayinyear')]
     public function anyPayInYear(BI $bi, Services $statistiques)
     {
         // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
@@ -102,7 +102,7 @@ class StatisticsController extends AbstractController
         ]);
     }
 
-    #[Route('/statistics/neverpay', name: 'neverpay')]
+    #[Route('/{_locale<%app.supported_locales%>}/statistics/neverpay', name: 'neverpay')]
     public function neverPay(BI $bi, Services $statistiques)
     {
         // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
@@ -115,7 +115,7 @@ class StatisticsController extends AbstractController
         ]);
     }
 
-    #[Route('/statistics/nbredetache', name: 'nbredetache')]
+    #[Route('/{_locale<%app.supported_locales%>}/statistics/nbredetache', name: 'nbredetache')]
     public function numberDetacheByOrganisme(BI $bi, Services $statistiques)
     {
         // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
@@ -128,7 +128,7 @@ class StatisticsController extends AbstractController
         ]);
     }
 
-    #[Route('/statistics/newdetachebyyear', name: 'newdetachebyyear')]
+    #[Route('/{_locale<%app.supported_locales%>}/statistics/newdetachebyyear', name: 'newdetachebyyear')]
     public function newDetacheByYear(BI $bi, Services $statistiques)
     {
         // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'

@@ -28,6 +28,7 @@ use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Sasedev\MpdfBundle\Factory\MpdfFactory;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Require ROLE_USER for all the actions of this controller
@@ -36,8 +37,8 @@ use Sasedev\MpdfBundle\Factory\MpdfFactory;
 class AgentController extends AbstractController
 {
     # Enregistrer un nouveau détachement
-    #[Route('/agent', name: 'agent_detache_new')]
-    public function detacher(EntityManagerInterface $manager, Request $request, Services $services,
+    #[Route('/{_locale<%app.supported_locales%>}/agent', name: 'agent_detache_new')]
+    public function detacher(EntityManagerInterface $manager, Request $request, Services $services, TranslatorInterface $translator,
                              OrganismesRepository $organismesRepository, GradeRepository $gradeRepository): Response
     {
         // utilisateur connecté
@@ -103,7 +104,8 @@ class AgentController extends AbstractController
                 $manager->flush();
 
                 // Alerte succès de l'enregistrement d'un nouveau détachement
-                $this->addFlash("success","Le nouveau détachement a été enregistré avec succès !!!");
+                $flash = $translator->trans("Le nouveau détachement a été enregistré avec succès !!!");
+                $this->addFlash("success", $flash);
 
                 return $this->redirectToRoute('agent_detache_list');
             }
@@ -114,9 +116,10 @@ class AgentController extends AbstractController
     }
 
     # Apporter des modifications à un détachement
-    #[Route('/agent/{id}/edit', name: 'agent_detache_edit')]
+    #[Route('/{_locale<%app.supported_locales%>}/agent/{id}/edit', name: 'agent_detache_edit')]
     public function update (EntityManagerInterface $manager, Request $request, OrganismesRepository $organismesRepository,
-                             AgentDetache $detache, GradeRepository $gradeRepository, Services $services): Response
+                             AgentDetache $detache, GradeRepository $gradeRepository, Services $services,
+                            TranslatorInterface $translator): Response
     {
         // utilisateur connecté
         $user = $this->getUser()->getUsername();
@@ -180,7 +183,8 @@ class AgentController extends AbstractController
                 $manager->flush();
 
                 // Alerte succès de la mise à jour du détachement
-                $this->addFlash("warning","Les modifications apportées au détachement ont été enregistrés avec succès !!!");
+                $this->addFlash("warning",
+                                $translator->trans("Les modifications apportées au détachement ont été enregistrés avec succès !!!"));
 
                 return $this->redirectToRoute('agent_detache_list');
             }
@@ -193,7 +197,7 @@ class AgentController extends AbstractController
     }
 
     # Pour afficher la liste des détachés
-    #[Route('/agent/list', name: 'agent_detache_list')]
+    #[Route('/{_locale<%app.supported_locales%>}/agent/list', name: 'agent_detache_list')]
     public function list(EntityManagerInterface $manager, Request $request, AgentDetacheRepository $repos): Response
     {
         if($this->getUser()->getOrganisme()->getSigle() === "MINFI" | $this->isGranted('ROLE_ADMIN'))
@@ -207,7 +211,7 @@ class AgentController extends AbstractController
     }
 
     # Pour afficher la liste des détachés sur une année donnée
-    #[Route('/agent/{year<\d+>?1999}', name: 'agent_detache_year')]
+    #[Route('/{_locale<%app.supported_locales%>}/agent/{year<\d+>?1999}', name: 'agent_detache_year')]
     public function listDetacheYear(String $year, BI $bi, Services $statistiques): Response
     {
         // 'nbUsers', 'nbOrganismes', 'nbAgentsDetaches'
@@ -227,8 +231,9 @@ class AgentController extends AbstractController
     }
 
     # Pour mettre fin au détachement de l'agent dans un organisme
-    #[Route('/agent/findetachement/{id}', name: 'fin_detachement')]
-    public function finDetachement(EntityManagerInterface $manager, Request $request, AgentDetache $agentDetache): Response
+    #[Route('/{_locale<%app.supported_locales%>}/agent/findetachement/{id}', name: 'fin_detachement')]
+    public function finDetachement(EntityManagerInterface $manager, Request $request, AgentDetache $agentDetache,
+                                   TranslatorInterface $translator): Response
     {
         // utilisateur connecté
         $user = $this->getUser()->getUsername();
@@ -270,7 +275,8 @@ class AgentController extends AbstractController
             $manager->flush();
 
             // Alerte succès de l'enregistrement d'un nouveau détachement
-            $this->addFlash("success","La fin de détachement a été enregistrée avec succès !!!");
+            $this->addFlash("success",
+                            $translator->trans("Fin de détachement enregistré avec succès !!!") );
 
             return $this->redirectToRoute('agent_detache_list');
         }
@@ -281,7 +287,7 @@ class AgentController extends AbstractController
     }
 
     # Apporter des modifications à un détachement
-    #[Route('/agent/details/{id<\d+>}', name: 'agent_detache_details')]
+    #[Route('/{_locale<%app.supported_locales%>}/agent/details/{id<\d+>}', name: 'agent_detache_details')]
     public function details (AgentDetache $agentDetache, MinistereRepository $ministereRepository,
                              GradeRepository $gradeRepository, Services $services): Response
     {
@@ -299,7 +305,7 @@ class AgentController extends AbstractController
     }
 
     # Exportation des données vers un fichier pdf
-    #[Route('/agent/pdf/details/{id<\d+>}', name: 'agent_detache_details_pdf')]
+    #[Route('/{_locale<%app.supported_locales%>}/agent/pdf/details/{id<\d+>}', name: 'agent_detache_details_pdf')]
     public function detailsPdf (AgentDetache $agentDetache, MinistereRepository $ministereRepository,
                              GradeRepository $gradeRepository, Services $services, MpdfFactory $mpdfFactory): Response
     {

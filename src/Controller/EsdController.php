@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\Pdf;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Require ROLE_USER for all the actions of this controller
@@ -29,8 +30,9 @@ use Knp\Snappy\Pdf;
 #[IsGranted('ROLE_USER')]
 class EsdController extends AbstractController
 {
-    #[Route('/esd/{id}', name: 'esd_evaluate')]
-    public function index(Services $services, Organismes $organisme, Request $request): Response
+    #[Route('/{_locale<%app.supported_locales%>}/esd/{id}', name: 'esd_evaluate')]
+    public function index(Services $services, Organismes $organisme, Request $request,
+        TranslatorInterface $translator): Response
     {
         // utilisateur connecté
         $user = $this->getUser();
@@ -81,7 +83,7 @@ class EsdController extends AbstractController
                 $id_agent[] = $agents[$i]->getId();
                 $grade_agent[] = $agents[$i]->getGradeDet();
 
-                if($vraiDateFin <= $dateDet)
+                if($vraiDateFin <= $dateDet | ($vraiDateDebut >= $dateFinDet & $dateFinDet > date_create("0001-01-01" )))
                 {
                     $dataEsd = [];
                     $detailsEsdAgent["dateDebut"] = $vraiDateDebut;
@@ -147,7 +149,7 @@ class EsdController extends AbstractController
             //dd($dataSar);
 
             // Alerte succès du calcul de l'ESD
-            $this->addFlash("success","La dette de l'organisme ". $organisme->getSigle() ." a été évaluée avec succès !!!");
+            $this->addFlash("success",$translator->trans("La dette de l'organisme ". $organisme->getSigle() ." a été évaluée avec succès !!!"));
 
             if ($total_reversements == null)
                 $total_reversements = 0;
@@ -173,7 +175,7 @@ class EsdController extends AbstractController
     }
     /** Fin esd_evaluate */
 
-    #[Route('/esd/{id}/{debut}/{fin}/{sar}/{dr}/{rar}', name:'esd_pdf')]
+    #[Route('/{_locale<%app.supported_locales%>}/esd/{id}/{debut}/{fin}/{sar}/{dr}/{rar}', name:'esd_pdf')]
     public function esdOrganismePDF(Organismes $organisme, PDFService $pdf, \DateTime $debut, \DateTime $fin,
         int $sar, int $dr, int $rar, Pdf $snappy)
     {
@@ -204,7 +206,7 @@ class EsdController extends AbstractController
     }
     /** Fin esdOrganismePDF */
 
-    #[Route('/esd/agent/{id}∕{dateDebut}/{dateFin}', name: 'esd_agent_details')]
+    #[Route('/{_locale<%app.supported_locales%>}/esd/agent/{id}∕{dateDebut}/{dateFin}', name: 'esd_agent_details')]
     public function detailsESDAgent(Services $services, AgentDetache $agentDetache, Request $request,
         \DateTime $dateDebut, \DateTime $dateFin): Response
     {
@@ -217,7 +219,7 @@ class EsdController extends AbstractController
         $dateFinDet = $agentDetache->getDateFinDet();
         $totalCotis = $services->getTotalCotisations($agentDetache, $dateDebut, $dateFin);
 
-        if($dateFin <= $dateDet)
+        if($dateFin <= $dateDet | ($dateDebut >= $dateFinDet & $dateFinDet > date_create("0001-01-01" )))
         {
             $detailsEsdAgent["dateDebut"] = $dateDebut;
             $detailsEsdAgent["dateFin"] = $dateFin;
@@ -226,7 +228,7 @@ class EsdController extends AbstractController
             $detailsEsdAgent["partPatronale"] = 0;
             $detailsEsdAgent["sar"] = 0;
             if($gradeDet >= "60000" && $gradeDet < "62000") {
-                $detailsEsdAgent["echelon"] = $echelon;
+                $detailsEsdAgent["echelon"] = $echelonDet;
             } else {
                 $detailsEsdAgent["indice"] = $indiceDet;
             }
@@ -275,7 +277,7 @@ class EsdController extends AbstractController
     /** Fin esd_agent_details */
 
 
-    #[Route('/esd', name: 'esd_orga')]
+    #[Route('/{_locale<%app.supported_locales%>}/esd', name: 'esd_orga')]
     public function listOrganisme(OrganismesRepository $organismesRepository): Response
     {
         if($this->getUser()->getOrganisme()->getSigle() === "MINFI" | $this->isGranted('ROLE_ADMIN'))
@@ -288,7 +290,7 @@ class EsdController extends AbstractController
         ]);
     }
 
-    #[Route('/esdmensuel', name: 'esd_orga_mensuel')]
+    #[Route('/{_locale<%app.supported_locales%>}/esdmensuel', name: 'esd_orga_mensuel')]
     public function listOrganisme2(OrganismesRepository $organismesRepository): Response
     {
         if($this->getUser()->getOrganisme()->getSigle() === "MINFI" | $this->isGranted('ROLE_ADMIN'))
@@ -301,8 +303,9 @@ class EsdController extends AbstractController
         ]);
     }
 
-    #[Route('/esdmensuel/{id}', name: 'reversement_mensuel')]
-    public function reversementMensuel(Services $services, Organismes $organisme, Request $request): Response
+    #[Route('/{_locale<%app.supported_locales%>}/esdmensuel/{id}', name: 'reversement_mensuel')]
+    public function reversementMensuel(Services $services, Organismes $organisme, Request $request,
+                                        TranslatorInterface $translator): Response
     {
         // utilisateur connecté
         $user = $this->getUser();
@@ -334,13 +337,14 @@ class EsdController extends AbstractController
         for ($i = 0; $i < count($agents); $i++){
             $dateIntegration = $agents[$i]->getDateIntegration();
             $dateDet = $agents[$i]->getDateDet();
+            $dateFinDet = $agents[$i]->getDateFinDet();
             $gradeDet = $agents[$i]->getGradeDet();
             $classeDet = $agents[$i]->getClasseDet();
             $echelonDet = $agents[$i]->getEchelonDet();
             $indiceDet = $services->getIndice($gradeDet, $classeDet, $echelonDet);
 
             //Si la date de début est inférieure à la date de détachement, la date de début sera la date de détachement
-            if ($dateDet >= $dateDebut){
+            if ($dateDet >= $dateDebut) {
                 $dateDebut = $dateDet;
             }
 
@@ -348,16 +352,48 @@ class EsdController extends AbstractController
             if($gradeDet >= "60000" && $gradeDet < "62000") {
                 $first_echelon = $services->getFirstEchelon($gradeDet, $echelonDet, $dateIntegration, $dateDebut, $dateDet);
                 // $sar = somme à reverser pour un agent détatché du code du travail
-                $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration, $dateDet);
+                if($dateDebut >= $dateFinDet & $dateFinDet > date_create("0001-01-01" )) {
+                    $sar = [];
+                    $detailsEsdAgent = [];
+                    $detailsEsdAgent["dateDet"] = $dateDet;
+                    $detailsEsdAgent["dateDebut"] = $dateDebut;
+                    $detailsEsdAgent["dateFin"] = $dateFin;
+                    $detailsEsdAgent["indice"] = $first_indice;
+                    $detailsEsdAgent["sb"] = 0;
+                    $detailsEsdAgent["partSalariale"] = 0;
+                    $detailsEsdAgent["partPatronale"] = 0;
+                    $detailsEsdAgent["sar"] = 0;
+                    $sar["0"] = $detailsEsdAgent;
+                } else {
+                    $sar = $services->getSommeAReverserCT($dateDebut, $dateFin, $first_echelon, $gradeDet, $dateIntegration, $dateDet);
+                }
+
                 $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
+
                 // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
                 $id_agent[] = $agents[$i]->getId();
                 $grade_agent[] = $agents[$i]->getGradeDet();
             } else {
                 $first_indice = $services->getFirstIndice($gradeDet, $indiceDet, $dateIntegration, $dateDebut, $dateDet);
                 // $sar = somme à reverser pour un agent détatché fonction
-                $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration, $dateDet);
+                if($dateDebut >= $dateFinDet & $dateFinDet > date_create("0001-01-01" )) {
+                    $sar = [];
+                    $detailsEsdAgent = [];
+                    $detailsEsdAgent["dateDet"] = $dateDet;
+                    $detailsEsdAgent["dateDebut"] = $dateDebut;
+                    $detailsEsdAgent["dateFin"] = $dateFin;
+                    $detailsEsdAgent["indice"] = $first_indice;
+                    $detailsEsdAgent["sb"] = 0;
+                    $detailsEsdAgent["partSalariale"] = 0;
+                    $detailsEsdAgent["partPatronale"] = 0;
+                    $detailsEsdAgent["sar"] = 0;
+                    $sar["0"] = $detailsEsdAgent;
+                } else {
+                    $sar = $services->getSommeAReverserFC($dateDebut, $dateFin, $first_indice, $gradeDet, $dateIntegration, $dateDet);
+                }
+
                 $sar_organisme[$agents[$i]->getNoms() . " (" . $agents[$i]->getMatricule() . ")"] = $sar;
+
                 // on stocke l'ID de l'agent détaché qui va nous aider pour afficher les détails de l'évaluation de son ESD
                 $id_agent[] = $agents[$i]->getId();
                 $grade_agent[] = $agents[$i]->getGradeDet();
@@ -377,7 +413,8 @@ class EsdController extends AbstractController
         }
 
         // Alerte succès de l'enregistrement d'un nouveau détachement
-        $this->addFlash("success","La somme à reverser mensuellement par l'organisme ". $organisme->getSigle() ." a été évaluée avec succès !!!");
+        $this->addFlash("success",
+                $translator->trans("La somme à reverser mensuellement par l'organisme ". $organisme->getSigle() ." a été évaluée avec succès !!!"));
 
         return $this->render('esd/esd_mensuel.html.twig', [
             'dateDebut' => $vraiDateDebut->format('d-m-Y'),

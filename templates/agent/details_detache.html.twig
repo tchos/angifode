@@ -1,19 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails du détachement{% endblock %}
+{% block title %}{{ "Détails du détachement" | trans }}{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="row">
             <div class="col-10">
                 <div class="h4 text-success">
-                    Détails sur le détachement de l'agent {{ agent.noms }} ({{ agent.matricule }}) dans l'organisme {{ agent.organisme.sigle }}
+                    {{ "Détails sur le détachement de l'agent %name% (%matricule%) dans l'organisme %organisme%"
+                        | trans({'%name%': agent.noms, '%matricule%' : agent.matricule, '%organisme%': agent.organisme.sigle}) }}
                 </div>
             </div>
             <div class="col-2 me-auto">
                 <a class="btn btn-dark btn-sm fw-bolder float-end" href="{{ path('agent_detache_details_pdf',{'id': agent.id}) }}">
                     <i class="fa fa-backward" aria-hidden="true"></i>
-                    Exporter en PDF</a>
+                    {{ "Exporter en PDF" | trans }}</a>
             </div>
         </div>
         <hr>
@@ -21,59 +22,59 @@
             <div class="col-6">
                 <table class="table table-striped text-dark">
                     <tr>
-                        <th>Date de naissance</th>
+                        <th>{{ "Date de naissance" | trans }}</th>
                         <td class="text-end">{{ agent.dateNaissance | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                     <tr>
-                        <th>Date d'intégration</th>
+                        <th>{{ "Date d'intégration" | trans }}</th>
                         <td class="text-end">{{ agent.dateIntegration | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                     <tr>
-                        <th>Ministère</th>
+                        <th>{{ "Ministère" | trans }}</th>
                         <td class="text-end">{{ agent.ministere }}</td>
                     </tr>
                     <tr>
-                        <th>Date de détachement</th>
+                        <th>{{ "Date de détachement" | trans }}</th>
                         <td class="text-end">{{ agent.dateDet | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                     <tr>
-                        <th>Nature de l'acte de détachement</th>
+                        <th>{{ "Nature de l'acte de détachement" | trans }}</th>
                         <td class="text-end">{{ agent.typeActeDet }}</td>
                     </tr>
                     <tr>
-                        <th>Références de l'acte de détachement</th>
+                        <th>{{ "Références de l'acte de détachement" | trans }}</th>
                         <td class="text-end">{{ agent.refActeDet }}</td>
                     </tr>
                     <tr>
-                        <th>Date de signature de l'acte de détachement</th>
+                        <th>{{ "Date de signature de l'acte de détachement" | trans }}</th>
                         <td class="text-end">{{ agent.dateActeDet | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                     <tr>
-                        <th>Grade au détachement</th>
+                        <th>{{ "Grade au détachement" | trans }}</th>
                         <td class="text-end">{{ grade.libGrade }}</td>
                     </tr>
                     <tr>
-                        <th>Catégorie Fonction Publique</th>
+                        <th>{{ "Catégorie à la Fonction Publique" | trans }}</th>
                         <td class="text-end">{{ grade.categorie }}</td>
                     </tr>
                     <tr>
-                        <th>Classe au détachement</th>
+                        <th>{{ "Classe au détachement" | trans }}</th>
                         <td class="text-end">{{ agent.classeDet }}</td>
                     </tr>
                     <tr>
-                        <th>Echelon au détachement</th>
+                        <th>{{ "Echelon au détachement" | trans }}</th>
                         <td class="text-end">{{ agent.echelonDet }}</td>
                     </tr>
                     <tr>
-                        <th>Indice au détachement</th>
+                        <th>{{ "Indice au détachement" | trans }}</th>
                         <td class="text-end">{{ indiceDet }}</td>
                     </tr>
                     <tr>
-                        <th>Date prise de service dans l'organisme</th>
+                        <th>{{ "Date de prise de service dans l'organisme" | trans }}</th>
                         <td class="text-end">{{ agent.datePriseService | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                     <tr>
-                        <th>Date fin de détachement dans l'organisme</th>
+                        <th>{{ "Date de fin de détachement dans l'organisme" | trans }}</th>
                         <td class="text-end">{{ agent.dateFinDet | format_datetime('full', 'none', locale='fr') }}</td>
                     </tr>
                 </table>
@@ -81,14 +82,16 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-6 pt-2 text-danger fw-bold">Veuillez apporter des modifications si les informations détaillées ci-dessus ne sont pas exactes.</div>
+            <div class="col-6 pt-2 text-danger fw-bold">
+                {{ "Veuillez apporter des modifications si les informations détaillées ci-dessus ne sont pas exactes." | trans }}
+            </div>
             <div class="col-3"><a class="btn btn-danger fw-bolder" href="{{ path('agent_detache_edit', {'id': agent.id}) }}">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
-                    Apporter des modifications</a>
+                    {{ "Apporter des modifications" | trans }}</a>
             </div>
             <div class="col-3"><a class="btn btn-success fw-bolder" href="{{ path('agent_detache_list') }}">
                     <i class="fa fa-backward" aria-hidden="true"></i>
-                    Retourner à la liste des détachés</a>
+                    {{ "Retourner à la liste des détachés" | trans }}</a>
             </div>
         </div>
     </div>

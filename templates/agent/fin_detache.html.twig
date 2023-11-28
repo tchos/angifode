@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Fin détachement{% endblock %}
+{% block title %}{{ "Fin détachement" | trans }}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('asset/css/angifode.css') }}" />
@@ -8,7 +8,7 @@
 
 {% block body %}
     <div class="container">
-        <div class="h4 text-success">Mettre fin au détachement de {{ detache.noms }} ({{ detache.matricule }})</div>
+        <div class="h4 text-success">{{ "Mettre fin au détachement de" | trans}} {{ detache.noms }} ({{ detache.matricule }})</div>
         {% for message in app.session.flashBag.get('success') %}
             <div class="alert alert-success">{{ message }}</div>
         {% endfor %}
@@ -25,11 +25,11 @@
         <hr>
         <button type="submit" class="btn btn-success btn">
             <i class="fas fa-check"></i>
-            <span class="fw-bolder">Enregistrer la fin de détachement</span>
+            <span class="fw-bolder">{{ "Enregistrer la fin de détachement" | trans }}</span>
         </button>
         <a class="btn btn-dark fw-bolder" href="{{ path('agent_detache_list') }}">
             <i class="fa fa-backward" aria-hidden="true"></i>
-            Retourner à la liste des détachés
+            {{ "Retourner à la liste des détachés" | trans }}
         </a>
         {{ form_end(form) }}
     </div>

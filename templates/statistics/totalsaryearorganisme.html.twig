@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Statistiques: Total des sommes reversées par année{% endblock %}
+{% block title %}{{ "Statistiques: Total des sommes reversées par année" | trans }}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
@@ -9,52 +9,7 @@
 {% block body %}
     <div class="container-fluid my-4">
         <hr>
-        <div class="row">
-            <div class="col">
-                <div class="card bg-primary text-white mb-3 text-center">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fas fa-university fa-3x"></i>
-                            </div>
-                            <div class="col-8">
-                                <h4 class="card-title">{{ stats.nbOrganismes }} organismes parapublics</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="col">
-                    <div class="card bg-success text-white mb-3 text-center">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-4">
-                                    <i class="fas fa-address-book fa-3x"></i>
-                                </div>
-                                <div class="col-8">
-                                    <h4 class="card-title">{{ stats.nbAgentsDetaches }} agents publics détachés</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card bg-dark text-white mb-3 text-center">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fas fa-users fa-3x"></i>
-                            </div>
-                            <div class="col-8">
-                                <h4 class="card-title">{{stats.nbUsers }} utilisateurs inscrits</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% include 'partials/_chiffres.html.twig' with {'stats': stats} %}
         <hr>
     </div>
     <div class="container-fluid">
@@ -63,7 +18,7 @@
                 {% include 'partials/_ulstats.html.twig' %}
             </div>
             <div class="col">
-                <h4>Total des sommes reversées par année</h4>
+                <h4>{{ "Total des sommes reversées par année" | trans }}</h4>
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -71,9 +26,9 @@
                                 <thead>
                                 <tr class="table-primary">
                                     <th class="text-center fw-bolder">ID</th>
-                                    <th class="text-center fw-bolder">ANNEE</th>
-                                    <th class="ps-5 fw-bolder">ORGANISME</th>
-                                    <th class="text-end fw-bolder">TOTAL MONTANT REVERSE (FCFA)</th>
+                                    <th class="text-center fw-bolder">{{ "ANNEE" | trans }}</th>
+                                    <th class="ps-5 fw-bolder">{{ "ORGANISME" | trans }}</th>
+                                    <th class="text-end fw-bolder">{{ "TOTAL MONTANT REVERSE (FCFA)" | trans }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>

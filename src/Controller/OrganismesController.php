@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Require ROLE_USER for all the actions of this controller
@@ -21,8 +22,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[IsGranted('ROLE_ADMIN')]
 class OrganismesController extends AbstractController
 {
-    #[Route('/organisme', name: 'create_organisme')]
-    public function index(EntityManagerInterface $manager, Request $request): Response
+    #[Route('/{_locale<%app.supported_locales%>}/organisme', name: 'create_organisme')]
+    public function index(EntityManagerInterface $manager, Request $request, TranslatorInterface $translator): Response
     {
         // utilisateur connecté
         $user = $this->getUser()->getUsername();
@@ -58,7 +59,7 @@ class OrganismesController extends AbstractController
             $manager->flush();
 
             // Alerte succès de l'enregistrement d'un nouvel organisme
-            $this->addFlash("success", "Organisme créé avec succès !");
+            $this->addFlash("success", $translator->trans("Organisme créé avec succès !"));
 
             return $this->redirectToRoute('organisme_list');
         }
@@ -71,14 +72,15 @@ class OrganismesController extends AbstractController
     /**
      * Permet de modifier les informations sur un organisme
      *
-     * @Route("organisme/{id}/edit", name="organisme_edit")
+     * @Route("/{_locale<%app.supported_locales%>}/organisme/{id}/edit", name="organisme_edit")
      *
      * @param EntityManagerInterface $manager
      * @param Request $request
      * @param Organismes $organisme
      * @return Response
      */
-    public function edit(EntityManagerInterface $manager, Request $request, Organismes $organisme): Response
+    public function edit(EntityManagerInterface $manager, Request $request, Organismes $organisme,
+                            TranslatorInterface $translator): Response
     {
         // utilisateur connecté
         $user = $this->getUser()->getUsername();
@@ -109,7 +111,7 @@ class OrganismesController extends AbstractController
             $manager->flush();
 
             // Alerte succès de la mise à jour des informations sur un organisme
-            $this->addFlash("warning", "Organisme modifié avec succès !");
+            $this->addFlash("warning", $translator->trans("Organisme modifié avec succès !"));
 
             return $this->redirectToRoute('organisme_list');
         }
@@ -123,7 +125,7 @@ class OrganismesController extends AbstractController
     /**
      * Permet de lister les organismes existant
      *
-     * @Route("organisme/list", name="organisme_list")
+     * @Route("/{_locale<%app.supported_locales%>}/organisme/list", name="organisme_list")
      *
      * @param EntityManagerInterface $manager
      * @param Request $request

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page non trouvée !!!{% endblock %}
+{% block title %}{{ "Page non trouvée" | trans }} !!!{% endblock %}
 {% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ asset('asset/css/angifode.css') }}"/>{% endblock %}
 {% block body %}
     <style>
@@ -18,10 +18,10 @@
     <main id="div1" class="container mt-5">
         <section class="row">
             <div class="col-6">
-                <h3>ANGIFODE: Page non trouvée !!!</h3>
-                <p>La page à laquelle vous tentez d'accéder n'a pas été trouvée.</p>
+                <h3>ANGIFODE: {{ "Page non trouvée" | trans }} !!!</h3>
+                <p>{{ "La page à laquelle vous tentez d'accéder n'a pas été trouvée." | trans }}</p>
                 <a href="{{ path('app_home') }}" title="Retournez à la page d'acceuil" class="btn btn-success">
-                    <span class="fw-bolder">Cliquez ici pour retrouner à la page d'accueil.</span>
+                    <span class="fw-bolder">{{ "Cliquez ici pour retrouner à la page d'accueil." | trans }}</span>
                 </a>
             </div>
         </section>

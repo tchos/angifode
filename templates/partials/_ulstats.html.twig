@@ -1,30 +1,30 @@
 <ul class="list-group">
     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-        Total des sommes réversées par année
-        <a href="{{ path('totalsaryear') }}" class="btn btn-sm btn-primary d-block row fw-bolder fw-bolder">Voir</a>
+        {{ "Total des sommes réversées par année" | trans }}
+        <a href="{{ path('totalsaryear') }}" class="btn btn-sm btn-primary d-block row fw-bolder fw-bolder">{{ "Voir" | trans }}</a>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-        Total des sommes réversées par structure sur une année donnée
-        <a href="{{ path('totalsaryearorganisme') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
+        {{ "Total des sommes réversées par structure sur une année donnée" | trans }}
+        <a href="{{ path('totalsaryearorganisme') }}" class="btn btn-sm btn-primary d-block row fw-bolder">{{ "Voir" | trans }}</a>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-        Total des sommes réversées par structure et par trimestre sur une année donnée
-        <a href="{{ path('sartrim', {'year': 2022}) }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
+        {{ "Total des sommes réversées par structure et par trimestre sur une année donnée" | trans }}
+        <a href="{{ path('sartrim', {'year': 2022}) }}" class="btn btn-sm btn-primary d-block row fw-bolder">{{ "Voir" | trans }}</a>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-        Liste des structures qui n'ont pas encore reversé sur l'année en cours
-        <a href="{{ path('anypayinyear') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
+        {{ "Liste des structures qui n'ont pas encore reversé sur l'année en cours" | trans }}
+        <a href="{{ path('anypayinyear') }}" class="btn btn-sm btn-primary d-block row fw-bolder">{{ "Voir" | trans }}</a>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-        Liste des structures qui n'ont jamais réversé
-        <a href="{{ path('neverpay') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
+        {{ "Liste des structures qui n'ont jamais réversé" | trans }}
+        <a href="{{ path('neverpay') }}" class="btn btn-sm btn-primary d-block row fw-bolder">{{ "Voir" | trans }}</a>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-        Effectif des agents détachés par structure
-        <a href="{{ path('nbredetache') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
+        {{ "Effectif des agents détachés par structure" | trans }}
+        <a href="{{ path('nbredetache') }}" class="btn btn-sm btn-primary d-block row fw-bolder">{{ "Voir" | trans }}</a>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center fw-bolder">
-        Effectif des nouveaux détachés par année
-        <a href="{{ path('newdetachebyyear') }}" class="btn btn-sm btn-primary d-block row fw-bolder">Voir</a>
+        {{ "Effectif des nouveaux détachés par année" | trans }}
+        <a href="{{ path('newdetachebyyear') }}" class="btn btn-sm btn-primary d-block row fw-bolder">{{ "Voir" | trans }}</a>
     </li>
 </ul>

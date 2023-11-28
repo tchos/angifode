@@ -15,15 +15,22 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ReversementType extends AbstractType
 {
+    public $translator;
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $organismes = $options['organisme'];
         $builder
             ->add('typeRev',ChoiceType::class,[
-                'label' => "Moyen de réversement",
+                'label' => $this->translator->trans("Moyen de reversement"),
                 'choices' => [
                     'CHEQUE' => 'CHEQUE',
                     'VIREMENT' => 'VIREMENT',
@@ -31,51 +38,51 @@ class ReversementType extends AbstractType
                 ]
             ])
             ->add('refTitre', TextType::class,[
-                'label' => 'Références du moyen de reversement',
+                'label' => $this->translator->trans('Référence du moyen de reversement'),
                 'attr' => [
                     'placeholder' => 'Ex: 123456789'
                 ]
             ])
             ->add('dateTitre', DateType::class,[
-                'label' => 'Date du versement',
+                'label' => $this->translator->trans('Date de reversement'),
                 'widget' => 'single_text'
             ])
             ->add('montantRev', MoneyType::class,[
-                'label' => 'Montant du reversement',
+                'label' => $this->translator->trans('Montant du reversement'),
                 'currency' => 'CFA',
                 'attr' => [
                     'placeholder' => 'Ex: 10000000'
                 ]
             ])
             ->add('dateDebRev', DateType::class,[
-                'label' => 'Date de début de réversement',
+                'label' => $this->translator->trans('Date de début de période de reversement'),
                 'widget' => 'single_text'
             ])
             ->add('dateFinRev', DateType::class,[
-                'label' => 'Date de fin de réversement',
+                'label' => $this->translator->trans('Date de fin de période de reversement'),
                 'widget' => 'single_text'
             ])
             ->add('preuveRev', FileType::class,[
-                'label' => 'Téléverser une copie scannée de la preuve de réversement',
+                'label' => $this->translator->trans('Téléverser une copie scannée de la preuve de reversement au format PDF'),
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '10m',
-                        'maxSizeMessage' => 'La taille maximale dépasse 10 Mo',
+                        'maxSizeMessage' => $this->translator->trans('La taille maximale dépasse 10 Mo'),
                         'mimeTypes' => [
                             'application/pdf',
                             'application/x-pdf',
                         ],
-                        'mimeTypesMessage' => 'Merci de téléverser le fichier au format pdf',
+                        'mimeTypesMessage' => $this->translator->trans('Merci de téléverser le fichier au format pdf'),
                     ]),
                     new Assert\NotBlank([
-                        'message' => 'Vous devez impérativement insérer une preuve de réversement'
+                        'message' => $this->translator->trans('Vous devez impérativement insérer une preuve de réversement')
                     ])
                 ],
             ])
             ->add('organisme', EntityType::class,[
-                'label' => 'Organisme ayant effectué le reversement',
+                'label' => $this->translator->trans('Organisme ayant effectué le reversement'),
                 'class' => Organismes::class,
                 'choices' => $organismes
             ])

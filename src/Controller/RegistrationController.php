@@ -23,7 +23,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('ROLE_ADMIN')]
 class RegistrationController extends AbstractController
 {
-    #[Route('/register', name: 'app_register')]
+    #[Route('/{_locale<%app.supported_locales%>}/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator,
                              UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
@@ -68,8 +68,9 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/user/{id}/edit', name: 'user_edit')]
-    public function edit(EntityManagerInterface $manager, Request $request, User $user): Response
+    #[Route('/{_locale<%app.supported_locales%>}/user/{id}/edit', name: 'user_edit')]
+    public function edit(EntityManagerInterface $manager, Request $request, User $user,
+                            TranslatorInterface $translator): Response
     {
         // pour l'historisation de l'action
         $history = new Historique();
@@ -98,7 +99,7 @@ class RegistrationController extends AbstractController
             $manager->flush();
 
             // Alerte succès de la mise à jour des informations sur un organisme
-            $this->addFlash("warning", "Utilisateur modifié avec succès !");
+            $this->addFlash("warning", $translator->trans("Utilisateur modifié avec succès !"));
 
             return $this->redirectToRoute('user_list');
         }
@@ -109,13 +110,42 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    #[Route('/{_locale<%app.supported_locales%>}/user/{id}/resetpassword', name: 'user_resetpassword')]
+    public function resetPassword(EntityManagerInterface $entityManager, Request $request, User $user,
+                                    UserPasswordHasherInterface $userPasswordHasher, TranslatorInterface $translator): Response
+    {
+        // pour l'historisation de l'action
+        $history = new Historique();
+
+        $plainPassword = 'gomez';
+        $hashedPassword = $userPasswordHasher->hashPassword($user, $plainPassword);
+        $user->setPassword($hashedPassword);
+
+        $history->setTypeAction("RESET")
+            ->setAuteur($this->getUser()->getUsername())
+            ->setNature("PASSWORD")
+            ->setClef($user->getUsername())
+            ->setDateAction(new \DateTime())
+        ;
+
+        $entityManager->persist($user);
+        $entityManager->persist($history);
+        $entityManager->flush();
+
+        // Alerte succès de la mise à jour des informations sur un organisme
+        $this->addFlash("warning", $translator->trans("Le mot de passe a été réinitialisé avec succès !"));
+
+        return $this->redirectToRoute('user_list');
+
+    }
+
     /**
      * Liste des utilisateurs de l'application ANGIFODE
      * @param EntityManagerInterface $manager
      * @param UserRepository $repos
      * @return Response
      */
-    #[Route('/user/list', name: 'user_list')]
+    #[Route('/{_locale<%app.supported_locales%>}/user/list', name: 'user_list')]
     public function lister_user(EntityManagerInterface $manager,UserRepository $repos):Response
     {
         $listeUsers = $repos->findAll();

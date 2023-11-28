@@ -14,51 +14,57 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DetachementTypeOld extends AbstractType
 {
+    public $translator;
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $organismes = $options['organisme'];
         $builder
             ->add('matricule', TextType::class,[
-                'label' => 'Matricule de l\'agent',
+                'label' => $this->translator->trans('Matricule de l\'agent'),
                 'attr' => [
                     'placeholder' => 'Ex: 999999Z/A000000'
                 ]
             ])
             ->add('noms', TextType::class,[
-                'label' => 'Noms de l\'agent',
+                'label' => $this->translator->trans('Noms de l\'agent'),
                 'attr' => [
                     'placeholder' => 'Ex: TUKO BENEDICTO PACIFICO',
                 ]
             ])
             ->add('telephone', TelType::class,[
-                'label' => 'Téléphone de l\'agent',
+                'label' => $this->translator->trans('Téléphone de l\'agent'),
                 'attr' => [
                     'placeholder' => 'Ex: 677777777'
                 ]
             ])
             ->add('dateNaissance', DateType::class, [
-                'label' => 'Date de naissance',
+                'label' => $this->translator->trans('Date de naissance'),
                 'widget' => 'single_text',
                 ])
             ->add('dateIntegration', DateType::class, [
-                'label' => 'Date d\'intégration',
+                'label' => $this->translator->trans('Date d\'intégration'),
                 'widget' => 'single_text'])
             ->add('dateDernierAvct', DateType::class, [
-                'label' => 'Date dernier avancement',
+                'label' => $this->translator->trans('Date dernier avancement'),
                 'widget' => 'single_text',
             ])
             ->add('refActeInt', TextType::class,[
-                'label' => 'Référence de l\'acte d\'intégration',
+                'label' => $this->translator->trans('Référence de l\'acte d\'intégration'),
                 'attr' => [
                     'placeholder' => 'Ex: 000/SPM/INT',
                     'style' => 'text-transform:uppercase'
                 ]
             ])
             ->add('typeActeDet', ChoiceType::class,[
-                'label' => 'Type acte',
+                'label' => $this->translator->trans('Type acte'),
                 'choices' => [
                     'Arrêté' => 'ARRETE',
                     'Décret' => 'DECRET',
@@ -67,7 +73,7 @@ class DetachementTypeOld extends AbstractType
                 ]
             ])
             ->add('dateActeDet', DateType::class, [
-                'label' => 'Date de signature',
+                'label' => $this->translator->trans('Date de signature'),
                 'widget' => 'single_text'])
             ->add('ministere', ChoiceType::class, [
                 'label' => 'Ministère',
@@ -96,6 +102,9 @@ class DetachementTypeOld extends AbstractType
                     'MINESEC' => '25',
                     'MINJEC' => '26',
                     'MINEPDED' => '28',
+                    'MINMIDT' => '29',
+                    'MINADER' => '30',
+                    'MINEPIA' => '31',
                     'MINEE' => '32',
                     'MINFOF' => '33',
                     'MINEFOP' => '35',

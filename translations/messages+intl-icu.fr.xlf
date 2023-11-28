@@ -1009,7 +1009,7 @@
         <source>Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année %year%</source>
         <target>Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année %year%</target>
       </trans-unit>
-      <trans-unit id="sMHmN" resname="Statistiques: Total des sommes reversées par année">
+      <trans-unit id="sMHm__N" resname="Statistiques: Total des sommes reversées par année">
         <source>Statistiques: Total des sommes reversées par année</source>
         <target>Statistiques: Total des sommes reversées par année</target>
       </trans-unit>
@@ -1028,6 +1028,158 @@
       <trans-unit id="kCcP6BR" resname="TOTAL MONTANT REVERSE (FCFA)">
         <source>TOTAL MONTANT REVERSE (FCFA)</source>
         <target>TOTAL MONTANT REVERSE (FCFA)</target>
+      </trans-unit>
+      <trans-unit id="rVdSVpj" resname="Cotisation totale">
+        <source>Cotisation totale</source>
+        <target>__Cotisation totale</target>
+      </trans-unit>
+      <trans-unit id="m9HWBDI" resname="Agents détachés">
+        <source>Agents détachés</source>
+        <target>__Agents détachés</target>
+      </trans-unit>
+      <trans-unit id="NOz5IRW" resname="Matricule de l'agent">
+        <source>Matricule de l'agent</source>
+        <target>__Matricule de l'agent</target>
+      </trans-unit>
+      <trans-unit id="q7X4xMb" resname="Noms de l'agent">
+        <source>Noms de l'agent</source>
+        <target>__Noms de l'agent</target>
+      </trans-unit>
+      <trans-unit id="7ajMG4G" resname="Téléphone de l'agent">
+        <source>Téléphone de l'agent</source>
+        <target>__Téléphone de l'agent</target>
+      </trans-unit>
+      <trans-unit id="vi9b1r." resname="Date dernier avancement">
+        <source>Date dernier avancement</source>
+        <target>__Date dernier avancement</target>
+      </trans-unit>
+      <trans-unit id="SOuWWwh" resname="Référence de l'acte d'intégration">
+        <source>Référence de l'acte d'intégration</source>
+        <target>__Référence de l'acte d'intégration</target>
+      </trans-unit>
+      <trans-unit id="SpYszSB" resname="Type acte">
+        <source>Type acte</source>
+        <target>__Type acte</target>
+      </trans-unit>
+      <trans-unit id="6eGvfDd" resname="Date de signature">
+        <source>Date de signature</source>
+        <target>__Date de signature</target>
+      </trans-unit>
+      <trans-unit id="5jLQzT2" resname="Date de fin détachement">
+        <source>Date de fin détachement</source>
+        <target>__Date de fin détachement</target>
+      </trans-unit>
+      <trans-unit id="QD.t_5." resname="Motif du fin de détachement">
+        <source>Motif du fin de détachement</source>
+        <target>__Motif du fin de détachement</target>
+      </trans-unit>
+      <trans-unit id="U7K034e" resname="La structure a mis fin au détachement">
+        <source>La structure a mis fin au détachement</source>
+        <target>__La structure a mis fin au détachement</target>
+      </trans-unit>
+      <trans-unit id="phrEscl" resname="Retour au ministère d'origine">
+        <source>Retour au ministère d'origine</source>
+        <target>__Retour au ministère d'origine</target>
+      </trans-unit>
+      <trans-unit id="e1MBCVb" resname="L\agent détaché a été nommé à un autre poste">
+        <source>L\agent détaché a été nommé à un autre poste</source>
+        <target>__L\agent détaché a été nommé à un autre poste</target>
+      </trans-unit>
+      <trans-unit id="zH8R971" resname="L'agent détaché a été remplacé à son poste suite à une nommination">
+        <source>L'agent détaché a été remplacé à son poste suite à une nommination</source>
+        <target>__L'agent détaché a été remplacé à son poste suite à une nommination</target>
+      </trans-unit>
+      <trans-unit id="6zu.mVt" resname="Appelé à faire valoir ses droit à la retraite">
+        <source>Appelé à faire valoir ses droit à la retraite</source>
+        <target>__Appelé à faire valoir ses droit à la retraite</target>
+      </trans-unit>
+      <trans-unit id="AHIKX2q" resname="Décès de l'agent détaché">
+        <source>Décès de l'agent détaché</source>
+        <target>__Décès de l'agent détaché</target>
+      </trans-unit>
+      <trans-unit id="FlDfNqL" resname="Nom de l'organisme">
+        <source>Nom de l'organisme</source>
+        <target>__Nom de l'organisme</target>
+      </trans-unit>
+      <trans-unit id="z1pwkhk" resname="Sigle de l'organisme">
+        <source>Sigle de l'organisme</source>
+        <target>__Sigle de l'organisme</target>
+      </trans-unit>
+      <trans-unit id="a8AnvA8" resname="Siège de l'organisme">
+        <source>Siège de l'organisme</source>
+        <target>__Siège de l'organisme</target>
+      </trans-unit>
+      <trans-unit id="S5aB09I" resname="Boîte postale de l'organisme">
+        <source>Boîte postale de l'organisme</source>
+        <target>__Boîte postale de l'organisme</target>
+      </trans-unit>
+      <trans-unit id="V9jSgKj" resname="Fax de l'organisme">
+        <source>Fax de l'organisme</source>
+        <target>__Fax de l'organisme</target>
+      </trans-unit>
+      <trans-unit id="a5NzaxV" resname="Email de l'organisme">
+        <source>Email de l'organisme</source>
+        <target>__Email de l'organisme</target>
+      </trans-unit>
+      <trans-unit id="Mj5DtvM" resname="Téléhone 1">
+        <source>Téléhone 1</source>
+        <target>__Téléhone 1</target>
+      </trans-unit>
+      <trans-unit id="HPIEea_" resname="Téléhone 2">
+        <source>Téléhone 2</source>
+        <target>__Téléhone 2</target>
+      </trans-unit>
+      <trans-unit id="C5sIQWx" resname="Ville où se trouve l'organisme">
+        <source>Ville où se trouve l'organisme</source>
+        <target>__Ville où se trouve l'organisme</target>
+      </trans-unit>
+      <trans-unit id="gMCoqGh" resname="Localité de l'organisme">
+        <source>Localité de l'organisme</source>
+        <target>__Localité de l'organisme</target>
+      </trans-unit>
+      <trans-unit id="ezhbQeu" resname="Site web de l'organisme">
+        <source>Site web de l'organisme</source>
+        <target>__Site web de l'organisme</target>
+      </trans-unit>
+      <trans-unit id="lAXn8tB" resname="Les deux mots de passe ne correspondent pas.">
+        <source>Les deux mots de passe ne correspondent pas.</source>
+        <target>__Les deux mots de passe ne correspondent pas.</target>
+      </trans-unit>
+      <trans-unit id="XfrGi6s" resname="Confimer le mot de passe">
+        <source>Confimer le mot de passe</source>
+        <target>__Confimer le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="qhUVJr6" resname="Entrer le nom complet de l'utilisateur">
+        <source>Entrer le nom complet de l'utilisateur</source>
+        <target>__Entrer le nom complet de l'utilisateur</target>
+      </trans-unit>
+      <trans-unit id="J_Ew7HK" resname="Rôle de l'utilisateur">
+        <source>Rôle de l'utilisateur</source>
+        <target>__Rôle de l'utilisateur</target>
+      </trans-unit>
+      <trans-unit id="0KrKy0n" resname="Activer le compte">
+        <source>Activer le compte</source>
+        <target>__Activer le compte</target>
+      </trans-unit>
+      <trans-unit id="622k0wI" resname="Organisme de détachement">
+        <source>Organisme de détachement</source>
+        <target>__Organisme de détachement</target>
+      </trans-unit>
+      <trans-unit id="muPX9TI" resname="Année de reversement">
+        <source>Année de reversement</source>
+        <target>__Année de reversement</target>
+      </trans-unit>
+      <trans-unit id="nW30HcD" resname="Saisissez votre ancien mot de passe">
+        <source>Saisissez votre ancien mot de passe</source>
+        <target>__Saisissez votre ancien mot de passe</target>
+      </trans-unit>
+      <trans-unit id="RviMkTC" resname="Entrez votre nouveau mot de passe">
+        <source>Entrez votre nouveau mot de passe</source>
+        <target>__Entrez votre nouveau mot de passe</target>
+      </trans-unit>
+      <trans-unit id="Xv6yVdv" resname="Confimez votre nouveau mot de passe">
+        <source>Confimez votre nouveau mot de passe</source>
+        <target>__Confimez votre nouveau mot de passe</target>
       </trans-unit>
     </body>
   </file>

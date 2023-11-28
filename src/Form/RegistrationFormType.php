@@ -18,37 +18,43 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationFormType extends AbstractType
 {
+    public $translator;
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('username', TextType::class,[
-                'label' => 'Nom d\'utilisateur',
+                'label' => $this->translator->trans('Nom d\'utilisateur'),
                 'attr' => [
                     'placeholder' => 'Ex: benedicto'
                 ]
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Les deux mots de passe ne correspondent pas.',
+                'invalid_message' => $this->translator->trans('Les deux mots de passe ne correspondent pas.'),
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confimer le mot de passe'],
+                'first_options'  => ['label' => $this->translator->trans('Mot de passe')],
+                'second_options' => ['label' => $this->translator->trans('Confimer le mot de passe')],
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password']
                     ])
             ->add('fullName', TextType::class,[
-                'label' => 'Entrer le nom complet de l\'utilisateur',
+                'label' => $this->translator->trans('Entrer le nom complet de l\'utilisateur'),
                 'attr' => [
                     'placeholder' => "TUKO BENEDICTO PACIFICO"
                 ]
             ])
             ->add('roles', ChoiceType::class,[
                 'required' => true,
-                'label' => 'Rôle de l\'utilisateur',
+                'label' => $this->translator->trans('Rôle de l\'utilisateur'),
                 'choices' => [
                     'Organisme' => 'ROLE_USER',
                     'Administrateur' => 'ROLE_ADMIN',
@@ -58,7 +64,7 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('activation', ChoiceType::class,[
-                'label' => 'Activer le compte',
+                'label' => $this->translator->trans('Activer le compte'),
                 'choices' => [
                     'Oui' => true,
                     'Non    ' => false,
@@ -71,7 +77,7 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('organisme', EntityType::class,[
-                'label' => 'Organisme de détachement',
+                'label' => $this->translator->trans('Organisme de détachement'),
                 'class' => Organismes::class
             ])
         ;

@@ -105,7 +105,7 @@
                                         dans l'organisme {{ detache.organisme.sigle }} ?</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <a class="btn btn-danger" href="{{ path('agent_detache_edit', {'id': detache.id}) }}">{{ "Oui, Supprimer"| trans }}</a>
+                                    <a class="btn btn-danger" href="{{ path('delete_detache', {'id': detache.id}) }}">{{ "Oui, Supprimer"| trans }}</a>
                                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{ "Non, Annuler" | trans }}</button>
                                 </div>
                             </div>

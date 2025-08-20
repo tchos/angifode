@@ -18,14 +18,7 @@
             {{ "Résultat de l'évaluation de la dette sociale de l'organisme" | trans }}
             <span class="badge bg-dark fw-bolder">{{ organisme.sigle }}</span>
             {% set rar = (total_sar_organisme - total_reversement) %}
-            <a href="{{ path('esd_pdf',
-                {'id': organisme.id,
-                    'debut': dateDebut,
-                    'fin': dateFin,
-                    'sar': total_sar_organisme,
-                    'dr': total_reversement,
-                    'rar': rar })
-                }}" class="badge bg-primary fw-bolder float-end text-decoration-none">
+            <a href="#" class="badge bg-primary fw-bolder float-end text-decoration-none">
                 {{ "Télécharger ESD" | trans }}
             </a>
         </div>
@@ -88,7 +81,7 @@
                         {% set i = 0 %}
                         {% for agent, sar in dataSar %}
                             <tr>
-                                <td>{{ i }}</td>
+                                <td>{{ i + 1 }}</td>
                                 <td>{{ agent }}</td>
                                 <td class="text-end pe-5">
                                     {{ sar | number_format(0,'.',' ') }}

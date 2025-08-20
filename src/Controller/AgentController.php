@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\AgentDetache;
+use App\Entity\Decisions;
 use App\Entity\FinDetachement;
 use App\Entity\Historique;
 use App\Entity\Organismes;
@@ -81,7 +82,7 @@ class AgentController extends AbstractController
             if ( $age < 17 )
             {
                 // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
-                $form->get('dateIntegration')->addError(new FormError("Le détaché ne peut être intégré avant 17 ans !"));
+                $form->get('dateIntegration')->addError(new FormError("Le détaché #[IsGranted('ROLE_USER')]ne peut être intégré avant 17 ans !"));
             } elseif ($codeGrade == null) {
                 // $form->get('gradeDet') me donne accès au champ gradeDet du formulaire
                 $form->get('gradeDet')->addError(new FormError("Le grade renseigné n'existe pas en base de données !"));
@@ -372,5 +373,28 @@ class AgentController extends AbstractController
         return new PdfResponse($knpSnapyPdf->getOutputFromHtml($html),
             '/home/tchos/Documents/projets/symfony/angifode/public/asset/snappy/file.pdf');
          */
+    }
+
+    # Supprimer un détachement en BD
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/{_locale<%app.supported_locales%>}/agent/{id}/delete', name: 'delete_detache')]
+    public function delete(Request $request, AgentDetache $agentDetache, EntityManagerInterface $entityManager,
+                           TranslatorInterface $translator): Response
+    {
+        $history = new Historique();
+
+        $history->setTypeAction("DELETE")
+            ->setAuteur($this->getUser()->getUsername())
+            ->setNature("SUPPRESION DETACHEMENT")
+            ->setClef($agentDetache->getMatricule().' - '.$agentDetache->getOrganisme()->getSigle())
+            ->setDateAction(new \DateTime())
+        ;
+
+        $entityManager->persist($history);
+        $entityManager->remove($agentDetache);
+        $entityManager->flush();
+        $this->addFlash("success", $translator->trans("Suppression du détachement effectué avec avec succès !!!") );
+
+        return $this->redirectToRoute('agent_detache_list');
     }
 }

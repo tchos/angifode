@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guide Utilisateur{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="h5 text-success">
+            {{ "Télécharger le manuel d'utilisation de l'application ANGIFODE via le lien ci-contre" | trans }}
+            <a href="{{ asset('asset/images/GUIDE_UTILISATEUR_ANGIFODE_V3.pdf') }}" class="badge bg-success fw-bolder float-end text-decoration-none">
+                {{ "MANUEL ANGIFODE" | trans }}
+            </a>
+        </div>
+        <hr>
+
+        {% if is_granted('ROLE_ADMIN') %}
+        <div class="h5 text-warning mt-5">
+            {{ "Télécharger le manuel d'administration de l'application ANGIFODE via le lien ci-contre" | trans }}
+            <a href="{{ asset('asset/images/GUIDE_ADMINISTRATEUR_ANGIFODE_2023.pdf') }}" class="badge bg-warning fw-bolder float-end text-decoration-none">
+                {{ "MANUEL ANGIFODE" | trans }}
+            </a>
+        </div>
+        <hr>
+        {% endif %}
+    </div>
+{% endblock %}

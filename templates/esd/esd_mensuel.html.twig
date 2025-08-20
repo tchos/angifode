@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ "Montant à reverser sur la période allant du  {{ dateDebut }} au {{ dateFin }}" | trans }}{% endblock %}
+{% block title %}
+    {{ "Montant à reverser sur la période allant du  %dateDebut% au %dateFin%"
+    | trans({'%dateDebut%': dateDebut, '%dateFin%': dateFin}) }}
+{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/dataTables.bootstrap4.min.css') }}">
@@ -58,7 +61,7 @@
                         {% set i = 0 %}
                         {% for agent, sar in dataSar %}
                             <tr>
-                                <td>{{ i }}</td>
+                                <td>{{ i + 1 }}</td>
                                 <td>{{ agent }}</td>
                                 <td class="text-end pe-5">
                                     {% if grade_agent[i] >= "60000" and grade_agent[i] < "62000" %}

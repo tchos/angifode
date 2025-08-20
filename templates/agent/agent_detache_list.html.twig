@@ -23,7 +23,8 @@
                                 <th>{{ "MATRICULE" | trans }}</th>
                                 <th>{{ "NOMS" | trans }}</th>
                                 <th>{{ "ORGANISME" | trans }}</th>
-                                <th>{{ "DETACHEMENT" | trans }}</th>
+                                <th class="text-center">{{ "DEBUT" | trans }}</th>
+                                <th class="text-center">{{ "FIN" | trans }}</th>
                                 <th class="text-end">{{ "ACTION" | trans }}</th>
                             </tr>
                         </thead>
@@ -35,12 +36,15 @@
                                 <td>{{ agentDetache.matricule }}</td>
                                 <td>{{ agentDetache.noms }}</td>
                                 <td>{{ agentDetache.organisme.sigle }}</td>
-                                <td>{{ agentDetache.dateDet | format_datetime('full', 'none', locale='fr') }}</td>
+                                <td class="text-center">{{ agentDetache.dateDet | date('Y-m-d') }}</td>
+                                <td class="text-center">
+                                    {{ agentDetache.dateFinDet and agentDetache.dateFinDet | date('Y') != '-0001' ? agentDetache.dateFinDet | date('Y-m-d') : '-' }}
+                                </td>
                                 <td class="text-end">
                                     <a title="Modifier le détachement" href="{{ path('agent_detache_edit', {'id': agentDetache.id}) }}">
                                         <i class="fas fa-edit"></i><span class="ms-4"></span></a>
                                     {% if is_granted('ROLE_ADMIN') %}
-                                    <a title="Supprimer le détachement" href="{{ path('agent_detache_edit', {'id': agentDetache.id}) }}">
+                                    <a title="Supprimer le détachement" href="{{ path('delete_detache', {'id': agentDetache.id}) }}">
                                         <i class="fa fa-window-close text-danger"></i><span class="ms-4"></span></a>
                                     {% endif %}
                                     <a title="Détails du détachement" href="{{ path('agent_detache_details', {'id': agentDetache.id}) }}">

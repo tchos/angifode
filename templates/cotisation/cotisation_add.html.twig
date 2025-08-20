@@ -9,7 +9,7 @@
 {% block body %}
     <div class="container">
         <div class="h4 text-success">
-            {{ "Enregistrement d'une cotisation liée au reversement N° %reversement%" | trans({'reversement': reversement.refTitre})}}
+            {{ "Enregistrement d'une cotisation liée au reversement N° %reversement%" | trans({'%reversement%': reversement.refTitre})}}
         </div>
         {% for message in app.session.flashBag.get('success') %}
             <div class="alert alert-success">{{ message }}</div>

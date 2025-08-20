@@ -19,19 +19,19 @@
       </trans-unit>
       <trans-unit id="01jxWkr" resname="Organismes">
         <source>Organismes</source>
-        <target>Institutions</target>
+        <target>Entities</target>
       </trans-unit>
       <trans-unit id="PdMJvnI" resname="Reversements">
         <source>Reversements</source>
-        <target>Outpayments</target>
+        <target>Remittance</target>
       </trans-unit>
       <trans-unit id="DgXEvsA" resname="Nouveau reversement">
         <source>Nouveau reversement</source>
-        <target>New outpayment</target>
+        <target>New remittance</target>
       </trans-unit>
       <trans-unit id="Wg8PXLf" resname="Liste des reversements">
         <source>Liste des reversements</source>
-        <target>Liste of outpayments	</target>
+        <target>Liste of remittances</target>
       </trans-unit>
       <trans-unit id="G.RNBOI" resname="ESD">
         <source>ESD</source>
@@ -43,7 +43,7 @@
       </trans-unit>
       <trans-unit id="KTDGp16" resname="Evaluation du reversement mensuel">
         <source>Evaluation du reversement mensuel</source>
-        <target>Estimation of monthly payout</target>
+        <target>Estimation of monthly remittance</target>
       </trans-unit>
       <trans-unit id="I9OTi17" resname="Utilisateurs">
         <source>Utilisateurs</source>
@@ -91,143 +91,143 @@
       </trans-unit>
       <trans-unit id="QHheZlO" resname="Les modifications apportées au détachement ont été enregistrés avec succès !!!">
         <source>Les modifications apportées au détachement ont été enregistrés avec succès !!!</source>
-        <target>Les modifications apportées au détachement ont été enregistrés avec succès !!!</target>
+        <target>Changes to the secondment have been successfully registered !!!</target>
       </trans-unit>
       <trans-unit id="gWBjTCj" resname="Fin de détachement enregistré avec succès !!!">
         <source>Fin de détachement enregistré avec succès !!!</source>
-        <target>Fin de détachement enregistré avec succès !!!</target>
+        <target>End of secondment successfully registered !!!</target>
       </trans-unit>
       <trans-unit id="eF7p6Qu" resname="La cotisation a été enregistrée avec succès !!!">
         <source>La cotisation a été enregistrée avec succès !!!</source>
-        <target>La cotisation a été enregistrée avec succès !!!</target>
+        <target>The contribution has been successfully registered !!!</target>
       </trans-unit>
       <trans-unit id="uRQcKnP" resname="La somme des cotisations dépasse de ">
         <source>La somme des cotisations dépasse de </source>
-        <target>La somme des cotisations dépasse de </target>
+        <target>The amount of contributions exceeds by </target>
       </trans-unit>
       <trans-unit id="LKkucy4" resname="La dette de l'organisme ">
         <source>La dette de l'organisme </source>
-        <target>La dette de l'organisme </target>
+        <target>The body's debt </target>
       </trans-unit>
       <trans-unit id="XOdutmC" resname="La somme à reverser mensuellement par l'organisme ">
         <source>La somme à reverser mensuellement par l'organisme </source>
-        <target>La somme à reverser mensuellement par l'organisme </target>
+        <target>Monthly remittances par l'organisme </target>
       </trans-unit>
       <trans-unit id="T50uZfJ" resname="Organisme créé avec succès !">
         <source>Organisme créé avec succès !</source>
-        <target>Organisme créé avec succès !</target>
+        <target>Body Successfully created !</target>
       </trans-unit>
       <trans-unit id="5zsunM2" resname="Organisme modifié avec succès !">
         <source>Organisme modifié avec succès !</source>
-        <target>Organisme modifié avec succès !</target>
+        <target>Body Successfully edited !</target>
       </trans-unit>
       <trans-unit id="j54HwL9" resname="Utilisateur modifié avec succès !">
         <source>Utilisateur modifié avec succès !</source>
-        <target>Utilisateur modifié avec succès !</target>
+        <target>User Successfully edited !</target>
       </trans-unit>
       <trans-unit id="yfCwDxs" resname="Le mot de passe a été réinitialisé avec succès !">
         <source>Le mot de passe a été réinitialisé avec succès !</source>
-        <target>Le mot de passe a été réinitialisé avec succès !</target>
+        <target>The password has been successfully reset !</target>
       </trans-unit>
       <trans-unit id="GyR0Aq4" resname="Les modifications apportées au reversement ont été enregistrées avec succès !!!">
         <source>Les modifications apportées au reversement ont été enregistrées avec succès !!!</source>
-        <target>Les modifications apportées au reversement ont été enregistrées avec succès !!!</target>
+        <target>Changes on this remittance has been successfully recorded !!!</target>
       </trans-unit>
       <trans-unit id="bYpJSfB" resname="Mot de passe modifié avec succès !!!">
         <source>Mot de passe modifié avec succès !!!</source>
-        <target>Mot de passe modifié avec succès !!!</target>
+        <target>Password successfully changed !!!</target>
       </trans-unit>
       <trans-unit id="2Y_T7jy" resname="Votre ancien mot de passe n'est pas valide !!!">
         <source>Votre ancien mot de passe n'est pas valide !!!</source>
-        <target>Votre ancien mot de passe n'est pas valide !!!</target>
+        <target>Your previous password is invalid !!!</target>
       </trans-unit>
       <trans-unit id="6ABUKzv" resname="Saisie d'un nouveau détachement">
         <source>Saisie d'un nouveau détachement</source>
-        <target>Saisie d'un nouveau détachement</target>
+        <target>Enter a new secondment</target>
       </trans-unit>
       <trans-unit id="M4WXv_h" resname="Informations sur l'agent">
         <source>Informations sur l'agent</source>
-        <target>Informations sur l'agent</target>
+        <target>Employee's details</target>
       </trans-unit>
       <trans-unit id="c8Vedr2" resname="Informations sur le détachement">
         <source>Informations sur le détachement</source>
-        <target>Informations sur le détachement</target>
+        <target>Information on secondment</target>
       </trans-unit>
       <trans-unit id="GnLXFVU" resname="Créer le détachement">
         <source>Créer le détachement</source>
-        <target>Créer le détachement</target>
+        <target>Create secondment</target>
       </trans-unit>
       <trans-unit id="e3DhzDa" resname="Annuler le détachement">
         <source>Annuler le détachement</source>
-        <target>Annuler le détachement</target>
+        <target>Cancel secondment</target>
       </trans-unit>
       <trans-unit id="h_0T20i" resname="Apporter des modifications sur le détachement de l'agent">
         <source>Apporter des modifications sur le détachement de l'agent</source>
-        <target>Apporter des modifications sur le détachement de l'agent</target>
+        <target>Make changes to the employee's secondment</target>
       </trans-unit>
       <trans-unit id="RZUfasG" resname="Enregistrer les modifications">
         <source>Enregistrer les modifications</source>
-        <target>Enregistrer les modifications</target>
+        <target>Save changes</target>
       </trans-unit>
       <trans-unit id="Z_s05fR" resname="Annuler les modifications">
         <source>Annuler les modifications</source>
-        <target>Annuler les modifications</target>
+        <target>Undo changes</target>
       </trans-unit>
       <trans-unit id="AKxZ7xT" resname="Supprimer ce détachement">
         <source>Supprimer ce détachement</source>
-        <target>Supprimer ce détachement</target>
+        <target>Delete this secondment</target>
       </trans-unit>
       <trans-unit id="i3zyQJ4" resname="Suppression d'un détachement !">
         <source>Suppression d'un détachement !</source>
-        <target>Suppression d'un détachement !</target>
+        <target>Deletion of a secondment !</target>
       </trans-unit>
       <trans-unit id="sblIL48" resname="Oui, Supprimer">
         <source>Oui, Supprimer</source>
-        <target>Oui, Supprimer</target>
+        <target>Yes, Delete</target>
       </trans-unit>
       <trans-unit id="Fxc5eL1" resname="Non, Annuler">
         <source>Non, Annuler</source>
-        <target>Non, Annuler</target>
+        <target>No, Cancel</target>
       </trans-unit>
       <trans-unit id="psmZfno" resname="organismes parapublics">
         <source>organismes parapublics</source>
-        <target>organismes parapublics</target>
+        <target>semi-public bodies</target>
       </trans-unit>
       <trans-unit id="ktPYCV7" resname="agents publics détachés">
         <source>agents publics détachés</source>
-        <target>agents publics détachés</target>
+        <target>seconded public employees</target>
       </trans-unit>
       <trans-unit id="DSDuJU5" resname="utilisateurs inscrits">
         <source>utilisateurs inscrits</source>
-        <target>utilisateurs inscrits</target>
+        <target>registered users</target>
       </trans-unit>
       <trans-unit id="dCHUzXQ" resname="Total des sommes réversées par année">
         <source>Total des sommes réversées par année</source>
-        <target>Total des sommes réversées par année</target>
+        <target>Total remittance per Year</target>
       </trans-unit>
       <trans-unit id="Sh6EfsR" resname="Voir">
         <source>Voir</source>
-        <target>Voir</target>
+        <target>Go to</target>
       </trans-unit>
       <trans-unit id="Cqa6_uw" resname="Total des sommes réversées par structure sur une année donnée">
         <source>Total des sommes réversées par structure sur une année donnée</source>
-        <target>Total des sommes réversées par structure sur une année donnée</target>
+        <target>Total remittance per entity in a given year</target>
       </trans-unit>
       <trans-unit id="MyAimEI" resname="Total des sommes réversées par structure et par trimestre sur une année donnée">
         <source>Total des sommes réversées par structure et par trimestre sur une année donnée</source>
-        <target>Total des sommes réversées par structure et par trimestre sur une année donnée</target>
+        <target>Total remittance  per entity and per term over a given year</target>
       </trans-unit>
       <trans-unit id="16fNTHc" resname="Liste des structures qui n'ont pas encore reversé sur l'année en cours">
         <source>Liste des structures qui n'ont pas encore reversé sur l'année en cours</source>
-        <target>Liste des structures qui n'ont pas encore reversé sur l'année en cours</target>
+        <target>List of entities that have not yet remitted for the current year</target>
       </trans-unit>
       <trans-unit id="IY_GVc2" resname="Liste des structures qui n'ont jamais réversé">
         <source>Liste des structures qui n'ont jamais réversé</source>
-        <target>Liste des structures qui n'ont jamais réversé</target>
+        <target>Liste of entities that have never pay</target>
       </trans-unit>
       <trans-unit id="xrEYv83" resname="Effectif des agents détachés par structure">
         <source>Effectif des agents détachés par structure</source>
-        <target>Effectif des agents détachés par structure</target>
+        <target>Number of seconded employees per structure</target>
       </trans-unit>
       <trans-unit id="ZKiFy45" resname="NOMS">
         <source>NOMS</source>
@@ -251,11 +251,11 @@
       </trans-unit>
       <trans-unit id="ZwljoDS" resname="ORGANISME">
         <source>ORGANISME</source>
-        <target>INSTITUTION</target>
+        <target>ENTITY</target>
       </trans-unit>
-      <trans-unit id="tENXEhl" resname="Détails sur le détachement de l'agent %name% (%matricule%) dans l'organisme %organisme%">
-        <source>Détails sur le détachement de l'agent %name% (%matricule%) dans l'organisme %organisme%</source>
-        <target>Détails sur le détachement de l'agent %name% (%matricule%) dans l'organisme %organisme%</target>
+      <trans-unit id="irCYX1J" resname="Détails sur le détachement de l'agent {name} ({matricule}) dans l'organisme {organisme}">
+        <source>Détails sur le détachement de l'agent {name} ({matricule}) dans l'organisme {organisme}</source>
+        <target>Détails sur le détachement de l'agent {name} ({matricule}) dans l'organisme {organisme}</target>
       </trans-unit>
       <trans-unit id="ihyVVr_" resname="Exporter en PDF">
         <source>Exporter en PDF</source>
@@ -287,7 +287,7 @@
       </trans-unit>
       <trans-unit id="GDRME6w" resname="Date de signature de l'acte de détachement">
         <source>Date de signature de l'acte de détachement</source>
-        <target>Date de signature de l'acte de détachement</target>
+        <target>Date of signature of secondment instrument</target>
       </trans-unit>
       <trans-unit id="LvF5c4T" resname="Grade au détachement">
         <source>Grade au détachement</source>
@@ -299,75 +299,75 @@
       </trans-unit>
       <trans-unit id="3us_iPE" resname="Classe au détachement">
         <source>Classe au détachement</source>
-        <target>Classe au détachement</target>
+        <target>Class</target>
       </trans-unit>
       <trans-unit id="BhkcNDz" resname="Echelon au détachement">
         <source>Echelon au détachement</source>
-        <target>Echelon au détachement</target>
+        <target>Incremental Position</target>
       </trans-unit>
       <trans-unit id="unZcEYe" resname="Indice au détachement">
         <source>Indice au détachement</source>
-        <target>Indice au détachement</target>
+        <target>Index</target>
       </trans-unit>
       <trans-unit id="U6qZ82D" resname="Date prise de service dans l'organisme">
         <source>Date prise de service dans l'organisme</source>
-        <target>Date prise de service dans l'organisme</target>
+        <target>Date of Assumption of duty</target>
       </trans-unit>
       <trans-unit id="66TnHzI" resname="Date fin de détachement dans l'organisme">
         <source>Date fin de détachement dans l'organisme</source>
-        <target>Date fin de détachement dans l'organisme</target>
+        <target>End date of secondment</target>
       </trans-unit>
       <trans-unit id="Xk7m6Vk" resname="Veuillez apporter des modifications si les informations détaillées ci-dessus ne sont pas exactes.">
         <source>Veuillez apporter des modifications si les informations détaillées ci-dessus ne sont pas exactes.</source>
-        <target>Veuillez apporter des modifications si les informations détaillées ci-dessus ne sont pas exactes.</target>
+        <target>Please make changes if the information detailed above is not correct.</target>
       </trans-unit>
       <trans-unit id="4K8cdot" resname="Apporter des modifications">
         <source>Apporter des modifications</source>
-        <target>Apporter des modifications</target>
+        <target>Make changes</target>
       </trans-unit>
       <trans-unit id="tWI7hYv" resname="Retourner à la liste des détachés">
         <source>Retourner à la liste des détachés</source>
-        <target>Retourner à la liste des détachés</target>
+        <target>Return to the list of employees</target>
       </trans-unit>
       <trans-unit id="dtQwdRy" resname="Mettre fin au détachement de">
         <source>Mettre fin au détachement de</source>
-        <target>Mettre fin au détachement de</target>
+        <target>End the secondment of</target>
       </trans-unit>
       <trans-unit id="YEL3hGG" resname="Enregistrer la fin de détachement">
         <source>Enregistrer la fin de détachement</source>
-        <target>Enregistrer la fin de détachement</target>
+        <target>Save End of Secondment</target>
       </trans-unit>
       <trans-unit id="kVcG7p7" resname="Page non trouvée">
         <source>Page non trouvée</source>
-        <target>Page non trouvée</target>
+        <target>Page not found</target>
       </trans-unit>
       <trans-unit id="tqsb39r" resname="ANGIFODE: page restreinte à certains utilisateurs">
         <source>ANGIFODE: page restreinte à certains utilisateurs</source>
-        <target>ANGIFODE: page restreinte à certains utilisateurs</target>
+        <target>ANGIFODE: page restricted to specific users</target>
       </trans-unit>
       <trans-unit id="me2R1vF" resname="Vous n'avez pas les droits requis pour accéder à cette page.">
         <source>Vous n'avez pas les droits requis pour accéder à cette page.</source>
-        <target>Vous n'avez pas les droits requis pour accéder à cette page.</target>
+        <target>You do not have authorization to access this page.</target>
       </trans-unit>
       <trans-unit id="PhCuNqy" resname="Cliquez ici pour retrouner à la page d'accueil.">
         <source>Cliquez ici pour retrouner à la page d'accueil.</source>
-        <target>Cliquez ici pour retrouner à la page d'accueil.</target>
+        <target>Click here to return to the home page.</target>
       </trans-unit>
       <trans-unit id="P.7enM9" resname="La page à laquelle vous tentez d'accéder n'a pas été trouvée.">
         <source>La page à laquelle vous tentez d'accéder n'a pas été trouvée.</source>
-        <target>La page à laquelle vous tentez d'accéder n'a pas été trouvée.</target>
+        <target>The page you are trying to access was not found.</target>
       </trans-unit>
       <trans-unit id="ZZdjq1_" resname="Nouvelle cotisation">
         <source>Nouvelle cotisation</source>
-        <target>Nouvelle cotisation</target>
+        <target>New contribution</target>
       </trans-unit>
-      <trans-unit id="sCLrcJA" resname="Enregistrement d'une cotisation liée au reversement N° %reversement%">
-        <source>Enregistrement d'une cotisation liée au reversement N° %reversement%</source>
-        <target>Enregistrement d'une cotisation liée au reversement N° %reversement%</target>
+      <trans-unit id="DuhrRFf" resname="Enregistrement d'une cotisation liée au reversement N° {reversement}">
+        <source>Enregistrement d'une cotisation liée au reversement N° {reversement}</source>
+        <target>Enregistrement d'une cotisation liée au reversement N° {reversement}</target>
       </trans-unit>
       <trans-unit id="gqE._fm" resname="MONTANT">
         <source>MONTANT</source>
-        <target>MONTANT</target>
+        <target>AMOUNT</target>
       </trans-unit>
       <trans-unit id="Yt5i9Oo" resname="GAP">
         <source>GAP</source>
@@ -375,19 +375,19 @@
       </trans-unit>
       <trans-unit id="cdx0hz4" resname="Enregistrer">
         <source>Enregistrer</source>
-        <target>Enregistrer</target>
+        <target>Save</target>
       </trans-unit>
       <trans-unit id="rk8PyPt" resname="ETAT NOMMINATIF DES COTISATION">
         <source>ETAT NOMMINATIF DES COTISATION</source>
-        <target>ETAT NOMMINATIF DES COTISATION</target>
+        <target>LISTING OF CONTRIBUTORS</target>
       </trans-unit>
       <trans-unit id="FgaIZrf" resname="MATRICULE">
         <source>MATRICULE</source>
-        <target>MATRICULE</target>
+        <target>SERVICE NUMBER</target>
       </trans-unit>
       <trans-unit id="6ARXAmn" resname="TOTAL COTISE">
         <source>TOTAL COTISE</source>
-        <target>TOTAL COTISE</target>
+        <target>TOTAL CONTRIBUTED</target>
       </trans-unit>
       <trans-unit id="NYBGnQb" resname="ACTION">
         <source>ACTION</source>
@@ -395,101 +395,98 @@
       </trans-unit>
       <trans-unit id="7Z8kn3u" resname="Modifier les infos sur une cotisation">
         <source>Modifier les infos sur une cotisation</source>
-        <target>Modifier les infos sur une cotisation</target>
+        <target>Change contribution information</target>
       </trans-unit>
-      <trans-unit id="wbck12Z" resname="Modification du montant de la cotisation de %agent% liée au reversement N° %reversement%">
-        <source>Modification du montant de la cotisation de %agent% liée au reversement N° %reversement%</source>
-        <target>Modification du montant de la cotisation de %agent% liée au reversement N° %reversement%</target>
+      <trans-unit id="NZRQyGk" resname="Modification du montant de la cotisation de {agent} liée au reversement N° {reversement}">
+        <source>Modification du montant de la cotisation de {agent} liée au reversement N° {reversement}</source>
+        <target>Modification du montant de la cotisation de {agent} liée au reversement N° {reversement}</target>
       </trans-unit>
       <trans-unit id="hr9ycpi" resname="PERIODE">
         <source>PERIODE</source>
-        <target>PERIODE</target>
+        <target>PERIOD</target>
       </trans-unit>
       <trans-unit id="d2I.7c_" resname="Supprimer la cotisation">
         <source>Supprimer la cotisation</source>
-        <target>Supprimer la cotisation</target>
+        <target>Delete the contribution</target>
       </trans-unit>
       <trans-unit id="_gJLFUo" resname="Suppression d'une cotisation">
         <source>Suppression d'une cotisation</source>
-        <target>Suppression d'une cotisation</target>
+        <target>Deletion of a contribution</target>
       </trans-unit>
-      <trans-unit id="ujEOOJr" resname="Voulez-vous réellement supprimer cette cotisation de %name% (%matricule%) ?">
-        <source>Voulez-vous réellement supprimer cette cotisation de %name% (%matricule%) ?</source>
-        <target>Voulez-vous réellement supprimer cette cotisation de %name% (%matricule%) ?</target>
+      <trans-unit id="hwHVEi9" resname="Voulez-vous réellement supprimer cette cotisation de {name} ({matricule}) ?">
+        <source>Voulez-vous réellement supprimer cette cotisation de {name} ({matricule}) ?</source>
+        <target>Voulez-vous réellement supprimer cette cotisation de {name} ({matricule}) ?</target>
       </trans-unit>
       <trans-unit id="noeKhwI" resname="Cette application permet de faire un suivi rigoureux des reversements des cotisations pour pension du personnel&#10;            de l'Etat en détachement et de maitriser la dette sociale des organismes publics et parapublics.">
         <source>Cette application permet de faire un suivi rigoureux des reversements des cotisations pour pension du personnel
             de l'Etat en détachement et de maitriser la dette sociale des organismes publics et parapublics.</source>
-        <target>Cette application permet de faire un suivi rigoureux des reversements des cotisations pour pension du personnel
-            de l'Etat en détachement et de maitriser la dette sociale des organismes publics et parapublics.</target>
+        <target>This application permits us to closely monitor the remittance of pension contributions of seconded personnel and to master the social debt of public and semi-public bodies.</target>
       </trans-unit>
       <trans-unit id="0y0btTQ" resname="Module de gestion des agents publics">
         <source>Module de gestion des agents publics</source>
-        <target>Module de gestion des agents publics</target>
+        <target>Employee management module</target>
       </trans-unit>
       <trans-unit id="qiw.OFP" resname="Gérez les agents publics en détachement.">
         <source>Gérez les agents publics en détachement.</source>
-        <target>Gérez les agents publics en détachement.</target>
+        <target>Manage public employees on secondment.</target>
       </trans-unit>
       <trans-unit id="Ebv4czL" resname="Créer un nouveau détachement, listez, modifiez ou supprimez les infos sur les agents publics en détachment dans votre organisme.">
         <source>Créer un nouveau détachement, listez, modifiez ou supprimez les infos sur les agents publics en détachment dans votre organisme.</source>
-        <target>Créer un nouveau détachement, listez, modifiez ou supprimez les infos sur les agents publics en détachment dans votre organisme.</target>
+        <target>Create a new secondment, list, modify or delete information about public employees on secondment in your establishment.</target>
       </trans-unit>
       <trans-unit id="9iHsVU0" resname="Nouveau détachement !">
         <source>Nouveau détachement !</source>
-        <target>Nouveau détachement !</target>
+        <target>New secondment !</target>
       </trans-unit>
       <trans-unit id="XlOFDmS" resname="Module de gestion des organismes">
         <source>Module de gestion des organismes</source>
-        <target>Module de gestion des organismes</target>
+        <target>Entities Management Module</target>
       </trans-unit>
       <trans-unit id="vye4ard" resname="Gérez les organismes parapublics.">
         <source>Gérez les organismes parapublics.</source>
-        <target>Gérez les organismes parapublics.</target>
+        <target>Manage semi-public bodies.</target>
       </trans-unit>
       <trans-unit id="8H7PU.l" resname="Créez un nouvel organisme, listez, modifiez ou supprimez les infos sur les organismes parapublics existants au Cameroun.">
         <source>Créez un nouvel organisme, listez, modifiez ou supprimez les infos sur les organismes parapublics existants au Cameroun.</source>
-        <target>Créez un nouvel organisme, listez, modifiez ou supprimez les infos sur les organismes parapublics existants au Cameroun.</target>
+        <target>Create a new Entities, list, modify or delete information on existing semi-public bodies in Cameroon.</target>
       </trans-unit>
       <trans-unit id="lgx2nZn" resname="Nouvel organisme !">
         <source>Nouvel organisme !</source>
-        <target>Nouvel organisme !</target>
+        <target>New Entity !</target>
       </trans-unit>
       <trans-unit id="cpCTPf9" resname="Modules de gestion des reversements">
         <source>Modules de gestion des reversements</source>
-        <target>Modules de gestion des reversements</target>
+        <target>Remittance management modules</target>
       </trans-unit>
       <trans-unit id="DSlZyol" resname="Gérez les reversements effectués par les organismes.">
         <source>Gérez les reversements effectués par les organismes.</source>
-        <target>Gérez les reversements effectués par les organismes.</target>
+        <target>Manage remittances carried out by the entities.</target>
       </trans-unit>
       <trans-unit id="h284DiX" resname="Enregistrez, listez, modifiez et supprimez tous les reversements effectués au sein&#10;                        d'un organisme pour les cotisations pour pensions des agents publics détachés.">
         <source>Enregistrez, listez, modifiez et supprimez tous les reversements effectués au sein
                         d'un organisme pour les cotisations pour pensions des agents publics détachés.</source>
-        <target>Enregistrez, listez, modifiez et supprimez tous les reversements effectués au sein
-                        d'un organisme pour les cotisations pour pensions des agents publics détachés.</target>
+        <target>Register, list, modify and delete all remittance made by the body for the contribution of pension for seconded public employees.</target>
       </trans-unit>
       <trans-unit id="7Ipk9N7" resname="Nouveau reversement !">
         <source>Nouveau reversement !</source>
-        <target>Nouveau reversement !</target>
+        <target>New remittance !</target>
       </trans-unit>
       <trans-unit id="CnhCqjz" resname="Modules de gestion de la dette sociale.">
         <source>Modules de gestion de la dette sociale.</source>
-        <target>Modules de gestion de la dette sociale.</target>
+        <target>Social debt management modules.</target>
       </trans-unit>
       <trans-unit id="0bqRqA4" resname="Gérez les états des sommes dues sur les cotisations.">
         <source>Gérez les états des sommes dues sur les cotisations.</source>
-        <target>Gérez les états des sommes dues sur les cotisations.</target>
+        <target>Manage statements of amounts owed on contributions.</target>
       </trans-unit>
       <trans-unit id="BEUYq_U" resname="Evaluez la dette de votre organisme sur les cotisations pour pension non encore&#10;                        reversées pour le compte des agents publics détachés au sein de votre structure.">
         <source>Evaluez la dette de votre organisme sur les cotisations pour pension non encore
                         reversées pour le compte des agents publics détachés au sein de votre structure.</source>
-        <target>Evaluez la dette de votre organisme sur les cotisations pour pension non encore
-                        reversées pour le compte des agents publics détachés au sein de votre structure.</target>
+        <target>Estimate your indebtedness for outstanding pension contributions on behalf of public employees seconded to your institution.</target>
       </trans-unit>
       <trans-unit id="09fLqSg" resname="Evaluer la dette sociale !">
         <source>Evaluer la dette sociale !</source>
-        <target>Evaluer la dette sociale !</target>
+        <target>Estimate the social debt !</target>
       </trans-unit>
       <trans-unit id="x1.vxNo" resname="Date début de période">
         <source>Date début de période</source>
@@ -529,15 +526,15 @@
       </trans-unit>
       <trans-unit id="TlY.Vz1" resname="La taille maximale dépasse 10 Mo">
         <source>La taille maximale dépasse 10 Mo</source>
-        <target>La taille maximale dépasse 10 Mo</target>
+        <target>Maximum size exceeds 10 Mo</target>
       </trans-unit>
       <trans-unit id="XyKpdCf" resname="Merci de téléverser le fichier au format pdf">
         <source>Merci de téléverser le fichier au format pdf</source>
-        <target>Merci de téléverser le fichier au format pdf</target>
+        <target>Please upload the file in pdf format</target>
       </trans-unit>
       <trans-unit id="STdC8eI" resname="Vous devez impérativement insérer une preuve de réversement">
         <source>Vous devez impérativement insérer une preuve de réversement</source>
-        <target>Vous devez impérativement insérer une preuve de réversement</target>
+        <target>You must insert a proof of payment.</target>
       </trans-unit>
       <trans-unit id="nGwRZ0A" resname="Organisme ayant effectué le reversement">
         <source>Organisme ayant effectué le reversement</source>
@@ -639,9 +636,9 @@
         <source>Somme à reverser</source>
         <target>Somme à reverser</target>
       </trans-unit>
-      <trans-unit id="vS4dcTF" resname="Montant à reverser sur la période allant du  {{ dateDebut }} au {{ dateFin }}">
-        <source>Montant à reverser sur la période allant du  {{ dateDebut }} au {{ dateFin }}</source>
-        <target>Montant à reverser sur la période allant du  {{ dateDebut }} au {{ dateFin }}</target>
+      <trans-unit id="UGlhEUv" resname="Montant à reverser sur la période allant du  {dateDebut} au {dateFin}">
+        <source>Montant à reverser sur la période allant du  {dateDebut} au {dateFin}</source>
+        <target>Montant à reverser sur la période allant du  {dateDebut} au {dateFin}</target>
       </trans-unit>
       <trans-unit id="cETa5pX" resname="Evaluation de la somme à reverser mensuellement pour l'organisme">
         <source>Evaluation de la somme à reverser mensuellement pour l'organisme</source>
@@ -675,17 +672,13 @@
         <source>Période d'évaluation</source>
         <target>Période d'évaluation</target>
       </trans-unit>
-      <trans-unit id="tErQNon" resname="Dette sociale de %organisme%: Renseignez les dates de début et de fin de période">
-        <source>Dette sociale de %organisme%: Renseignez les dates de début et de fin de période</source>
-        <target>Dette sociale de %organisme%: Renseignez les dates de début et de fin de période</target>
+      <trans-unit id="u6ol5Cu" resname="Dette sociale de {organisme}: Renseignez les dates de début et de fin de période">
+        <source>Dette sociale de {organisme}: Renseignez les dates de début et de fin de période</source>
+        <target>Dette sociale de {organisme}: Renseignez les dates de début et de fin de période</target>
       </trans-unit>
       <trans-unit id="ZE3wqk9" resname="Evaluer la dette">
         <source>Evaluer la dette</source>
         <target>Evaluer la dette</target>
-      </trans-unit>
-      <trans-unit id="bmddjL6" resname="Montant à reverser sur la période allant du  %dateDebut% au %dateFin%">
-        <source>Montant à reverser sur la période allant du  %dateDebut% au %dateFin%</source>
-        <target>Montant à reverser sur la période allant du  %dateDebut% au %dateFin%</target>
       </trans-unit>
       <trans-unit id="qptobr5" resname="Résultat de l'évaluation de la dette sociale de l'organisme">
         <source>Résultat de l'évaluation de la dette sociale de l'organisme</source>
@@ -709,7 +702,7 @@
       </trans-unit>
       <trans-unit id="dS1hWCO" resname="Liste des organismes">
         <source>Liste des organismes</source>
-        <target>Liste des organismes</target>
+        <target>List of entities</target>
       </trans-unit>
       <trans-unit id="PWZ_K42" resname="Choisissez l'organisme pour lequel vous souhaitez évaluer la dette sociale (ESD)">
         <source>Choisissez l'organisme pour lequel vous souhaitez évaluer la dette sociale (ESD)</source>
@@ -730,44 +723,41 @@
       <trans-unit id="Estfz8." resname="Cette application permet de faire un suivi rigoureux des reversements des cotisations pour pension du personnel de&#10;                l'Etat en détachement et de maîtriser la dette sociale des organismes publics et parapublics.">
         <source>Cette application permet de faire un suivi rigoureux des reversements des cotisations pour pension du personnel de
                 l'Etat en détachement et de maîtriser la dette sociale des organismes publics et parapublics.</source>
-        <target>Cette application permet de faire un suivi rigoureux des reversements des cotisations pour pension du personnel de
-                l'Etat en détachement et de maîtriser la dette sociale des organismes publics et parapublics.</target>
+        <target>This application permits us to closely monitor the remittance of pension contributions of seconded personnel and to master the social debt of public and semi-public bodies.</target>
       </trans-unit>
       <trans-unit id="LC6DVEw" resname="Gérer les agents publics en détachement.">
         <source>Gérer les agents publics en détachement.</source>
-        <target>Gérer les agents publics en détachement.</target>
+        <target>Manage public employees on secondment.</target>
       </trans-unit>
       <trans-unit id="PCMr3aB" resname="Créer un nouveau détachement, listez, modifiez ou supprimez les informations sur les agents publics en détachment dans votre organisme.">
         <source>Créer un nouveau détachement, listez, modifiez ou supprimez les informations sur les agents publics en détachment dans votre organisme.</source>
-        <target>Créer un nouveau détachement, listez, modifiez ou supprimez les informations sur les agents publics en détachment dans votre organisme.</target>
+        <target>Create a new secondment, list, modify or delete information about public employees on secondment in your establishment.</target>
       </trans-unit>
       <trans-unit id="LPkAqE7" resname="Gérer les organismes parapublics.">
         <source>Gérer les organismes parapublics.</source>
-        <target>Gérer les organismes parapublics.</target>
+        <target>Manage semi-public bodies.</target>
       </trans-unit>
       <trans-unit id="9Q433U6" resname="Créer un nouvel organisme, lister, modifier ou supprimer les informations&#10;                                sur les organismes publics et parapublics existants au Cameroun.">
         <source>Créer un nouvel organisme, lister, modifier ou supprimer les informations
                                 sur les organismes publics et parapublics existants au Cameroun.</source>
-        <target>Créer un nouvel organisme, lister, modifier ou supprimer les informations
-                                sur les organismes publics et parapublics existants au Cameroun.</target>
+        <target>Create a new bodies, list, modify or delete information on existing semi-public bodies in Cameroon.</target>
       </trans-unit>
       <trans-unit id="5eaI_9G" resname="Gérer les reversements effectués par les organismes.">
         <source>Gérer les reversements effectués par les organismes.</source>
-        <target>Gérer les reversements effectués par les organismes.</target>
+        <target>Remittance management modules.</target>
       </trans-unit>
       <trans-unit id="1znT1Gu" resname="Enregistrer, lister, modifier et supprimer tous les reversements effectués au sein d'un organisme pour les&#10;                            cotisations pour pension des agents publics en position de détachement.">
         <source>Enregistrer, lister, modifier et supprimer tous les reversements effectués au sein d'un organisme pour les
                             cotisations pour pension des agents publics en position de détachement.</source>
-        <target>Enregistrer, lister, modifier et supprimer tous les reversements effectués au sein d'un organisme pour les
-                            cotisations pour pension des agents publics en position de détachement.</target>
+        <target>Register, list, modify and delete all remittance made by the body for the contribution of pension for seconded public employees.</target>
       </trans-unit>
       <trans-unit id="SzolEwK" resname="Nouvel organisme">
         <source>Nouvel organisme</source>
-        <target>Nouvel organisme</target>
+        <target>New entity</target>
       </trans-unit>
       <trans-unit id="87b8Uwp" resname="Création d'un organisme de détachement">
         <source>Création d'un organisme de détachement</source>
-        <target>Création d'un organisme de détachement</target>
+        <target>Creation of a secondment body</target>
       </trans-unit>
       <trans-unit id="474ghKA" resname="Valider la création de l'organisme">
         <source>Valider la création de l'organisme</source>
@@ -799,7 +789,7 @@
       </trans-unit>
       <trans-unit id="sE2efWz" resname="LISTE DES ORGANISMES">
         <source>LISTE DES ORGANISMES</source>
-        <target>LISTE DES ORGANISMES</target>
+        <target>LIST OF ENTITIES</target>
       </trans-unit>
       <trans-unit id="6pCRGUq" resname="VILLE">
         <source>VILLE</source>
@@ -853,13 +843,13 @@
         <source>DERNIERE CONNEXION</source>
         <target>DERNIERE CONNEXION</target>
       </trans-unit>
-      <trans-unit id="48dupuG" resname="Modifier le profil de %user%">
-        <source>Modifier le profil de %user%</source>
-        <target>Modifier le profil de %user%</target>
+      <trans-unit id=".UP9Bby" resname="Modifier le profil de {user}">
+        <source>Modifier le profil de {user}</source>
+        <target>Modifier le profil de {user}</target>
       </trans-unit>
-      <trans-unit id="k0yCUum" resname="Réinitialiser le mode de passe de %user%">
-        <source>Réinitialiser le mode de passe de %user%</source>
-        <target>Réinitialiser le mode de passe de %user%</target>
+      <trans-unit id="rNa8evb" resname="Réinitialiser le mode de passe de {user}">
+        <source>Réinitialiser le mode de passe de {user}</source>
+        <target>Réinitialiser le mode de passe de {user}</target>
       </trans-unit>
       <trans-unit id="a0ly.YI" resname="Enregistrer un nouveau reversement">
         <source>Enregistrer un nouveau reversement</source>
@@ -877,9 +867,9 @@
         <source>Modifier reversement</source>
         <target>Modifier reversement</target>
       </trans-unit>
-      <trans-unit id="yhhDJAG" resname="Modification du reversement du %typeRev% N° %refTitre% de %organisme% }}">
-        <source>Modification du reversement du %typeRev% N° %refTitre% de %organisme% }}</source>
-        <target>Modification du reversement du %typeRev% N° %refTitre% de %organisme% }}</target>
+      <trans-unit id="x8VJJ5Q" resname="Modification du reversement du {typeRev} N° {refTitre} de {organisme}">
+        <source>Modification du reversement du {typeRev} N° {refTitre} de {organisme}</source>
+        <target>Modification du reversement du {typeRev} N° {refTitre} de {organisme}</target>
       </trans-unit>
       <trans-unit id="FMPbfzo" resname="Supprimer ce reversement">
         <source>Supprimer ce reversement</source>
@@ -889,9 +879,9 @@
         <source>Suppression d'un reversement</source>
         <target>Suppression d'un reversement</target>
       </trans-unit>
-      <trans-unit id="F_3D3kh" resname="Voulez-vous réellement supprimer le reversement du %typeRev% N° %refTitre% de %organisme%">
-        <source>Voulez-vous réellement supprimer le reversement du %typeRev% N° %refTitre% de %organisme%</source>
-        <target>Voulez-vous réellement supprimer le reversement du %typeRev% N° %refTitre% de %organisme%</target>
+      <trans-unit id=".8tsVNW" resname="Voulez-vous réellement supprimer le reversement du {typeRev} N° {refTitre} de {organisme}">
+        <source>Voulez-vous réellement supprimer le reversement du {typeRev} N° {refTitre} de {organisme}</source>
+        <target>Voulez-vous réellement supprimer le reversement du {typeRev} N° {refTitre} de {organisme}</target>
       </trans-unit>
       <trans-unit id="6pkDQ.H" resname="Oui, supprimer">
         <source>Oui, supprimer</source>
@@ -909,13 +899,13 @@
         <source>PREUVES</source>
         <target>PREUVES</target>
       </trans-unit>
-      <trans-unit id="0agTXtu" resname="Modifier le réversement %reversement%">
-        <source>Modifier le réversement %reversement%</source>
-        <target>Modifier le réversement %reversement%</target>
+      <trans-unit id="wwgx7Xi" resname="Modifier le réversement {reversement}">
+        <source>Modifier le réversement {reversement}</source>
+        <target>Modifier le réversement {reversement}</target>
       </trans-unit>
-      <trans-unit id="1QGaRtU" resname="Répartir le réversement %reversement% en cotisations">
-        <source>Répartir le réversement %reversement% en cotisations</source>
-        <target>Répartir le réversement %reversement% en cotisations</target>
+      <trans-unit id="SBiakq." resname="Répartir le réversement {reversement} en cotisations">
+        <source>Répartir le réversement {reversement} en cotisations</source>
+        <target>Répartir le réversement {reversement} en cotisations</target>
       </trans-unit>
       <trans-unit id="U22DLw8" resname="CONNEXION">
         <source>CONNEXION</source>
@@ -1005,11 +995,11 @@
         <source>ANNEE DE DETACHEMENT</source>
         <target>ANNEE DE DETACHEMENT</target>
       </trans-unit>
-      <trans-unit id="5yCHT3K" resname="Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année %year%">
-        <source>Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année %year%</source>
-        <target>Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année %year%</target>
+      <trans-unit id="uoUOF6B" resname="Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année {year}">
+        <source>Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année {year}</source>
+        <target>Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année {year}</target>
       </trans-unit>
-      <trans-unit id="sMHm__N" resname="Statistiques: Total des sommes reversées par année">
+      <trans-unit id="sMHmN" resname="Statistiques: Total des sommes reversées par année">
         <source>Statistiques: Total des sommes reversées par année</source>
         <target>Statistiques: Total des sommes reversées par année</target>
       </trans-unit>
@@ -1031,155 +1021,283 @@
       </trans-unit>
       <trans-unit id="rVdSVpj" resname="Cotisation totale">
         <source>Cotisation totale</source>
-        <target>__Cotisation totale</target>
+        <target>Cotisation totale</target>
       </trans-unit>
       <trans-unit id="m9HWBDI" resname="Agents détachés">
         <source>Agents détachés</source>
-        <target>__Agents détachés</target>
+        <target>Agents détachés</target>
       </trans-unit>
       <trans-unit id="NOz5IRW" resname="Matricule de l'agent">
         <source>Matricule de l'agent</source>
-        <target>__Matricule de l'agent</target>
+        <target>Matricule de l'agent</target>
       </trans-unit>
       <trans-unit id="q7X4xMb" resname="Noms de l'agent">
         <source>Noms de l'agent</source>
-        <target>__Noms de l'agent</target>
+        <target>Noms de l'agent</target>
       </trans-unit>
       <trans-unit id="7ajMG4G" resname="Téléphone de l'agent">
         <source>Téléphone de l'agent</source>
-        <target>__Téléphone de l'agent</target>
+        <target>Téléphone de l'agent</target>
       </trans-unit>
       <trans-unit id="vi9b1r." resname="Date dernier avancement">
         <source>Date dernier avancement</source>
-        <target>__Date dernier avancement</target>
+        <target>Date dernier avancement</target>
       </trans-unit>
       <trans-unit id="SOuWWwh" resname="Référence de l'acte d'intégration">
         <source>Référence de l'acte d'intégration</source>
-        <target>__Référence de l'acte d'intégration</target>
+        <target>Référence de l'acte d'intégration</target>
       </trans-unit>
       <trans-unit id="SpYszSB" resname="Type acte">
         <source>Type acte</source>
-        <target>__Type acte</target>
+        <target>Type acte</target>
       </trans-unit>
       <trans-unit id="6eGvfDd" resname="Date de signature">
         <source>Date de signature</source>
-        <target>__Date de signature</target>
+        <target>Date de signature</target>
       </trans-unit>
       <trans-unit id="5jLQzT2" resname="Date de fin détachement">
         <source>Date de fin détachement</source>
-        <target>__Date de fin détachement</target>
+        <target>Date de fin détachement</target>
       </trans-unit>
       <trans-unit id="QD.t_5." resname="Motif du fin de détachement">
         <source>Motif du fin de détachement</source>
-        <target>__Motif du fin de détachement</target>
+        <target>Motif du fin de détachement</target>
       </trans-unit>
       <trans-unit id="U7K034e" resname="La structure a mis fin au détachement">
         <source>La structure a mis fin au détachement</source>
-        <target>__La structure a mis fin au détachement</target>
+        <target>La structure a mis fin au détachement</target>
       </trans-unit>
       <trans-unit id="phrEscl" resname="Retour au ministère d'origine">
         <source>Retour au ministère d'origine</source>
-        <target>__Retour au ministère d'origine</target>
+        <target>Retour au ministère d'origine</target>
       </trans-unit>
       <trans-unit id="e1MBCVb" resname="L\agent détaché a été nommé à un autre poste">
         <source>L\agent détaché a été nommé à un autre poste</source>
-        <target>__L\agent détaché a été nommé à un autre poste</target>
+        <target>L\agent détaché a été nommé à un autre poste</target>
       </trans-unit>
       <trans-unit id="zH8R971" resname="L'agent détaché a été remplacé à son poste suite à une nommination">
         <source>L'agent détaché a été remplacé à son poste suite à une nommination</source>
-        <target>__L'agent détaché a été remplacé à son poste suite à une nommination</target>
+        <target>L'agent détaché a été remplacé à son poste suite à une nommination</target>
       </trans-unit>
       <trans-unit id="6zu.mVt" resname="Appelé à faire valoir ses droit à la retraite">
         <source>Appelé à faire valoir ses droit à la retraite</source>
-        <target>__Appelé à faire valoir ses droit à la retraite</target>
+        <target>Appelé à faire valoir ses droit à la retraite</target>
       </trans-unit>
       <trans-unit id="AHIKX2q" resname="Décès de l'agent détaché">
         <source>Décès de l'agent détaché</source>
-        <target>__Décès de l'agent détaché</target>
+        <target>Décès de l'agent détaché</target>
       </trans-unit>
       <trans-unit id="FlDfNqL" resname="Nom de l'organisme">
         <source>Nom de l'organisme</source>
-        <target>__Nom de l'organisme</target>
+        <target>Nom de l'organisme</target>
       </trans-unit>
       <trans-unit id="z1pwkhk" resname="Sigle de l'organisme">
         <source>Sigle de l'organisme</source>
-        <target>__Sigle de l'organisme</target>
+        <target>Sigle de l'organisme</target>
       </trans-unit>
       <trans-unit id="a8AnvA8" resname="Siège de l'organisme">
         <source>Siège de l'organisme</source>
-        <target>__Siège de l'organisme</target>
+        <target>Siège de l'organisme</target>
       </trans-unit>
       <trans-unit id="S5aB09I" resname="Boîte postale de l'organisme">
         <source>Boîte postale de l'organisme</source>
-        <target>__Boîte postale de l'organisme</target>
+        <target>Boîte postale de l'organisme</target>
       </trans-unit>
       <trans-unit id="V9jSgKj" resname="Fax de l'organisme">
         <source>Fax de l'organisme</source>
-        <target>__Fax de l'organisme</target>
+        <target>Fax de l'organisme</target>
       </trans-unit>
       <trans-unit id="a5NzaxV" resname="Email de l'organisme">
         <source>Email de l'organisme</source>
-        <target>__Email de l'organisme</target>
+        <target>Email de l'organisme</target>
       </trans-unit>
       <trans-unit id="Mj5DtvM" resname="Téléhone 1">
         <source>Téléhone 1</source>
-        <target>__Téléhone 1</target>
+        <target>Téléhone 1</target>
       </trans-unit>
       <trans-unit id="HPIEea_" resname="Téléhone 2">
         <source>Téléhone 2</source>
-        <target>__Téléhone 2</target>
+        <target>Téléhone 2</target>
       </trans-unit>
       <trans-unit id="C5sIQWx" resname="Ville où se trouve l'organisme">
         <source>Ville où se trouve l'organisme</source>
-        <target>__Ville où se trouve l'organisme</target>
+        <target>Ville où se trouve l'organisme</target>
       </trans-unit>
       <trans-unit id="gMCoqGh" resname="Localité de l'organisme">
         <source>Localité de l'organisme</source>
-        <target>__Localité de l'organisme</target>
+        <target>Localité de l'organisme</target>
       </trans-unit>
       <trans-unit id="ezhbQeu" resname="Site web de l'organisme">
         <source>Site web de l'organisme</source>
-        <target>__Site web de l'organisme</target>
+        <target>Site web de l'organisme</target>
       </trans-unit>
       <trans-unit id="lAXn8tB" resname="Les deux mots de passe ne correspondent pas.">
         <source>Les deux mots de passe ne correspondent pas.</source>
-        <target>__Les deux mots de passe ne correspondent pas.</target>
+        <target>Les deux mots de passe ne correspondent pas.</target>
       </trans-unit>
       <trans-unit id="XfrGi6s" resname="Confimer le mot de passe">
         <source>Confimer le mot de passe</source>
-        <target>__Confimer le mot de passe</target>
+        <target>Confimer le mot de passe</target>
       </trans-unit>
       <trans-unit id="qhUVJr6" resname="Entrer le nom complet de l'utilisateur">
         <source>Entrer le nom complet de l'utilisateur</source>
-        <target>__Entrer le nom complet de l'utilisateur</target>
+        <target>Entrer le nom complet de l'utilisateur</target>
       </trans-unit>
       <trans-unit id="J_Ew7HK" resname="Rôle de l'utilisateur">
         <source>Rôle de l'utilisateur</source>
-        <target>__Rôle de l'utilisateur</target>
+        <target>Rôle de l'utilisateur</target>
       </trans-unit>
       <trans-unit id="0KrKy0n" resname="Activer le compte">
         <source>Activer le compte</source>
-        <target>__Activer le compte</target>
+        <target>Activer le compte</target>
       </trans-unit>
       <trans-unit id="622k0wI" resname="Organisme de détachement">
         <source>Organisme de détachement</source>
-        <target>__Organisme de détachement</target>
+        <target>Organisme de détachement</target>
       </trans-unit>
       <trans-unit id="muPX9TI" resname="Année de reversement">
         <source>Année de reversement</source>
-        <target>__Année de reversement</target>
+        <target>Année de reversement</target>
       </trans-unit>
       <trans-unit id="nW30HcD" resname="Saisissez votre ancien mot de passe">
         <source>Saisissez votre ancien mot de passe</source>
-        <target>__Saisissez votre ancien mot de passe</target>
+        <target>Saisissez votre ancien mot de passe</target>
       </trans-unit>
       <trans-unit id="RviMkTC" resname="Entrez votre nouveau mot de passe">
         <source>Entrez votre nouveau mot de passe</source>
-        <target>__Entrez votre nouveau mot de passe</target>
+        <target>Entrez votre nouveau mot de passe</target>
       </trans-unit>
       <trans-unit id="Xv6yVdv" resname="Confimez votre nouveau mot de passe">
         <source>Confimez votre nouveau mot de passe</source>
-        <target>__Confimez votre nouveau mot de passe</target>
+        <target>Confimez votre nouveau mot de passe</target>
+      </trans-unit>
+      <trans-unit id="QZPPdEb" resname="Nom de l'agent">
+        <source>Nom de l'agent</source>
+        <target>Nom de l'agent</target>
+      </trans-unit>
+      <trans-unit id="S1xXWvI" resname="Arrêté">
+        <source>Arrêté</source>
+        <target>Arrêté</target>
+      </trans-unit>
+      <trans-unit id="vKGhM6p" resname="Décret">
+        <source>Décret</source>
+        <target>Décret</target>
+      </trans-unit>
+      <trans-unit id="7WxdEld" resname="Elu">
+        <source>Elu</source>
+        <target>Elu</target>
+      </trans-unit>
+      <trans-unit id="0tydz.K" resname="Décision">
+        <source>Décision</source>
+        <target>Decision</target>
+      </trans-unit>
+      <trans-unit id="EYhOy83" resname="Ministère d'origine">
+        <source>Ministère d'origine</source>
+        <target>Ministère d'origine</target>
+      </trans-unit>
+      <trans-unit id="g54g_zW" resname="Grade">
+        <source>Grade</source>
+        <target>Grade</target>
+      </trans-unit>
+      <trans-unit id="8uGvhcL" resname="Echelon">
+        <source>Echelon</source>
+        <target>Incremental position</target>
+      </trans-unit>
+      <trans-unit id=".sGf49V" resname="Classe">
+        <source>Classe</source>
+        <target>Class</target>
+      </trans-unit>
+      <trans-unit id="ai2wH71" resname="Référence de l'acte">
+        <source>Référence de l'acte</source>
+        <target>Référence de l'acte</target>
+      </trans-unit>
+      <trans-unit id="3M4APGV" resname="Date de suspension solde">
+        <source>Date de suspension solde</source>
+        <target>Date de suspension solde</target>
+      </trans-unit>
+      <trans-unit id="N3DBwUb" resname="Prise de service organisme">
+        <source>Prise de service organisme</source>
+        <target>Prise de service organisme</target>
+      </trans-unit>
+      <trans-unit id="z.P46BW" resname="Créer un nouvel organisme">
+        <source>Créer un nouvel organisme</source>
+        <target>Create a new entity</target>
+      </trans-unit>
+      <trans-unit id="_JFMpFo" resname="Voulez-vous réellement réinitialiser le mot de passe de {user} ?">
+        <source>Voulez-vous réellement réinitialiser le mot de passe de {user} ?</source>
+        <target>Voulez-vous réellement réinitialiser le mot de passe de {user} ?</target>
+      </trans-unit>
+      <trans-unit id="9Ya7LeX" resname="Oui, Réinitialiser">
+        <source>Oui, Réinitialiser</source>
+        <target>Oui, Réinitialiser</target>
+      </trans-unit>
+      <trans-unit id="tENXEhl" resname="Détails sur le détachement de l'agent {name} ({matricule}) dans l'organisme {organisme}">
+        <source>Détails sur le détachement de l'agent {name} ({matricule}) dans l'organisme {organisme}</source>
+        <target>Détails sur le détachement de l'agent {name} ({matricule}) dans l'organisme {organisme}</target>
+      </trans-unit>
+      <trans-unit id="sCLrcJA" resname="Enregistrement d'une cotisation liée au reversement N° {reversement}">
+        <source>Enregistrement d'une cotisation liée au reversement N° {reversement}</source>
+        <target>Enregistrement d'une cotisation liée au reversement N° {reversement}</target>
+      </trans-unit>
+      <trans-unit id="wbck12Z" resname="Modification du montant de la cotisation de {agent} liée au reversement N° {reversement}">
+        <source>Modification du montant de la cotisation de {agent} liée au reversement N° {reversement}</source>
+        <target>Modification du montant de la cotisation de {agent} liée au reversement N° {reversement}</target>
+      </trans-unit>
+      <trans-unit id="ujEOOJr" resname="Voulez-vous réellement supprimer cette cotisation de {name} ({matricule}) ?">
+        <source>Voulez-vous réellement supprimer cette cotisation de {name} ({matricule}) ?</source>
+        <target>Voulez-vous réellement supprimer cette cotisation de {name} ({matricule}) ?</target>
+      </trans-unit>
+      <trans-unit id="bmddjL6" resname="Montant à reverser sur la période allant du  {dateDebut} au {dateFin}">
+        <source>Montant à reverser sur la période allant du  {dateDebut} au {dateFin}</source>
+        <target>Montant à reverser sur la période allant du  {dateDebut} au {dateFin}</target>
+      </trans-unit>
+      <trans-unit id="tErQNon" resname="Dette sociale de {organisme}:  Renseignez les dates de début et de fin de période">
+        <source>Dette sociale de {organisme}:  Renseignez les dates de début et de fin de période</source>
+        <target>Dette sociale de {organisme}:  Renseignez les dates de début et de fin de période</target>
+      </trans-unit>
+      <trans-unit id="48dupuG" resname="Modifier le profil de {user}">
+        <source>Modifier le profil de {user}</source>
+        <target>Modifier le profil de {user}</target>
+      </trans-unit>
+      <trans-unit id="k0yCUum" resname="Réinitialiser le mode de passe de {user}">
+        <source>Réinitialiser le mode de passe de {user}</source>
+        <target>Réinitialiser le mode de passe de {user}</target>
+      </trans-unit>
+      <trans-unit id="fd1Kjsf" resname="Voulez-vous réellement réinitialiser le mot de passe de {user} ?">
+        <source>Voulez-vous réellement réinitialiser le mot de passe de {user} ?</source>
+        <target>Voulez-vous réellement réinitialiser le mot de passe de {user} ?</target>
+      </trans-unit>
+      <trans-unit id="WjPhyaO" resname="Modification du reversement du {typeRev} N° {refTitre} de {organisme}">
+        <source>Modification du reversement du {typeRev} N° {refTitre} de {organisme}</source>
+        <target>Modification du reversement du {typeRev} N° {refTitre} de {organisme}</target>
+      </trans-unit>
+      <trans-unit id="F_3D3kh" resname="Voulez-vous réellement supprimer le reversement du {typeRev} N° {refTitre} de {organisme}">
+        <source>Voulez-vous réellement supprimer le reversement du {typeRev} N° {refTitre} de {organisme}</source>
+        <target>Voulez-vous réellement supprimer le reversement du {typeRev} N° {refTitre} de {organisme}</target>
+      </trans-unit>
+      <trans-unit id="0agTXtu" resname="Modifier le réversement {reversement}">
+        <source>Modifier le réversement {reversement}</source>
+        <target>Modifier le réversement {reversement}</target>
+      </trans-unit>
+      <trans-unit id="1QGaRtU" resname="Répartir le réversement {reversement} en cotisations">
+        <source>Répartir le réversement {reversement} en cotisations</source>
+        <target>Répartir le réversement {reversement} en cotisations</target>
+      </trans-unit>
+      <trans-unit id="5yCHT3K" resname="Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année {year}">
+        <source>Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année {year}</source>
+        <target>Statistiques: Total des sommes réversées par structure et par trimestre pour le compte de l'année {year}</target>
+      </trans-unit>
+      <trans-unit id="xICTCZK" resname="Télécharger le manuel d'utilisation de l'application ANGIFODE via le lien ci-contre">
+        <source>Télécharger le manuel d'utilisation de l'application ANGIFODE via le lien ci-contre</source>
+        <target>Télécharger le manuel d'utilisation de l'application ANGIFODE via le lien ci-contre</target>
+      </trans-unit>
+      <trans-unit id="EbbeIqs" resname="MANUEL ANGIFODE">
+        <source>MANUEL ANGIFODE</source>
+        <target>MANUEL ANGIFODE</target>
+      </trans-unit>
+      <trans-unit id="kPYR.8n" resname="Télécharger le manuel d'administration de l'application ANGIFODE via le lien ci-contre">
+        <source>Télécharger le manuel d'administration de l'application ANGIFODE via le lien ci-contre</source>
+        <target>Télécharger le manuel d'administration de l'application ANGIFODE via le lien ci-contre</target>
       </trans-unit>
     </body>
   </file>

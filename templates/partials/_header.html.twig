@@ -45,8 +45,8 @@
                             <i class="fa fa-building" aria-hidden="true"></i>
                             {{ 'Organismes' | trans }}</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{ path('create_organisme') }}">Créer un nouvel organisme</a>
-                            <a class="dropdown-item" href="{{ path('organisme_list') }}">Liste des organismes</a>
+                            <a class="dropdown-item" href="{{ path('create_organisme') }}">{{ "Créer un nouvel organisme" | trans }}</a>
+                            <a class="dropdown-item" href="{{ path('organisme_list') }}">{{ "Liste des organismes" | trans }}</a>
                         </div>
                     </li>
                 {% endif %}
@@ -103,7 +103,7 @@
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link active fs-6" href="#">
+                    <a class="nav-link active fs-6" href="{{ path('app_guide') }}">
                         <i class="fa fa-laptop" aria-hidden="true"></i>
                         {{ 'Guide' | trans }}</a>
                 </li>

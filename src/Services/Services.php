@@ -685,9 +685,17 @@ class Services
              */
             //return 29;
         };
-        // $date2 = date_create("2023-06-30"); $date1 = date_create("2023-06-01");
+        //$date2 = date_create("2023-02-28"); $date1 = date_create("2023-02-01");
         $diff = $date1->diff($date2);
-        $days = (($date2->format('d') + 30) - ($date1->format('d'))) % 30;
+        if($date2->format('m') == 02 & $date2->format('d') == 28 )
+            $days = (($date2->format('d') + 32) - ($date1->format('d'))) % 30;
+        elseif($date2->format('m') == 02 & $date2->format('d') == 29 )
+            $days = (($date2->format('d') + 31) - ($date1->format('d'))) % 30;
+        elseif ($date2->format('m') != 02 & $date2->format('d') == 31)
+            $days = (($date2->format('d') + 29) - ($date1->format('d'))) % 30;
+        else
+            $days = (($date2->format('d') + 30) - ($date1->format('d'))) % 30;
+        //dd($days);
 
         return ($diff->y * 360) + ($diff->m * 30) + $days;
     }

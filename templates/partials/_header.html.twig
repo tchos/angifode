@@ -36,6 +36,10 @@
                             <i class="fa fa-list-ul" aria-hidden="true"></i>
                             {{ 'Liste des détachés' | trans }}
                         </a>
+                        <a class="dropdown-item" href="{{ path('search_agent') }}">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            {{ 'Rechercher un agent' | trans }}
+                        </a>
                     </div>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}

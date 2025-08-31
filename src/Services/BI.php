@@ -178,4 +178,42 @@ class BI
         )   ->setParameter('anDet', $anDet)
             ->getResult();
     }
+    /** Fin de la fonction getDetachesByYear($anDet) */
+
+    /**
+     * Permet de rechercher un agent à partir de son nom ou de son matricule
+     * @param $infos
+     * @return Entity Agents
+     */
+    public function searchAgentByNameOrMatricule($infos){
+        /**
+         * SELECT matricule, noms, dateNaissance as date_naissance, ministere, grade as code_grade, ministere, classe, echelon, libGrade as libelle_grade
+         * FROM agents, grade WHERE agents.code_grade = grade.codeGrade AND (noms = "AGONI" OR matricule = "010013A");
+         */
+        $mots_cles = explode(' ', $infos);
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
+            if ($i == 0) {
+                $recherche = '
+                    SELECT a.matricule, a.noms, a.dateNaissance as date_naissance, a.grade as code_grade, a.classe, a.echelon, 
+                    g.libGrade as libelle_grade, a.ministere
+                    FROM App\Entity\Agents a, App\Entity\Grade g
+                    WHERE (a.matricule LIKE :mot_clef'.$i.' OR a.noms LIKE :mot_clef'.$i.')
+                ';
+            } else {
+                $recherche .= ' AND (a.matricule LIKE :mot_clef'.$i.'
+                    OR a.noms LIKE :mot_clef'.$i.')';
+            }
+        }
+
+        $recherche .= ' AND a.grade = g.codeGrade';
+
+        $query = $this->manager->createQuery($recherche);
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
+            $mot_clef = trim($mots_cles[$i]);
+            $query->setParameter('mot_clef'.$i.'', '%'.$mot_clef.'%');
+        }
+
+        return $query->getResult();
+    }
+    /** Fin de la fonction searchAgentByNameOrMatricule($nom) */
 }

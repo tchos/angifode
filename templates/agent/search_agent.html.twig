@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Rechercher un agent" | trans }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('asset/css/angifode.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="h4 text-success">{{ "Recherche d'un agent public" | trans}}</div>
+        {% for message in app.session.flashBag.get('danger') %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+
+        {{ form_start(form) }}
+            <div class="row">
+                {{ form_errors(form.recherche) }}
+                <div class="col-sm-9">
+                    {{ form_widget(form.recherche) }}
+                </div>
+                <div class="col-sm">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                        <span class="fw-bolder">{{ "Rechercher" }}</span>
+                    </button>
+                </div>
+            </div>
+
+            <a class="btn btn-dark fw-bolder my-3" href="{{ path('agent_detache_new') }}">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+                {{ "Retour à la page d'enregistrement d'un nouveau détaché" | trans }}
+            </a>
+        {{ form_end(form) }}
+
+        {# Si l'agent recherche est trouve #}
+        {% if agents %}
+            <hr class="my-3 border-primary">
+            <table class="table table-hover">
+                <thead>
+                <tr class="table-active">
+                    <th class="text-center"><i class="fas fa-list-ol"></i> N°</th>
+                    <th class="text-center"><i class="fa-solid fa-arrow-up-1-9"></i> {{ "Matricule" | trans }}</th>
+                    <th><i class="fas fa-id-card"></i> {{ "Nom de l'Agent Public" | trans }}</th>
+                    <th class="text-center"><i class="fa-regular fa-calendar-minus"></i> {{ "Naissance" | trans }}</th>
+                    <th class="text-center"><i class="fa-solid fa-caret-up"></i> {{ "Grade" | trans  }}</th>
+                    <th class="text-center">
+                        <i class="fa-solid fa-landmark"></i> {{ "Classe" | trans }}
+                    </th>
+                    <th class="text-center">
+                        <i class="fa-brands fa-quinscape"></i> {{ "Echelon" | trans }}
+                    </th>
+                    <th class="text-center"><i class="fa-solid fa-building"></i> {{ "Ministère" | trans  }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set i = 1 %}
+                {% for agent in agents %}
+                    <tr>
+                        <td class="text-center">{{ i }}</td>
+                        <td class="text-center">{{ agent.matricule }}</td>
+                        <td>{{ agent.noms }}</td>
+                        <td class="text-center">{{ agent.date_naissance | date('Y-m-d') }}</td>
+                        <td class="text-center">{{ agent.libelle_grade }}</td>
+                        <td class="text-center">{{ agent.classe is empty ? '-' : agent.classe }}</td>
+                        <td class="text-center">{{ agent.echelon is empty ? '-' : agent.echelon }}</td>
+                        <td class="text-center">{{ agent.ministere }}</td>
+                    </tr>
+                    {% set i = i + 1 %}
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

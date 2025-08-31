@@ -9,6 +9,7 @@ use App\Entity\Historique;
 use App\Entity\Organismes;
 use App\Form\DetachementType;
 use App\Form\FinDetachementType;
+use App\Form\SearchAgentType;
 use App\Repository\AgentDetacheRepository;
 use App\Repository\BaremeRepository;
 use App\Repository\GradeRepository;
@@ -396,5 +397,47 @@ class AgentController extends AbstractController
         $this->addFlash("success", $translator->trans("Suppression du détachement effectué avec avec succès !!!") );
 
         return $this->redirectToRoute('agent_detache_list');
+    }
+
+    # Recherche un agent public à partir de son nom ou son matricul
+    #[Route('/{_locale<%app.supported_locales%>}/agent/search', name: 'search_agent')]
+    public function searcheAgent(Request $request, BI $bi, Services $statistiques, TranslatorInterface $translator): Response
+    {
+        $agents = null; // Variable qui va contenir le resultat de la recherche
+
+        // constructeur du formulaire qui va capter les informations de l'agent recherché
+        $form = $this->createForm(SearchAgentType::class);
+
+        // handlerequest() permet de parcourir la requête et d'extraire les informations du formulaire
+        $form->handleRequest($request);
+
+        /**
+         * Ayant extrait les infos saisies dans le formulaire,
+         * on vérifie que le formulaire a été soumis et qu'il est valide
+         */
+        if($form->isSubmitted() && $form->isValid())
+        {
+            // Récupérer le matricule et/ou le numero d'ESD saisis dans le formulaire
+            $donnees = $form->getData();
+            $cherche = $donnees['recherche'];
+
+            // Recherche dans le BD des ESD lies aux infos saisis
+            $agents = $bi->searchAgentByNameOrMatricule($cherche);
+            //dd($agents);
+
+            // Si l'on ne trouve rien on affiche un message d'Agent non trouve
+            if(!$agents) {
+                $this->addFlash("danger",
+                    $translator->trans("Erreur !!!
+                        Il n'existe aucun agent(s) public(s) avec pour nom et/ou matricule "
+                        .$cherche." dans le fichier solde.")
+                );
+            }
+        }
+
+        return $this->render('agent/search_agent.html.twig', [
+            'form' => $form->createView(),
+            'agents' => $agents,
+        ]);
     }
 }
